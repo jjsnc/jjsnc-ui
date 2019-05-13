@@ -1,10 +1,10 @@
 <template>
-<div >
-  <button class="jjsnc-btn " :type="type" :class="btnClass" @click="handleClick">
-    <i :class="icon" v-if="icon"></i>
-    <slot></slot>
-  </button>
-       <div class=""></div>
+  <div>
+    <button class="jjsnc-btn" :type="type" :class="btnClass" @click="handleClick">
+      <i :class="icon" v-if="icon"></i>
+      <slot></slot>
+    </button>
+    <div class></div>
   </div>
 </template>
 
@@ -76,15 +76,15 @@ export default {
 @import "../../common/scss/mixin";
 @import "../../common/scss/index";
 @mixin btn-active($bg, $border: null) {
-  &.jjsnc_btn_active, &:active {
+  &.jjsnc-btn_active,&:active {
     background: $bg;
-    @if $border != null {
-       @include border-1px($border);
+    @if ($border != null) {
+      @include border-1px($border);
     }
   }
 }
 
-.jjsnc_btn {
+.jjsnc-btn {
   display: block;
   margin: 0;
   padding: 17px 16px;
@@ -111,50 +111,52 @@ export default {
   }
 }
 
-.jjsnc_btn-inline {
+.jjsnc-btn-inline {
   width: auto;
   display: inline-block;
   vertical-align: middle;
   padding: 9px 10px;
-  // font-size: $fontsize-small;
+  font-size: $fontsize-small;
   > i {
     margin-right: 2px;
     transform: scale(1.14);
   }
 }
 
-.jjsnc_btn-primary {
+.jjsnc-btn-primary {
   color: $btn-primary-color;
   background: $btn-primary-bgc;
   @include btn-active($btn-primary-active-bgc);
 }
 
-.jjsnc_btn-light {
+.jjsnc-btn-light {
   color: $btn-light-color;
   background: $btn-light-bgc;
   box-shadow: $box-shadow-content;
   @include btn-active($btn-light-active-bgc);
 }
 
-.jjsnc_btn-outline {
+.jjsnc-btn-outline {
   color: $btn-outline-color;
   background: $btn-outline-bgc;
   @include border-1px($btn-outline-bdc);
   @include btn-active($btn-outline-active-bgc, $btn-outline-active-bdc);
 }
 
-.jjsnc_btn-outline-primary {
+.jjsnc-btn-outline-primary {
   color: $btn-outline-primary-color;
   background: $btn-outline-primary-bgc;
   @include border-1px($btn-outline-primary-bdc);
-  @include btn-active($btn-outline-primary-active-bgc, $btn-outline-primary-active-bdc);
+  @include btn-active(
+    $btn-outline-primary-active-bgc,
+    $btn-outline-primary-active-bdc
+  );
 }
 
-.jjsnc_btn_disabled {
+.jjsnc-btn_disabled {
   color: $btn-disabled-color;
   background: $btn-disabled-bgc;
   @include border-1px($btn-disabled-bdc);
   @include btn-active($btn-disabled-bgc, $btn-disabled-bdc);
 }
-
 </style>
