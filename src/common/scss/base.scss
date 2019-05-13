@@ -72,9 +72,9 @@ html {
     }
 }
 
-.cube-safe-area-pb {
-    @include safe-area-mixin(padding-bottom, 0, true);
-}
+// .cube-safe-area-pb {
+//     @include safe-area-mixin(padding-bottom, 0, true);
+// }
 
 @media (min-resolution: 2dppx) {
     .border-top-1px {

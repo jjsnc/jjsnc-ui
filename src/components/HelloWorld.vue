@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <jjsnc-button>按钮</jjsnc-button>
+    <jjsnc-button icon='jjsncic-right'>按钮</jjsnc-button>
   </div>
 </template>
 
