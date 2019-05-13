@@ -1,0 +1,275 @@
+@font-face {
+    font-family: "jjsnc-icon";
+    src: url("./jjsncic.woff") format("woff"),
+        url("./jjsncic.ttf") format("truetype");
+}
+
+[class^="jjsncic-"],
+[class*=" jjsncic-"] {
+    font-family: "jjsnc-icon" !important;
+    font-size: 100%;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.jjsncic-eye-invisible::before {
+    content: "\e624";
+}
+
+.jjsncic-eye-visible::before {
+    content: "\e625";
+}
+
+.jjsncic-square-right::before {
+    content: "\e67d";
+}
+
+.jjsncic-select::before {
+    content: "\e609";
+}
+
+.jjsncic-pulldown::before {
+    content: "\e603";
+}
+
+.jjsncic-pullup::before {
+    content: "\e604";
+}
+
+.jjsncic-more::before {
+    content: "\e607";
+}
+
+.jjsncic-back::before {
+    content: "\e608";
+}
+
+.jjsncic-arrow::before {
+    content: "\e60b";
+}
+
+.jjsncic-close::before {
+    content: "\e60d";
+}
+
+.jjsncic-warn::before {
+    content: "\e614";
+}
+
+.jjsncic-question::before {
+    content: "\e616";
+}
+
+.jjsncic-right::before {
+    content: "\e617";
+}
+
+.jjsncic-wrong::before {
+    content: "\e618";
+}
+
+.jjsncic-info::before {
+    content: "\e619";
+}
+
+.jjsncic-remove::before {
+    content: "\e61a";
+}
+
+.jjsncic-add::before {
+    content: "\e61c";
+}
+
+.jjsncic-share::before {
+    content: "\e631";
+}
+
+.jjsncic-no-wifi::before {
+    content: "\e632";
+}
+
+.jjsncic-smile::before {
+    content: "\e634";
+}
+
+.jjsncic-sad::before {
+    content: "\e636";
+}
+
+.jjsncic-email::before {
+    content: "\e637";
+}
+
+.jjsncic-game::before {
+    content: "\e638";
+}
+
+.jjsncic-wifi::before {
+    content: "\e639";
+}
+
+.jjsncic-hot::before {
+    content: "\e63b";
+}
+
+.jjsncic-notification::before {
+    content: "\e63d";
+}
+
+.jjsncic-delete::before {
+    content: "\e63e";
+}
+
+.jjsncic-vip::before {
+    content: "\e63f";
+}
+
+.jjsncic-mute::before {
+    content: "\e640";
+}
+
+.jjsncic-danger::before {
+    content: "\e641";
+}
+
+.jjsncic-volume::before {
+    content: "\e642";
+}
+
+.jjsncic-bad::before {
+    content: "\e643";
+}
+
+.jjsncic-mobile-phone::before {
+    content: "\e644";
+}
+
+.jjsncic-aim::before {
+    content: "\e645";
+}
+
+.jjsncic-navigation::before {
+    content: "\e64d";
+}
+
+.jjsncic-safe-pay::before {
+    content: "\e64e";
+}
+
+.jjsncic-tag::before {
+    content: "\e64f";
+}
+
+.jjsncic-lock::before {
+    content: "\e651";
+}
+
+.jjsncic-unlock::before {
+    content: "\e652";
+}
+
+.jjsncic-edit::before {
+    content: "\e653";
+}
+
+.jjsncic-scan::before {
+    content: "\e654";
+}
+
+.jjsncic-qr-code::before {
+    content: "\e655";
+}
+
+.jjsncic-calendar::before {
+    content: "\e659";
+}
+
+.jjsncic-time::before {
+    content: "\e65f";
+}
+
+.jjsncic-red-packet::before {
+    content: "\e664";
+}
+
+.jjsncic-star::before {
+    content: "\e668";
+}
+
+.jjsncic-setting::before {
+    content: "\e669";
+}
+
+.jjsncic-home::before {
+    content: "\e66d";
+}
+
+.jjsncic-credit-card::before {
+    content: "\e66e";
+}
+
+.jjsncic-mall::before {
+    content: "\e670";
+}
+
+.jjsncic-microphone::before {
+    content: "\e673";
+}
+
+.jjsncic-search::before {
+    content: "\e674";
+}
+
+.jjsncic-good::before {
+    content: "\e675";
+}
+
+.jjsncic-alert::before {
+    content: "\e676";
+}
+
+.jjsncic-picture::before {
+    content: "\e677";
+}
+
+.jjsncic-message::before {
+    content: "\e678";
+}
+
+.jjsncic-phone::before {
+    content: "\e67a";
+}
+
+.jjsncic-location::before {
+    content: "\e67b";
+}
+
+.jjsncic-like::before {
+    content: "\e67c";
+}
+
+.jjsncic-camera::before {
+    content: "\e67e";
+}
+
+.jjsncic-person::before {
+    content: "\e67f";
+}
+
+.jjsncic-round-border::before {
+    content: "\e683";
+}
+
+.jjsncic-important::before {
+    content: "\e68b";
+}
+
+.jjsncic-ok::before {
+    content: "\e68c";
+}
+
+.jjsncic-square-border::before {
+    content: "\e990";
+}
