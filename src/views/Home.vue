@@ -9,16 +9,21 @@
     <jjsnc-button :inline="true">inline</jjsnc-button>
     <jjsnc-button :outline="true">outline</jjsnc-button>
     <jjsnc-button :primary="true">primary</jjsnc-button>
+    <jjsnc-loading></jjsnc-loading>
+    <jjsnc-loading :size="28"></jjsnc-loading>
+    <jjsnc-loading :size="40"></jjsnc-loading>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import jjsncButton from "@/components/button/button.vue";
+import jjsncLoading from "@/components/loading/loading.vue";
 export default {
   name: "home",
   components: {
-    jjsncButton
+    jjsncButton,
+    jjsncLoading
   }
 };
 </script>
