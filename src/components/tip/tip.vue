@@ -9,35 +9,91 @@
     </div>
   </transition>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import visibilityMixin from "../../common/mixins/visibility";
+
 const COMPONENT_NAME = "jjsnc-tip";
 const EVENT_CLICK = "click";
 const EVENT_CLOSE = "close";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [visibilityMixin],
   props: {
     direction: {
       type: String,
-      default: top
+      default: "top"
     },
-    offsetLfet: {
+    offsetLeft: {
       type: [String, Number],
       default: 0
     },
-    offsetRightt: {
-      type: [String, Number],
-      default: 0
-    },
-    offsetBottom: {
+    offsetRight: {
       type: [String, Number],
       default: 0
     },
     offsetTop: {
       type: [String, Number],
       default: 0
+    },
+    offsetBottom: {
+      type: [String, Number],
+      default: 0
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let angleEleStyle = this.$refs.angle.style;
+      const boxMap = {
+        left: "right",
+        right: "left",
+        top: "bottom",
+        bottom: "top"
+      };
+      const offsets = [
+        {
+          name: "offsetLeft",
+          target: "left",
+          percentFix: {
+            marginLeft: "-6px"
+          }
+        },
+        {
+          name: "offsetRight",
+          target: "right",
+          percentFix: {
+            marginRight: "-6px"
+          }
+        },
+        {
+          name: "offsetTop",
+          target: "top",
+          percentFix: {
+            marginTop: "-6px"
+          }
+        },
+        {
+          name: "offsetBottom",
+          target: "bottom",
+          percentFix: {
+            marginBottom: "-6px"
+          }
+        }
+      ];
+      offsets.forEach(offset => {
+        const value = this[offset.name];
+        if (value !== 0) {
+          const isNum = typeof value === "number";
+          angleEleStyle[offset.target] = value + (isNum ? "px" : "");
+          if (offset.percentFix && !isNum) {
+            Object.keys(offset.percentFix).forEach(key => {
+              angleEleStyle[key] = offset.percentFix[key];
+            });
+          }
+          angleEleStyle[boxMap[offset.target]] = "auto";
+        }
+      });
+    });
   },
   methods: {
     handleClick() {
@@ -51,10 +107,10 @@ export default {
   }
 };
 </script>
+<style lang="scss" >
+@import "../../common/scss/variable.scss";
+@import "../../common/scss/mixin.scss";
 
-<style lang="scss" scoped>
-@import "../../common/scss/variable";
-@import "../../common/scss/mixin";
 .jjsnc-tip {
   display: flex;
   z-index: 10;
@@ -116,44 +172,44 @@ export default {
       }
     }
   }
-  .jjsnc-tip-angle {
-    position: absolute;
-    &::before {
-      content: "";
-      display: block;
-      border-width: 0 6px 6px;
-      border-style: solid;
-      border-color: transparent transparent $tip-bgc;
-    }
+}
+.jjsnc-tip-angle {
+  position: absolute;
+  &::before {
+    content: "";
+    display: block;
+    border-width: 0 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent $tip-bgc;
   }
-  .jjsnc-tip-close {
-    position: absolute;
-    right: 14px;
-    top: 12px;
-    width: 12px;
-    height: 12px;
-    padding: 0;
-    color: inherit;
-    outline: none;
-    border: none;
-    background: none;
-    transform: scale(1.3);
-  }
-  .jjsnc-tip-content {
-    min-height: 18px;
-    line-height: 18px;
-    @include flex-fix();
-    overflow: hidden;
-  }
+}
+.jjsnc-tip-close {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  color: inherit;
+  outline: none;
+  border: none;
+  background: none;
+  transform: scale(1.3);
+}
+.jjsnc-tip-content {
+  min-height: 18px;
+  line-height: 18px;
+  @include flex-fix();
+  overflow: hidden;
 }
 
 .jjsnc-tip-zoom-enter-active {
   animation: tip-in 0.4s;
 }
+
 .jjsnc-tip-zoom-leave-active {
   animation: tip-out 0.2s;
 }
-
 @keyframes tip-in {
   0% {
     transform: scale(0);
@@ -165,9 +221,11 @@ export default {
     transform: scale(1);
   }
 }
+
 @keyframes tip-out {
   from {
     transform: scale(1);
+    opacity: 1;
   }
   to {
     transform: scale(0);
