@@ -151,7 +151,6 @@ $ui-width: 1.42em;
     }
   }
 }
-
 .jjsnc-checkbox-wrap {
   position: relative;
   display: flex;
@@ -164,7 +163,6 @@ $ui-width: 1.42em;
   word-break: break-word;
   word-wrap: break-word;
 }
-
 .jjsnc-checkbox-input {
   z-index: 1;
   position: absolute;
@@ -178,14 +176,13 @@ $ui-width: 1.42em;
   position: relative;
   width: 1em;
   height: 1em;
-  margin-right: $ui-width - 1;
+  margin-right: $ui-width - 1em;
   line-height: 1;
   border-radius: 50%;
   &.jjsncic-square-border {
     border-radius: 2px;
   }
-  &::before,
-  i {
+  &::before, i {
     transition: all 0.2s;
   }
   &::before {
@@ -201,7 +198,6 @@ $ui-width: 1.42em;
     transform: scale(0.4);
   }
 }
-
 .jjsnc-checkbox_checked {
   .jjsnc-checkbox-ui {
     &::before {
@@ -213,9 +209,23 @@ $ui-width: 1.42em;
     }
   }
 }
+.jjsnc-checkbox_disabled {
+  .jjsnc-checkbox-ui {
+    background-color: $checkbox-disabled-icon-bgc;
+    &::before, i {
+      transition: none;
+    }
+    &::before {
+      color: transparent;
+    }
+    i {
+      color: $checkbox-disabled-icon-color;
+    }
+  }
+}
 .jjsnc-checkbox_checked.jjsnc-checkbox_disabled {
   .jjsnc-checkbox-ui {
-    background-color: $checkbox_checked-icon-bgc;
+    background-color: $checkbox-checked-icon-bgc;
   }
 }
 .jjsnc-checkbox-hollow {
@@ -248,19 +258,19 @@ $ui-width: 1.42em;
   &.jjsnc-checkbox_disabled {
     .jjsnc-checkbox-ui {
       background-color: transparent;
-    }
-    &::before {
-      color: $checkbox-hollow-disabled-icon-color;
-    }
-    i {
-      transform: scale(1);
-      color: transparent;
-    }
-  }
-  &.jjsnc-checkbox_checked {
-    .jjsnc-checkbox-ui {
-      i {
+      &::before {
         color: $checkbox-hollow-disabled-icon-color;
+      }
+      i {
+        transform: scale(1);
+        color: transparent;
+      }
+    }
+    &.jjsnc-checkbox_checked {
+      .jjsnc-checkbox-ui {
+        i {
+          color: $checkbox-hollow-disabled-icon-color;
+        }
       }
     }
   }
