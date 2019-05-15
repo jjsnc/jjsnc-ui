@@ -220,7 +220,7 @@ $ui-width: 1.42em;
 }
 .jjsnc-checkbox-hollow {
   i {
-    width: 100;
+    width: 100%;
     height: 100%;
     &::before {
       content: "";

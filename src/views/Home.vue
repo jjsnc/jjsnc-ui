@@ -14,7 +14,10 @@
         <!-- <jjsnc-loading></jjsnc-loading> -->
     <!-- <jjsnc-button :inline="true" :outline="true" @click="$refs.tip.show()" :primary="true">Show tip</jjsnc-button> -->
       <!-- <jjsnc-tip ref="tip" direction="bottom" style="left:123px;top:25px;">Tip</jjsnc-tip> -->
-      <jjsnc-checkbox v-model="checked"> Checkbox</jjsnc-checkbox>
+      <!-- <jjsnc-checkbox v-model="checked"> Checkbox</jjsnc-checkbox> -->
+      <jjsnc-checkbox v-model="checked" position="right" shape="square" :hollow-style="true">
+  Styled Checkbox
+</jjsnc-checkbox>
   </div>
 </template>
 
