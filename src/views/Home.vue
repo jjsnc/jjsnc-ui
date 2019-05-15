@@ -12,22 +12,30 @@
     <jjsnc-loading :size="28"></jjsnc-loading>
     <jjsnc-loading :size="40"></jjsnc-loading> -->
         <!-- <jjsnc-loading></jjsnc-loading> -->
-    <jjsnc-button :inline="true" :outline="true" @click="$refs.tip.show()" :primary="true">Show tip</jjsnc-button>
-      <jjsnc-tip ref="tip" direction="bottom" style="left:123px;top:25px;">Tip</jjsnc-tip>
+    <!-- <jjsnc-button :inline="true" :outline="true" @click="$refs.tip.show()" :primary="true">Show tip</jjsnc-button> -->
+      <!-- <jjsnc-tip ref="tip" direction="bottom" style="left:123px;top:25px;">Tip</jjsnc-tip> -->
+      <jjsnc-checkbox v-model="checked"> Checkbox</jjsnc-checkbox>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import jjsncButton from "@/components/button/button.vue";
-import jjsncLoading from "@/components/loading/loading.vue";
-import jjsncTip from "@/components/tip/tip.vue";
+// import jjsncButton from "@/components/button/button.vue";
+// import jjsncLoading from "@/components/loading/loading.vue";
+// import jjsncTip from "@/components/tip/tip.vue";
+import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
 export default {
   name: "home",
   components: {
-    jjsncButton,
-    jjsncLoading,
-    jjsncTip
+    // jjsncButton,
+    // jjsncLoading,
+    // jjsncTip,
+    jjsncCheckbox
+  },
+  data(){
+    return {
+      checked:false
+    }
   }
 };
 </script>
