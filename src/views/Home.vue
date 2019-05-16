@@ -28,7 +28,8 @@
       Agree
       <a href="javascript:;" @click.stop="myhandle">处理事件</a>
     </jjsnc-checkbox> -->
-    <jjsnc-checkbox-group v-model="checkList" @input='EVENT_INPUT' :options="options" ></jjsnc-checkbox-group>
+    <!-- <jjsnc-checkbox-group v-model="checkList" @input='EVENT_INPUT' :options="options" ></jjsnc-checkbox-group> -->
+    <jjsnc-checkbox-group v-model="checkList" :options="options" :horizontal="true" shape="square" :hollow-style="true" />
   </div>
 </template>
 

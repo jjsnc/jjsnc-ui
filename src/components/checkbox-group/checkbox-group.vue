@@ -99,7 +99,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
 
@@ -115,7 +115,7 @@ export default {
     }
   }
 }
-.jjsnc-checkbox-group[data-horz="true"] {
+.jjsnc-checkbox-group[data-horz=true] {
   display: flex;
   padding-left: 0;
   @include border-1px($checkbox-group-horizontal-bdc, 2px);
@@ -146,5 +146,6 @@ export default {
     justify-content: center;
   }
 }
+
 </style>
 
