@@ -8,19 +8,20 @@
         :shape="shape"
         :position="position"
         :hollow-style="hollowStyle"
-      ></jjsnc-checkbox>
+      />
     </slot>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import jjsncCheckbox from "../checkbox/checkbox.vue";
-const CONPONENT_NAME = "jjsnc-checkbox-group";
+const COMPONENT_NAME = "jjsnc-checkbox-group";
+
 const EVENT_INPUT = "input";
 const EVENT_CHECKED = "checked";
 const EVENT_CANCLE_CHECKED = "cancel-checked";
+
 export default {
-  name: CONPONENT_NAME,
+  name: COMPONENT_NAME,
   props: {
     value: {
       type: Array
@@ -73,7 +74,7 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler() {
+      handler(newValue, oldValue) {
         this._value = this.value.concat();
       }
     }
@@ -90,6 +91,7 @@ export default {
         const index = this._value.indexOf(value);
         this._value.splice(index, 1);
       }
+      this.$emit(EVENT_INPUT, this._value);
     });
   },
   components: {
@@ -97,8 +99,6 @@ export default {
   }
 };
 </script>
-
-
 <style lang="scss" scoped>
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
@@ -108,48 +108,43 @@ export default {
   overflow: hidden;
   background-color: $checkbox-group-bgc;
   .jjsnc-checkbox {
-    &:last-child{
-      .jjsnc-checkbox-wrap{
-         @include border-1px();
+    &:last-child {
+      .jjsnc-checkbox-wrap {
+        @include border-none();
       }
     }
   }
 }
-
-.jjsnc-checkbox-group[data-horz='true']{
+.jjsnc-checkbox-group[data-horz="true"] {
   display: flex;
   padding-left: 0;
-  @include border-1px($checkbox-group-horizontal-bgc, 2xpx);
+  @include border-1px($checkbox-group-horizontal-bdc, 2px);
   border-radius: 2px;
-  .jjsnc-checkbox{
+  .jjsnc-checkbox {
     @include flex-fix();
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
-    &:after{
-      border-color: $checkbox-group-horizontal-bgc;
+    &:after {
+      border-color: $checkbox-group-horizontal-bdc;
     }
-    &:last-child{
+    &:last-child {
       @include border-none();
     }
-    &[data-pos='right']{
-      .jjsnc-checkbox-ui{
+    &[data-pos="right"] {
+      .jjsnc-checkbox-ui {
         position: relative;
-        margin-left: .42em;
+        margin-left: 0.42em;
         order: 1;
       }
-      .jjsnc-checkbox-label{
+      .jjsnc-checkbox-label {
         margin-right: 0;
       }
     }
   }
-  .jjsnc-checkbox-wrap{
+  .jjsnc-checkbox-wrap {
     justify-content: center;
   }
 }
-
-
-
-
 </style>
 

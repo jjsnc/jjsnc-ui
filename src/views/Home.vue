@@ -24,10 +24,11 @@
     <jjsnc-checkbox v-model="checked" :option="option"/>
     <jjsnc-checkbox v-model="checked" :option="{disabled: true}">Disabled Checkbox</jjsnc-checkbox> -->
 
-    <jjsnc-checkbox class="with-click" v-model="checked">
+    <!-- <jjsnc-checkbox class="with-click" v-model="checked">
       Agree
       <a href="javascript:;" @click.stop="myhandle">处理事件</a>
-    </jjsnc-checkbox>
+    </jjsnc-checkbox> -->
+    <jjsnc-checkbox-group v-model="checkList" @input='EVENT_INPUT' :options="options" ></jjsnc-checkbox-group>
   </div>
 </template>
 
@@ -36,38 +37,49 @@
 // import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
-import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
+// import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
+import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
 export default {
   name: "home",
   components: {
     // jjsncButton,
     // jjsncLoading,
     // jjsncTip,
-    jjsncCheckbox
+    // jjsncCheckbox,
+    jjsncCheckboxGroup
   },
   data() {
     return {
-      checked: false,
-      option: {
-        label: "Option Checkbox",
-        value: "optionValue",
-        disabled: false
-      }
+      checkList: ['1', '4'],
+      options: [
+        '1',
+        '2',
+        {
+          label: '3',
+          value: '3',
+          disabled: true
+        },
+        {
+          label: '4',
+          value: '4',
+          disabled: true
+        }
+      ]
     };
   },
   methods: {
     myhandle() {
 
       alert('234')
+    },
+    EVENT_INPUT(data){
+      console.log(data)
     }
   }
 };
 </script>
 <style>
-.with-click .jjsnc-checkbox-label a {
-  position: relative;
-  z-index: 1;
-}
+
 </style>
 
 
