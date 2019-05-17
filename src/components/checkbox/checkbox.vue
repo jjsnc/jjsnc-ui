@@ -182,7 +182,8 @@ $ui-width: 1.42em;
   &.jjsncic-square-border {
     border-radius: 2px;
   }
-  &::before, i {
+  &::before,
+  i {
     transition: all 0.2s;
   }
   &::before {
@@ -212,7 +213,8 @@ $ui-width: 1.42em;
 .jjsnc-checkbox_disabled {
   .jjsnc-checkbox-ui {
     background-color: $checkbox-disabled-icon-bgc;
-    &::before, i {
+    &::before,
+    i {
       transition: none;
     }
     &::before {
