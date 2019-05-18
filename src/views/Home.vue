@@ -44,7 +44,7 @@
         <i>Disabled & Checked Checkbox</i>
       </jjsnc-checkbox>
     </jjsnc-checkbox-group>-->
-    <jjsnc-toolbar :actions="actions" @click="clickHandler"></jjsnc-toolbar>
+    <!-- <jjsnc-toolbar :actions="actions" @click="clickHandler" :more-actions="moreActions"></jjsnc-toolbar> -->
   </div>
 </template>
 
@@ -68,46 +68,11 @@ export default {
   },
   data() {
     return {
-      // checkList: ["1", "4"],
-      // options: [
-      //   "1",
-      //   "2",
-      //   {
-      //     label: "3",
-      //     value: "3",
-      //     disabled: true
-      //   },
-      //   {
-      //     label: "4",
-      //     value: "4",
-      //     disabled: true
-      //   }
-      // ]
-      money: 10,
-      actions: [
-        {
-          text: "完成订单",
-          action: "showText"
-        },
-        {
-          text: "打车来接",
-          checked: false,
-          type: "checkbox"
-        },
-        {
-          text: '一口价<span class="orange">10元</span>',
-          action: "moreMoney"
-        }
-      ]
-    };
+    }
   },
   methods: {
     showText(item) {
-      this.$createToast({
-        type: 'correct',
-        txt: 'clicked ' + item.text,
-        time: 1000
-      }).show()
+      alert(item)
     },
     moreMoney(item) {
       this.money += 10
