@@ -30,7 +30,7 @@
     </jjsnc-checkbox>-->
     <!-- <jjsnc-checkbox-group v-model="checkList" @input='EVENT_INPUT' :options="options" ></jjsnc-checkbox-group> -->
     <!-- <jjsnc-checkbox-group v-model="checkList" :options="options" :horizontal="true" shape="square" :hollow-style="true" /> -->
-    <jjsnc-checkbox-group v-model="checkList">
+    <!-- <jjsnc-checkbox-group v-model="checkList">
       <jjsnc-checkbox option="1">
         <i>Checkbox 1</i>
       </jjsnc-checkbox>
@@ -43,7 +43,8 @@
       <jjsnc-checkbox :option="{value: '4', disabled: true}">
         <i>Disabled & Checked Checkbox</i>
       </jjsnc-checkbox>
-    </jjsnc-checkbox-group>
+    </jjsnc-checkbox-group>-->
+    <jjsnc-toolbar :actions="actions" @click="clickHandler"></jjsnc-toolbar>
   </div>
 </template>
 
@@ -52,45 +53,80 @@
 // import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
-import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
-import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
+// import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
+// import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
+import jjsncToolbar from "@/components/toolbar/toolbar.vue";
 export default {
   name: "home",
   components: {
     // jjsncButton,
     // jjsncLoading,
     // jjsncTip,
-    jjsncCheckbox,
-    jjsncCheckboxGroup
+    // jjsncCheckbox,
+    // jjsncCheckboxGroup,
+    jjsncToolbar
   },
   data() {
     return {
-      checkList: ["1", "4"],
-      options: [
-        "1",
-        "2",
+      // checkList: ["1", "4"],
+      // options: [
+      //   "1",
+      //   "2",
+      //   {
+      //     label: "3",
+      //     value: "3",
+      //     disabled: true
+      //   },
+      //   {
+      //     label: "4",
+      //     value: "4",
+      //     disabled: true
+      //   }
+      // ]
+      money: 10,
+      actions: [
         {
-          label: "3",
-          value: "3",
-          disabled: true
+          text: "完成订单",
+          action: "showText"
         },
         {
-          label: "4",
-          value: "4",
-          disabled: true
+          text: "打车来接",
+          checked: false,
+          type: "checkbox"
+        },
+        {
+          text: '一口价<span class="orange">10元</span>',
+          action: "moreMoney"
         }
       ]
     };
   },
   methods: {
-    myhandle() {
+    showText(item) {
+      this.$createToast({
+        type: 'correct',
+        txt: 'clicked ' + item.text,
+        time: 1000
+      }).show()
     },
-    EVENT_INPUT() {
+    moreMoney(item) {
+      this.money += 10
+      item.text = '一口价<span class="orange">' + this.money + '元</span>'
+    },
+    clickHandler(item) {
+      if (item.action) {
+        this[item.action](item)
+      }
     }
   }
 };
 </script>
 <style>
+
+.orange{
+  color: #fc9153
+}
+  
 </style>
 
 

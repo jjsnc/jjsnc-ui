@@ -1,11 +1,8 @@
 <template>
-  <div>
     <button class="jjsnc-btn" :type="type" :class="btnClass" @click="handleClick">
       <i :class="icon" v-if="icon"></i>
       <slot></slot>
     </button>
-    <div class></div>
-  </div>
 </template>
 
 <script>
@@ -75,6 +72,7 @@ export default {
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
 @import "../../common/scss/index";
+
 @mixin btn-active($bg, $border: null) {
   &.jjsnc-btn_active,&:active {
     background: $bg;
