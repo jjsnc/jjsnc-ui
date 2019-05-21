@@ -45,7 +45,8 @@
       </jjsnc-checkbox>
     </jjsnc-checkbox-group>-->
     <!-- <jjsnc-toolbar :actions="actions" @click="clickHandler" :more-actions="moreActions"></jjsnc-toolbar> -->
-    <jjsnc-tab-bar :data="tabs" v-model="selectedLabelDefault"></jjsnc-tab-bar>
+    <jjsnc-tab-bar :data="tabs" v-model="selectedLabelDefault"  @click="clickHandler"
+    @change="changeHandler"></jjsnc-tab-bar>
   </div>
 </template>
 
@@ -92,20 +93,7 @@ export default {
       ]
     };
   },
-  methods: {
-    showText(item) {
-      alert(item);
-    },
-    moreMoney(item) {
-      this.money += 10;
-      item.text = '一口价<span class="orange">' + this.money + "元</span>";
-    },
-    clickHandler(item) {
-      if (item.action) {
-        this[item.action](item);
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 <style>
