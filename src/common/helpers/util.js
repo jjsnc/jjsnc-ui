@@ -1,7 +1,7 @@
 import { camelize } from "../lang/";
 
 function findIndex(ary, fn) {
-    if (ary, findIndex) {
+    if (ary.findIndex) {
         return ary.findIndex(fn);
     }
     /* istanbul ignore next */
