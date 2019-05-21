@@ -45,11 +45,7 @@
       </jjsnc-checkbox>
     </jjsnc-checkbox-group>-->
     <!-- <jjsnc-toolbar :actions="actions" @click="clickHandler" :more-actions="moreActions"></jjsnc-toolbar> -->
-   <div id="ll" class="a b c d sss">
-       a b c d sss
-   </div>
-
-
+    <jjsnc-tab-bar :data="tabs" v-model="selectedLabelDefault"></jjsnc-tab-bar>
   </div>
 </template>
 
@@ -60,7 +56,8 @@
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
 // import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
-import jjsncToolbar from "@/components/toolbar/toolbar.vue";
+// import jjsncToolbar from "@/components/toolbar/toolbar.vue";
+import jjsncTabBar from "@/components/tab-bar/tab-bar.vue";
 export default {
   name: "home",
   components: {
@@ -69,34 +66,52 @@ export default {
     // jjsncTip,
     // jjsncCheckbox,
     // jjsncCheckboxGroup,
-    jjsncToolbar
+    // jjsncToolbar
+    jjsncTabBar
   },
   data() {
     return {
-    }
+      selectedLabelDefault: "Vip",
+      tabs: [
+        {
+          label: "Home",
+          icon: "jjsncic-home"
+        },
+        {
+          label: "Like",
+          icon: "jjsncic-like"
+        },
+        {
+          label: "Vip",
+          icon: "jjsncic-vip"
+        },
+        {
+          label: "Me",
+          icon: "jjsncic-person"
+        }
+      ]
+    };
   },
   methods: {
     showText(item) {
-      alert(item)
+      alert(item);
     },
     moreMoney(item) {
-      this.money += 10
-      item.text = '一口价<span class="orange">' + this.money + '元</span>'
+      this.money += 10;
+      item.text = '一口价<span class="orange">' + this.money + "元</span>";
     },
     clickHandler(item) {
       if (item.action) {
-        this[item.action](item)
+        this[item.action](item);
       }
     }
   }
 };
 </script>
 <style>
-
-.orange{
-  color: #fc9153
+.orange {
+  color: #fc9153;
 }
-  
 </style>
 
 

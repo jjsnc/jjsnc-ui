@@ -1,4 +1,4 @@
-import { camelize } from "../lang/";
+import { camelize } from "../lang/string";
 
 function findIndex(ary, fn) {
     if (ary.findIndex) {
@@ -123,7 +123,7 @@ function cb2PromiseWithResolve(cb) {
 function debounce(func, wait, immediate, initValue) {
     let timeout;
     let result = initValue;
-    const later = function name(params) {
+    const later = function (content, args) {
         timeout = null;
         if (args) {
             result = func.apply(content, args);

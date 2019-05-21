@@ -36,8 +36,8 @@ export default {
     this.$parent.removeTab(this);
   },
   computed: {
-    isAction() {
-      return this.$$parent.vlaue === this.value;
+    isActive() {
+      return this.$parent.value === this.value;
     }
   },
   methods: {
@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss">
 @import "../../common/scss/variable";
-
+@import "../../common/scss/index";
 .jjsnc-tab {
   flex: 1;
   padding: 7px 0;
