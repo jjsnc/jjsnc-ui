@@ -69,7 +69,7 @@ const typesReset = {
 }
 
 
-function restTypeValue(obj, key, defVal) {
+function resetTypeValue(obj, key, defVal) {
     if (defVal !== undefined) {
         return typesReset._set(obj, key, defVal);
     }
@@ -79,7 +79,7 @@ function restTypeValue(obj, key, defVal) {
         resetHandler && resetHandler(obj, key, value);
     } else {
         Object.keys(obj).forEach((key) => {
-            restTypeValue(obj, key)
+            resetTypeValue(obj, key)
         });
     }
 }
@@ -109,8 +109,8 @@ function cb2PromiseWithResolve(cb) {
     let promise;
     if (typeof window.Promise !== 'undefined') {
         const _cb = cb;
-        promise = new window.Promise((resolve)=>{
-            cb = (data)=>{
+        promise = new window.Promise((resolve) => {
+            cb = (data) => {
                 _cb && _cb(data)
                 resolve(data);
             }
@@ -120,12 +120,70 @@ function cb2PromiseWithResolve(cb) {
     return promise;
 }
 
-cb2PromiseWithResolve() 
+function debounce(func, wait, immediate, initValue) {
+    let timeout;
+    let result = initValue;
+    const later = function name(params) {
+        timeout = null;
+        if (args) {
+            result = func.apply(content, args);
+        }
+    }
+    const debounced = function (...args) {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        if (immediate) {
+            const callNow = !timeout;
+            if (callNow) {
+                result = func.apply(this, args);
+            }
+        } else {
+            timeout = setTimeout(() => {
+                later(this, args);
+            }, wait);
+        }
+        return result;
+    }
+    debounced.cancel = function () {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+    return debounced;
+}
 
+function processComponentName(Component, { prefix = '', firstUpperCase = false } = {}) {
+    const name = Component.name;
+    const pureName = name.replace('^jjsnc-/i', '');
+    let camelizeName = `${camelize(`${prefix}${pureName}`)}`;
+    /* istanbul ignore if */
+    if (firstUpperCase) {
+        camelizeName = camelizeName.charAt(0).toUpperCase() + camelizeName.slice(1);
+    }
+    return camelizeName;
 
+}
+function parsePath(obj, path = '') {
+    const segments = path.split('.');
+    let result = obj;
+    for (let i = 0; i < segments.length; i++) {
+        const key = segments[i];
+        if (isUndef(result[key])) {
+            result = '';
+            break;
+        } else {
+            result = result[key];
+        }
+    }
+    return result;
+}
 
-
-
+const isFunc = judgeTypeFnCreator('Function');
+const isUndef = judgeTypeFnCreator('Undefined');
+const isArray = judgeTypeFnCreator('Array');
+const isString = judgeTypeFnCreator('String');
+const isObject = judgeTypeFnCreator('Object');
+const isNumber = judgeTypeFnCreator('Number');
 
 
 
@@ -134,4 +192,17 @@ export {
     findIndex,
     deepAssign,
     createAddAPI,
+    resetTypeValue,
+    parallel,
+    cb2PromiseWithResolve,
+    debounce,
+    processComponentName,
+    parsePath,
+    isUndef,
+    isFunc,
+    isArray,
+    isString,
+    isObject,
+    isNumber
+
 }
