@@ -45,12 +45,23 @@
       </jjsnc-checkbox>
     </jjsnc-checkbox-group>-->
     <!-- <jjsnc-toolbar :actions="actions" @click="clickHandler" :more-actions="moreActions"></jjsnc-toolbar> -->
-    <jjsnc-tab-bar
+    <!-- <jjsnc-tab-bar
       :data="tabs"
       v-model="selectedLabelDefault"
       @click="clickHandler"
       @change="changeHandler"
-    ></jjsnc-tab-bar>
+      :showSlider='true'
+      :inline='true'
+      :useTransition='true'
+    ></jjsnc-tab-bar>-->
+    <jjsnc-tab-bar v-model="selectedLabelSlots" show-slider inline @click="clickHandler">
+      <jjsnc-tab v-for="(item) in tabs" :label="item.label" :key="item.label">
+        <!-- name为icon的插槽 -->
+        <i slot="icon" :class="item.icon"></i>
+        <!-- 默认插槽 -->
+        {{item.label}}
+      </jjsnc-tab>
+    </jjsnc-tab-bar>
   </div>
 </template>
 
@@ -63,6 +74,7 @@
 // import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
 // import jjsncToolbar from "@/components/toolbar/toolbar.vue";
 import jjsncTabBar from "@/components/tab-bar/tab-bar.vue";
+import jjsncTab from "@/components/tab-bar/tab.vue";
 export default {
   name: "home",
   components: {
@@ -72,11 +84,12 @@ export default {
     // jjsncCheckbox,
     // jjsncCheckboxGroup,
     // jjsncToolbar
-    jjsncTabBar
+    jjsncTabBar,
+    jjsncTab
   },
   data() {
     return {
-      selectedLabelDefault: "Vip",
+      selectedLabelSlots: "Like",
       tabs: [
         {
           label: "Home",
@@ -98,11 +111,10 @@ export default {
     };
   },
   methods: {
-    clickHandler(label) {
+    clickHandler() {
       // if you clicked home tab, then print 'Home'
-      console.log(label);
     },
-    changeHandler(label) {
+    changeHandler() {
       // if you clicked different tab, this methods can be emitted
     }
   }

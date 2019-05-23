@@ -17,9 +17,9 @@
 import { prefixStyle } from "../../common/helpers/dom";
 import { findIndex } from "../../common/helpers/util";
 import jjsncTab from "./tab.vue";
-import { clearTimeout } from "timers";
 
 const COMPONENT_NAME = "jjsnc-tab-bar";
+
 const EVENT_INPUT = "input";
 const EVENT_CHANGE = "change";
 const EVENT_CLICK = "click";
@@ -28,7 +28,7 @@ const TRANSFORM = prefixStyle("transform");
 const TRANSITION = prefixStyle("transition");
 
 export default {
-  name:COMPONENT_NAME,
+  name: COMPONENT_NAME,
   components: {
     jjsncTab
   },
@@ -70,15 +70,14 @@ export default {
   },
   activated() {
     /* istanbul ignore next */
-
     window.addEventListener("resize", this._resizeHandler);
   },
   deactivated() {
     /* istanbul ignore next */
-
     this._cleanUp();
   },
   beforeDestroy() {
+    /* istanbul ignore next */
     this._cleanUp();
   },
   methods: {
@@ -87,15 +86,12 @@ export default {
     },
     removeTab(tab) {
       const index = this.tabs.indexOf(tab);
-      if (index > -1) {
-        this.tabs.splice(index, 1);
-      }
+      if (index > -1) this.tabs.splice(index, 1);
     },
     trigger(value) {
       // emit click event as long as tab is clicked
       this.$emit(EVENT_CLICK, value);
       // only when value changed, emit change & input event
-
       if (value !== this.value) {
         const changedEvents = [EVENT_INPUT, EVENT_CHANGE];
         changedEvents.forEach(eventType => {
@@ -114,7 +110,7 @@ export default {
       });
     },
     setSliderTransform(offset) {
-      const slider = this.$$refs.slider;
+      const slider = this.$refs.slider;
       if (typeof offset === "number") {
         offset = `${offset}px`;
       }
@@ -155,26 +151,26 @@ export default {
 
 <style lang="scss">
 @import "../../common/scss/variable";
-.jjsnc-tab-bar{
+.jjsnc-tab-bar {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.jjsnc-tab-bar_inline{
-  .jjsnc-tab{
+.jjsnc-tab-bar_inline {
+  .jjsnc-tab {
     display: flex;
     align-content: center;
     justify-content: center;
   }
 }
-.jjsnc-tab-bar-slider{
+.jjsnc-tab-bar-slider {
   position: absolute;
   left: 0;
   bottom: 0;
   height: 2px;
   width: 20px;
-  background-color: $tab-slider-bgc
+  background-color: $tab-slider-bgc;
 }
 </style>
 
