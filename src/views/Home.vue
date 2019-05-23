@@ -62,9 +62,24 @@
         {{item.label}}
       </jjsnc-tab>
     </jjsnc-tab-bar>-->
-    <jjsnc-radio-group v-model="selected" :options="options">
-
-    </jjsnc-radio-group>
+    <!-- <jjsnc-radio-group v-model="selected" :options="options"></jjsnc-radio-group> -->
+    <!-- <jjsnc-radio-group
+      v-model="selected2"
+      :options="options2"
+      position="right"
+      :hollow-style="true"
+    />-->
+    <!-- <jjsnc-radio-group v-model="selected3" :options="options3" :horizontal="true"/> -->
+    <!-- <jjsnc-radio-group>
+      <jjsnc-radio
+        v-for="(option, index) in options4"
+        :key="index"
+        :option="option"
+        v-model="selected4"
+      >
+        <img :src="option.src">
+      </jjsnc-radio>
+    </jjsnc-radio-group> -->
   </div>
 </template>
 
@@ -78,7 +93,8 @@
 // import jjsncToolbar from "@/components/toolbar/toolbar.vue";
 // import jjsncTabBar from "@/components/tab-bar/tab-bar.vue";
 // import jjsncTab from "@/components/tab-bar/tab.vue";
-import jjsncRadioGroup from "@/components/radio/radio-group.vue";
+// import jjsncRadioGroup from "@/components/radio/radio-group.vue";
+// import jjsncRadio from "@/components/radio/radio.vue";
 export default {
   name: "home",
   components: {
@@ -90,12 +106,67 @@ export default {
     // jjsncToolbar
     // jjsncTabBar,
     // jjsncTab,
-    jjsncRadioGroup
+    // jjsncRadioGroup,
+    // jjsncRadio
   },
   data() {
     return {
-      selected: '',
-      options: ['Option1', 'Option2']
+      // selected: "",
+      // options: ["Option1", "Option2"],
+      // selected2: 3,
+      // options2: [
+      //   {
+      //     label: "Option1",
+      //     value: 1
+      //   },
+      //   {
+      //     label: "Option2",
+      //     value: 2
+      //   },
+      //   {
+      //     label: "Option3",
+      //     value: 3,
+      //     disabled: true
+      //   }
+      // ],
+      // selected3: "3",
+      // options3: [
+      //   {
+      //     label: "1",
+      //     value: "1"
+      //   },
+      //   {
+      //     label: "2",
+      //     value: "2"
+      //   },
+      //   {
+      //     label: "3",
+      //     value: "3",
+      //     disabled: true
+      //   }
+      // ],
+      // selected4: "1",
+      // options4: [
+      //   {
+      //     label: "1",
+      //     value: "1",
+      //     src:
+      //       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516805611092&di=80d0f229dd999ffa3be79d6e317832b0&imgtype=0&src=http%3A%2F%2Fimglf0.ph.126.net%2F1EnYPI5Vzo2fCkyy2GsJKg%3D%3D%2F2829667940890114965.jpg"
+      //   },
+      //   {
+      //     label: "2",
+      //     value: "2",
+      //     src:
+      //       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516805611092&di=80d0f229dd999ffa3be79d6e317832b0&imgtype=0&src=http%3A%2F%2Fimglf0.ph.126.net%2F1EnYPI5Vzo2fCkyy2GsJKg%3D%3D%2F2829667940890114965.jpg"
+      //   },
+      //   {
+      //     label: "3",
+      //     value: "3",
+      //     src:
+      //       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516805611092&di=80d0f229dd999ffa3be79d6e317832b0&imgtype=0&src=http%3A%2F%2Fimglf0.ph.126.net%2F1EnYPI5Vzo2fCkyy2GsJKg%3D%3D%2F2829667940890114965.jpg",
+      //     disabled: true
+      //   }
+      // ]
     };
   },
   methods: {
