@@ -1,6 +1,6 @@
 <template>
   <div class="jjsnc-radio" :class="_containerClass" :data-pos="position">
-    <label class="jjsnc-radio-wrap" :class="_warpClass">
+    <label class="jjsnc-radio-wrap" :class="_wrapClass">
       <input
         class="jjsnc-radio-input"
         type="radio"
@@ -17,9 +17,11 @@
     </label>
   </div>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-radio";
 const EVENT_INPUT = "input";
+
 export default {
   name: COMPONENT_NAME,
   inject: {
@@ -55,8 +57,8 @@ export default {
         () => {
           return radioGroup.radioValue;
         },
-        newVlaue => {
-          this.radioValue = newVlaue;
+        newValue => {
+          this.radioValue = newValue;
         }
       );
     }
@@ -94,12 +96,12 @@ export default {
       const option = this.computedOption;
       return {
         "jjsnc-radio-hollow": this.hollowStyle,
-        "jjsnc-radio_selected": this.radioValue,
+        "jjsnc-radio_selected": this.radioValue === option.value,
         "jjsnc-radio_disabled": option.disabled,
         "border-right-1px": this.$parent.horizontal
       };
     },
-    _warpClass() {
+    _wrapClass() {
       if (!this.$parent.horizontal) {
         return "border-bottom-1px";
       }
@@ -111,6 +113,7 @@ export default {
 <style lang="scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
+@import "../../common/scss/index";
 $ui-width: 1.42em;
 .jjsnc-radio {
   position: relative;
@@ -139,9 +142,8 @@ $ui-width: 1.42em;
   padding: 11px 0;
   line-height: 1.5;
   word-break: break-word;
-  word-break: break-word;
+  word-wrap: break-word;
 }
-
 .jjsnc-radio-input {
   z-index: 1;
   position: absolute;
@@ -151,7 +153,6 @@ $ui-width: 1.42em;
   height: 100%;
   opacity: 0;
 }
-
 .jjsnc-radio-ui {
   position: relative;
   width: 1em;
@@ -159,13 +160,16 @@ $ui-width: 1.42em;
   margin-right: $ui-width - 1em;
   line-height: 1;
   color: transparent;
-  background: transparent;
+  background-color: transparent;
   border-radius: 50%;
   &::before,
   i {
+    transition: all 0.2s;
+  }
+  &::before {
     color: $radio-icon-color;
     display: inline-block;
-    transform: scale(1, 24);
+    transform: scale(1.24);
   }
   i {
     position: absolute;
@@ -176,21 +180,20 @@ $ui-width: 1.42em;
     height: 100%;
     border-radius: 50%;
     transform: scale(0.4);
-  }
-  &::before {
-    contain: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50%;
-    height: 50%;
-    transform: translate(-50%, -50%) scale(0.8);
-    // background-color: transparent;
-    border-radius: 50%;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+
+      border-radius: 50%;
+    }
   }
 }
-
-.cube-radio_selected {
+.jjsnc-radio_selected {
   .jjsnc-radio-ui {
     background-color: $radio-selected-icon-bgc;
     &::before {
@@ -198,14 +201,12 @@ $ui-width: 1.42em;
     }
     i {
       transform: scale(1);
-      // color: $radio-selected-icon-color
       &::before {
         background-color: $radio-selected-icon-color;
       }
     }
   }
 }
-
 .jjsnc-radio_disabled {
   .jjsnc-radio-ui {
     background-color: $radio-disabled-icon-bgc;

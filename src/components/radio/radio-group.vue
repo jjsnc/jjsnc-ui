@@ -12,11 +12,12 @@
     </slot>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import jjsncRadio from "./radio.vue";
 const COMPONENT_NAME = "jjsnc-radio-group";
+
 const EVENT_INPUT = "input";
+
 export default {
   name: COMPONENT_NAME,
   provide() {
@@ -50,7 +51,7 @@ export default {
       radioValue: this.value
     };
   },
-  wathc: {
+  watch: {
     value(newV) {
       this.radioValue = newV;
     },
@@ -70,7 +71,7 @@ export default {
     jjsncRadio
   }
 };
-</script>
+</script>>
 
 <style lang="scss">
 @import "../../common/scss/variable";
@@ -88,8 +89,7 @@ export default {
     }
   }
 }
-
-.jjsnc-radio-group[data-hoz="true"] {
+.jjsnc-radio-group[data-horz="true"] {
   display: flex;
   padding-left: 0;
   @include border-1px($radio-group-horizontal-bdc, 2px);
@@ -105,19 +105,22 @@ export default {
     &:last-child {
       @include border-none();
     }
+    &:last-child {
+      @include border-none();
+    }
     &[data-pos="right"] {
       .jjsnc-radio-ui {
         position: relative;
-        margin-right: 0.42em;
+        margin-left: 0.42em;
         order: 1;
       }
       .jjsnc-radio-label {
         margin-right: 0;
       }
     }
-    .jjsnc-radio-wrap {
-      justify-content: center;
-    }
+  }
+  .jjsnc-radio-wrap {
+    justify-content: center;
   }
 }
 </style>
