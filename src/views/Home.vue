@@ -54,14 +54,17 @@
       :inline='true'
       :useTransition='true'
     ></jjsnc-tab-bar>-->
-    <jjsnc-tab-bar v-model="selectedLabelSlots" show-slider inline @click="clickHandler">
+    <!-- <jjsnc-tab-bar v-model="selectedLabelSlots" show-slider inline @click="clickHandler">
       <jjsnc-tab v-for="(item) in tabs" :label="item.label" :key="item.label">
-        <!-- name为icon的插槽 -->
+
         <i slot="icon" :class="item.icon"></i>
-        <!-- 默认插槽 -->
+
         {{item.label}}
       </jjsnc-tab>
-    </jjsnc-tab-bar>
+    </jjsnc-tab-bar>-->
+    <jjsnc-radio-group v-model="selected" :options="options">
+
+    </jjsnc-radio-group>
   </div>
 </template>
 
@@ -73,8 +76,9 @@
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
 // import jjsncCheckboxGroup from "@/components/checkbox-group/checkbox-group.vue";
 // import jjsncToolbar from "@/components/toolbar/toolbar.vue";
-import jjsncTabBar from "@/components/tab-bar/tab-bar.vue";
-import jjsncTab from "@/components/tab-bar/tab.vue";
+// import jjsncTabBar from "@/components/tab-bar/tab-bar.vue";
+// import jjsncTab from "@/components/tab-bar/tab.vue";
+import jjsncRadioGroup from "@/components/radio/radio-group.vue";
 export default {
   name: "home",
   components: {
@@ -84,30 +88,14 @@ export default {
     // jjsncCheckbox,
     // jjsncCheckboxGroup,
     // jjsncToolbar
-    jjsncTabBar,
-    jjsncTab
+    // jjsncTabBar,
+    // jjsncTab,
+    jjsncRadioGroup
   },
   data() {
     return {
-      selectedLabelSlots: "Like",
-      tabs: [
-        {
-          label: "Home",
-          icon: "jjsncic-home"
-        },
-        {
-          label: "Like",
-          icon: "jjsncic-like"
-        },
-        {
-          label: "Vip",
-          icon: "jjsncic-vip"
-        },
-        {
-          label: "Me",
-          icon: "jjsncic-person"
-        }
-      ]
+      selected: '',
+      options: ['Option1', 'Option2']
     };
   },
   methods: {
