@@ -45,8 +45,12 @@
       </jjsnc-checkbox>
     </jjsnc-checkbox-group>-->
     <!-- <jjsnc-toolbar :actions="actions" @click="clickHandler" :more-actions="moreActions"></jjsnc-toolbar> -->
-    <jjsnc-tab-bar :data="tabs" v-model="selectedLabelDefault"  @click="clickHandler"
-    @change="changeHandler"></jjsnc-tab-bar>
+    <jjsnc-tab-bar
+      :data="tabs"
+      v-model="selectedLabelDefault"
+      @click="clickHandler"
+      @change="changeHandler"
+    ></jjsnc-tab-bar>
   </div>
 </template>
 
@@ -93,7 +97,15 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    clickHandler(label) {
+      // if you clicked home tab, then print 'Home'
+      console.log(label);
+    },
+    changeHandler(label) {
+      // if you clicked different tab, this methods can be emitted
+    }
+  }
 };
 </script>
 <style>
