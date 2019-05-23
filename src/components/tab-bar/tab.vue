@@ -11,6 +11,7 @@
 
 <script>
 const COMPONENT_NAME = "jjsnc-tab";
+
 export default {
   name: COMPONENT_NAME,
   props: {
