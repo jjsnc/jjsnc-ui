@@ -16,6 +16,7 @@ const EVENT_INPUT = "input";
 export default {
   name: COMPONENT_NAME,
   props: {
+    value: [String, Number, Array],
     options: {
       type: Array,
       default() {

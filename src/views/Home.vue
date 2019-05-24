@@ -205,6 +205,11 @@ export default {
 .orange {
   color: #fc9153;
 }
+.home {
+  padding: 20px;
+  background: #efeff4;
+  height: 100vh;
+}
 </style>
 
 
