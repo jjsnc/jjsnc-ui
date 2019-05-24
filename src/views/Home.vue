@@ -91,7 +91,7 @@
       </jjsnc-checker-item>
     </jjsnc-checker>-->
 
-    <jjsnc-checker v-model="checkerList" :options="options" :min="1" :max="2"/>
+    <!-- <jjsnc-checker v-model="checkerList" :options="options" :min="1" :max="2"/> -->
   </div>
 </template>
 
@@ -107,8 +107,8 @@
 // import jjsncTab from "@/components/tab-bar/tab.vue";
 // import jjsncRadioGroup from "@/components/radio/radio-group.vue";
 // import jjsncRadio from "@/components/radio/radio.vue";
-import jjsncChecker from "@/components/checker/checker.vue";
-import jjsncCheckerItem from "@/components/checker/checker-item.vue";
+// import jjsncChecker from "@/components/checker/checker.vue";
+// import jjsncCheckerItem from "@/components/checker/checker-item.vue";
 export default {
   name: "home",
   components: {
@@ -122,8 +122,8 @@ export default {
     // jjsncTab,
     // jjsncRadioGroup,
     // jjsncRadio
-    jjsncChecker,
-    jjsncCheckerItem
+    // jjsncChecker,
+    // jjsncCheckerItem
   },
   data() {
     return {
