@@ -79,7 +79,8 @@
       >
         <img :src="option.src">
       </jjsnc-radio>
-    </jjsnc-radio-group> -->
+    </jjsnc-radio-group>-->
+    <jjsnc-checker v-model="checkerValue" :options="options"/>
   </div>
 </template>
 
@@ -95,6 +96,7 @@
 // import jjsncTab from "@/components/tab-bar/tab.vue";
 // import jjsncRadioGroup from "@/components/radio/radio-group.vue";
 // import jjsncRadio from "@/components/radio/radio.vue";
+import jjsncChecker from "@/components/checker/checker.vue";
 export default {
   name: "home",
   components: {
@@ -108,6 +110,7 @@ export default {
     // jjsncTab,
     // jjsncRadioGroup,
     // jjsncRadio
+    jjsncChecker
   },
   data() {
     return {
@@ -167,6 +170,25 @@ export default {
       //     disabled: true
       //   }
       // ]
+      checkerValue: [],
+      options: [
+        {
+          value: 1,
+          text: "red"
+        },
+        {
+          value: 2,
+          text: "yellow"
+        },
+        {
+          value: 3,
+          text: "blue"
+        },
+        {
+          value: 4,
+          text: "green"
+        }
+      ]
     };
   },
   methods: {
