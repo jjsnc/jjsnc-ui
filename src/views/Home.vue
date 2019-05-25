@@ -92,7 +92,7 @@
     </jjsnc-checker>-->
 
     <!-- <jjsnc-checker v-model="checkerList" :options="options" :min="1" :max="2"/> -->
-    <jjsnc-input
+    <!-- <jjsnc-input
       v-model="value"
       @input="changeHandler"
       :clearable="clearable"
@@ -103,7 +103,7 @@
       :autofocus="autofocus"
       :autocomplete="autocomplete"
       :eye="eye"
-    ></jjsnc-input>
+    ></jjsnc-input> -->
   </div>
 </template>
 
@@ -121,27 +121,11 @@
 // import jjsncRadio from "@/components/radio/radio.vue";
 // import jjsncChecker from "@/components/checker/checker.vue";
 // import jjsncCheckerItem from "@/components/checker/checker-item.vue";
-import jjsncInput from "@/components/input/input.vue";
+// import jjsncInput from "@/components/input/input.vue";
 export default {
   name: "home",
   data() {
     return {
-      value: "",
-      placeholder: "请输入内容",
-      clearable: {
-        visible: true,
-        blurHidden: false
-      },
-      type: "password",
-      readonly: true,
-      maxlength: 10,
-      disabled: false,
-      autofocus: true,
-      autocomplete:true,
-      eye: {
-        open: true,
-        reverse: false
-      }
     };
   },
   methods: {
@@ -166,7 +150,7 @@ export default {
     // jjsncRadio
     // jjsncChecker,
     // jjsncCheckerItem
-    jjsncInput
+    // jjsncInput
   }
 };
 </script>
