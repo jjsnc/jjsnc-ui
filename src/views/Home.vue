@@ -92,6 +92,7 @@
     </jjsnc-checker>-->
 
     <!-- <jjsnc-checker v-model="checkerList" :options="options" :min="1" :max="2"/> -->
+    <jjsnc-input v-model="value" @input="changeHandler" :clearable='clearable'></jjsnc-input>
   </div>
 </template>
 
@@ -109,6 +110,7 @@
 // import jjsncRadio from "@/components/radio/radio.vue";
 // import jjsncChecker from "@/components/checker/checker.vue";
 // import jjsncCheckerItem from "@/components/checker/checker-item.vue";
+import jjsncInput from "@/components/input/input.vue";
 export default {
   name: "home",
   components: {
@@ -124,37 +126,24 @@ export default {
     // jjsncRadio
     // jjsncChecker,
     // jjsncCheckerItem
+    jjsncInput
   },
   data() {
     return {
-      checkerList: [3],
-      options: [
-        {
-          value: 1,
-          text: 'red'
-        },
-        {
-          value: 2,
-          text: 'yellow'
-        },
-        {
-          value: 3,
-          text: 'blue',
-           disabled: true
-        },
-        {
-          value: 4,
-          text: 'green'
-        }
-      ]
+      value: "",
+      clearable: {
+        visible: true,
+        blurHidden: true
+      }
     };
   },
   methods: {
     clickHandler() {
       // if you clicked home tab, then print 'Home'
     },
-    changeHandler() {
+    changeHandler(item) {
       // if you clicked different tab, this methods can be emitted
+      console.log(item);
     }
   }
 };

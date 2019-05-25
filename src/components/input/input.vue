@@ -15,13 +15,13 @@
       :autofocus="autofocus"
       @focus="handleFocus"
       @blur="handleBlur"
-      @change="changeHandler"
+      @change="changeHander"
     >
     <div class="jjsnc-input-append" v-if="$slots.append || _showClear || _showPwdEye">
-      <div class="jjsnc-input-clear" v-if="_showClear" @touched="handleClear">
+      <div class="jjsnc-input-clear" v-if="_showClear" @touchend="handleClear">
         <i class="jjsncic-wrong"></i>
       </div>
-      <div class="jjsnc-input-eye" v-if="_showPwEye" @click="handlePwdEye">
+      <div class="jjsnc-input-eye" v-if="_showPwdEye" @click="handlePwdEye">
         <i :class="eyeClass"></i>
       </div>
       <slot name="append"></slot>
@@ -46,6 +46,11 @@ export default {
       default: "text"
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: String,
+    readonly: {
       type: Boolean,
       default: false
     },
@@ -127,18 +132,18 @@ export default {
       this.inputValue = newValue;
     },
     inputValue(newValue) {
-      this.$$emit(EVENT_INPUT, newValue);
+      this.$emit(EVENT_INPUT, newValue);
     },
     clearable: {
       handler() {
-        this.formatedClearable();
+        this.formatClearable();
       },
       deep: true,
       immediate: true
     },
     eye: {
       handler() {
-        this.formatedEye();
+        this.formateEye();
       },
       deep: true,
       immediate: true
@@ -146,7 +151,7 @@ export default {
   },
   methods: {
     changeHander(e) {
-      this.$$emit(EVENT_CHANGE, e);
+      this.$emit(EVENT_CHANGE, e);
     },
     formatClearable() {
       if (typeof this.clearable === "boolean") {
@@ -155,7 +160,7 @@ export default {
         Object.assign(this.formatedClearable, this.clearable);
       }
     },
-    formmateEye() {
+    formateEye() {
       if (typeof this.eye === "boolean") {
         this.formatedEye.open = this.eye;
       } else {
@@ -164,6 +169,7 @@ export default {
     },
     handleFocus(e) {
       this.$emit(EVENT_FOCUS, e);
+      this.isFocus = true;
     },
     handleBlur(e) {
       this.$emit(EVENT_BLUE, e);
@@ -183,7 +189,7 @@ export default {
 <style lang="scss" rel>
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
-
+@import "../../common/scss/index";
 .jjsnc-input {
   display: flex;
   align-items: center;
