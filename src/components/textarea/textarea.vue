@@ -1,7 +1,7 @@
 <template>
   <div
     class="jjsnc-textarea-wrapper"
-    :class="{'jjsnc-textarea_expanded': expanded, 'jjsnc-textarea_active':isFocus}"
+    :class="{'jjsnc-textarea_expanded': expanded, 'jjsnc-textarea_active': isFocus}"
   >
     <textarea
       ref="input"
@@ -13,20 +13,20 @@
       :disabled="disabled"
       @focus="handleFocus"
       @blur="handleBlur">
-    </textarea>
+      </textarea>
     <span
       v-if="indicator"
       v-show="expanded"
       class="jjsnc-textarea-indicator"
     >{{indicatorConf.remain ? remain : count}}</span>
-    <div>{{indicator}}</div>
   </div>
 </template>
 
-<script>
-import inputMinxi from "../../common/mixins/input";
+<script type="text/ecmascript-6">
+import inputMixin from "../../common/mixins/input";
 const COMPONENT_NAME = "jjsnc-textarea";
 const EVENT_INPUT = "input";
+
 const DEFAULT_INDICATOR = {
   negative: true,
   remain: true
@@ -34,7 +34,7 @@ const DEFAULT_INDICATOR = {
 
 export default {
   name: COMPONENT_NAME,
-  mixins: [inputMinxi],
+  mixins: [inputMixin],
   data() {
     return {
       textareaValue: this.value,
@@ -54,7 +54,7 @@ export default {
     required: Boolean,
     placeholder: {
       type: String,
-      default: "pleasse type here..."
+      default: "please type here..."
     },
     dirname: String,
     form: String,
