@@ -4,7 +4,7 @@
     :class="{'jjsnc-textarea_expanded': expanded, 'jjsnc-textarea_active':isFocus}"
   >
     <textarea
-      ref="textarea"
+      ref="input"
       class="jjsnc-textarea"
       v-model="textareaValue"
       v-bind="$props"
@@ -12,10 +12,14 @@
       :maxLength="maxLength"
       :disabled="disabled"
       @focus="handleFocus"
-      @blur="handleBlur"
-    >
-  <span v-if="indicator" v-show="expanded" class="cube-textarea-indicator">{{indicatorConf.remain ? remain : count}}</span>
+      @blur="handleBlur">
     </textarea>
+    <span
+      v-if="indicator"
+      v-show="expanded"
+      class="jjsnc-textarea-indicator"
+    >{{indicatorConf.remain ? remain : count}}</span>
+    <div>{{indicator}}</div>
   </div>
 </template>
 
@@ -85,7 +89,7 @@ export default {
       return this.textareaValue.length;
     },
     remain() {
-      let diff = this.maxLenath - this.count;
+      let diff = this.maxLength - this.count;
       if (!this.indicatorConf.negative && diff < 0) {
         diff = 0;
       }
@@ -159,7 +163,7 @@ export default {
   font-size: 100%;
   line-height: inherit;
   color: $textarea-color;
-  background-color: $textarea-color;
+  background-color: $textarea-bgc;
   border-radius: 2px;
   resize: none;
   border: none;
