@@ -92,7 +92,18 @@
     </jjsnc-checker>-->
 
     <!-- <jjsnc-checker v-model="checkerList" :options="options" :min="1" :max="2"/> -->
-    <jjsnc-input v-model="value" @input="changeHandler" :clearable='clearable'></jjsnc-input>
+    <jjsnc-input
+      v-model="value"
+      @input="changeHandler"
+      :clearable="clearable"
+      :placeholder="placeholder"
+      :type="type"
+      :maxLength="maxlength"
+      :disabled="disabled"
+      :autofocus="autofocus"
+      :autocomplete="autocomplete"
+      :eye="eye"
+    ></jjsnc-input>
   </div>
 </template>
 
@@ -113,6 +124,35 @@
 import jjsncInput from "@/components/input/input.vue";
 export default {
   name: "home",
+  data() {
+    return {
+      value: "",
+      placeholder: "请输入内容",
+      clearable: {
+        visible: true,
+        blurHidden: false
+      },
+      type: "password",
+      readonly: true,
+      maxlength: 10,
+      disabled: false,
+      autofocus: true,
+      autocomplete:true,
+      eye: {
+        open: true,
+        reverse: false
+      }
+    };
+  },
+  methods: {
+    clickHandler() {
+      // if you clicked home tab, then print 'Home'
+    },
+    changeHandler(item) {
+      // if you clicked different tab, this methods can be emitted
+      console.log(item);
+    }
+  },
   components: {
     // jjsncButton,
     // jjsncLoading,
@@ -127,24 +167,6 @@ export default {
     // jjsncChecker,
     // jjsncCheckerItem
     jjsncInput
-  },
-  data() {
-    return {
-      value: "",
-      clearable: {
-        visible: true,
-        blurHidden: false
-      }
-    };
-  },
-  methods: {
-    clickHandler() {
-      // if you clicked home tab, then print 'Home'
-    },
-    changeHandler(item) {
-      // if you clicked different tab, this methods can be emitted
-      console.log(item);
-    }
   }
 };
 </script>

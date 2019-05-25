@@ -29,13 +29,14 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import inputMixin from "../../common/mixins/input";
-const COMPONENT_NAME = "jjsnc-inpit";
+const COMPONENT_NAME = "jjsnc-input";
 const EVENT_INPUT = "input";
 const EVENT_CHANGE = "change";
-const EVENT_BLUE = "blur";
+const EVENT_BLUR = "blur";
 const EVENT_FOCUS = "focus";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [inputMixin],
@@ -98,7 +99,7 @@ export default {
   computed: {
     _type() {
       const type = this.type;
-      if (type === "passworld" && this.eye && this.pwdVisible) {
+      if (type === "password" && this.eye && this.pwdVisible) {
         return "text";
       }
       return type;
@@ -115,7 +116,7 @@ export default {
       return visible;
     },
     _showPwdEye() {
-      return this.type === "passsword" && this.eye && !this.disabled;
+      return this.type === "password" && this.eye && !this.disabled;
     },
     pwdVisible() {
       const eye = this.formatedEye;
@@ -172,10 +173,10 @@ export default {
       this.isFocus = true;
     },
     handleBlur(e) {
-      this.$emit(EVENT_BLUE, e);
+      this.$emit(EVENT_BLUR, e);
       this.isFocus = false;
     },
-    handleClear() {
+    handleClear(e) {
       this.inputValue = "";
       this.$refs.input.focus();
     },
