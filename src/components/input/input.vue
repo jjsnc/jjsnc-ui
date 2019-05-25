@@ -217,12 +217,11 @@ export default {
     .jjsnc-input-clear,
     .jjsnc-input-eye {
       &:first-child {
-        margin-right: -5px;
+        margin-left: -5px;
       }
     }
   }
 }
-
 .jjsnc-input_active {
   &::after {
     border-color: $input-focus-border-color;
@@ -247,9 +246,11 @@ export default {
   }
 }
 .jjsnc-input-eye {
-  > .jjsncic-eye-invisible,
-  .jjsncic-eye-visible {
-    transform: scale(1.4);
+  > {
+    .jjsncic-eye-invisible,
+    .jjsncic-eye-visible {
+      transform: scale(1.4);
+    }
   }
 }
 </style>

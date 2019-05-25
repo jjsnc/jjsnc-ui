@@ -133,7 +133,7 @@ export default {
       value: "",
       clearable: {
         visible: true,
-        blurHidden: true
+        blurHidden: false
       }
     };
   },
