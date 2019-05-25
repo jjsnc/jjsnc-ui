@@ -104,13 +104,13 @@
       :autocomplete="autocomplete"
       :eye="eye"
     ></jjsnc-input>-->
-    <jjsnc-textarea
+    <!-- <jjsnc-textarea
       v-model="value"
       :indicator="indicator"
       :readonly="readonly"
       :disabled="disabled"
       :autofocus="autofocus"
-    ></jjsnc-textarea>
+    ></jjsnc-textarea> -->
   </div>
 </template>
 
@@ -129,20 +129,11 @@
 // import jjsncChecker from "@/components/checker/checker.vue";
 // import jjsncCheckerItem from "@/components/checker/checker-item.vue";
 // import jjsncInput from "@/components/input/input.vue";
-import jjsncTextarea from "@/components/textarea/textarea.vue";
+// import jjsncTextarea from "@/components/textarea/textarea.vue";
 export default {
   name: "home",
   data() {
-    return {
-      value: "",
-      indicator: {
-        negative: true,
-        remain: true
-      },
-      readonly: false,
-      disabled: false,
-      autofocus:true
-    };
+    return {}
   },
   methods: {
     clickHandler() {
@@ -167,14 +158,12 @@ export default {
     // jjsncChecker,
     // jjsncCheckerItem
     // jjsncInput
-    jjsncTextarea
+    // jjsncTextarea
   }
 };
 </script>
 <style>
-.orange {
-  color: #fc9153;
-}
+
 .home {
   padding: 20px;
   background: #efeff4;
