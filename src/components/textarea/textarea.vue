@@ -11,16 +11,10 @@
       :placeholder="placeholder"
       :maxLength="maxLength"
       :disabled="disabled"
-      @focus="handlerFocus"
+      @focus="handleFocus"
       @blur="handleBlur"
     >
-    <span v-if="indicator"
-    v-show="expanded"
-    class="jjsnc-textarea-indicator"
-    >
-     {{indicatorConf.remain? remain: count}}
-    </span>
-
+  <span v-if="indicator" v-show="expanded" class="cube-textarea-indicator">{{indicatorConf.remain ? remain : count}}</span>
     </textarea>
   </div>
 </template>
@@ -66,7 +60,7 @@ export default {
       type: Boolean,
       default: false
     },
-    maxLenath: {
+    maxLength: {
       type: Number,
       default: 60
     },
@@ -115,7 +109,7 @@ export default {
       this.expanded = true;
       this.isFocus = true;
     },
-    handlerBlur(e) {
+    handleBlur(e) {
       this.$emit("blur", e);
       if (this.textareaValue.length === 0) {
         this.expanded = false;
@@ -128,7 +122,7 @@ export default {
 
 <style lang="scss">
 @import "../../common/scss/variable";
-@import "../../common/scsss/variable";
+@import "../../common/scss/mixin";
 
 .jjsnc-textarea-wrapper {
   position: relative;
