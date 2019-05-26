@@ -68,7 +68,7 @@ function getZeroStamp(date) {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return +new Date(year + '/' + month + '/' + day + '00:00:00')
+    return +new Date(year + '/' + month + '/' + day + ' 00:00:00')
 }
 
 
