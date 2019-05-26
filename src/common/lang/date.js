@@ -71,4 +71,36 @@ function getZeroStamp(date) {
     return +new Date(year + '/' + month + '/' + day + ' 00:00:00')
 }
 
+function getDayDiff(date1, date2) {
+    return Math.floor(getZeroStamp(date1) - getZeroStamp(date2)) / DAY_TIMESTAMP
+}
 
+function getNow() {
+    return window.performance && window.performance.now ? (performance.timing.navigationStart + performance.now()) : +new Date()
+}
+
+function computeNatureMaxDay(month, year) {
+    let natureMaxDay = 30;
+    if ([1, 3, 5, 7, 8, 10, 12].indexOf(month) > -1) {
+        natureMaxDay = 31
+    } else {
+        if (month === 2) {
+            natureMaxDay = !year || (!(year % 400) || (!(year % 4) && year % 100)) ? 29 : 28
+        }
+    }
+    return natureMaxDay;
+}
+
+export {
+    DAY_TIMESTAMP,
+    HOUR_TIMESTAMP,
+    MINUTE_TIMESTAMP,
+    pad,
+    formatType,
+    formatDate,
+    getZeroStamp,
+    getDayDiff,
+    getNow,
+    computeNatureMaxDay
+
+}
