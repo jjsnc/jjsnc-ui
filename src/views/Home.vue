@@ -111,6 +111,10 @@
       :disabled="disabled"
       :autofocus="autofocus"
     ></jjsnc-textarea> -->
+    <!-- <jjsncSelect
+      v-model="value"
+      :options="options"
+    ></jjsncSelect> -->
   </div>
 </template>
 
@@ -130,10 +134,14 @@
 // import jjsncCheckerItem from "@/components/checker/checker-item.vue";
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
+import jjsncSelect from "@/components/select/select.vue";
 export default {
   name: "home",
   data() {
-    return {}
+    return {
+      options: [2013, 2014, 2015, 2016, 2017, 2018],
+      value: 2016
+    }
   },
   methods: {
     clickHandler() {
@@ -159,6 +167,7 @@ export default {
     // jjsncCheckerItem
     // jjsncInput
     // jjsncTextarea
+    jjsncSelect
   }
 };
 </script>
