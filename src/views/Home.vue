@@ -155,7 +155,7 @@ export default {
       component.show();
       setTimeout(() => {
         component.hide();
-      }, 30000);
+      }, 2000);
     }
   },
   components: {
