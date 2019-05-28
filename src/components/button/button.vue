@@ -71,7 +71,7 @@ export default {
 <style lang="scss" rel="stylesheet/scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
-@import "../../common/scss/index";
+
 
 @mixin btn-active($bg, $border: null) {
   &.jjsnc-btn_active,&:active {

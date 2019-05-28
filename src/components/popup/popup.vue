@@ -82,7 +82,6 @@ export default {
 
 <style lang="scss">
 @import "../../common/scss/variable";
-@import "../../common/scss/index";
 .jjsnc-popup {
   position: fixed;
   left: 0;
