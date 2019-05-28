@@ -1,4 +1,4 @@
-const EVENT_TOGGLE = 'toggle';
+const EVENT_TOGGLE = 'toggle'
 
 export default {
     model: {
@@ -13,6 +13,8 @@ export default {
     },
     data() {
         return {
+            // If use the prop visible directly, the toggle will failed when user haven't set v-model as a reactive property.
+            // So we use the data isVisible instead.
             isVisible: false
         }
     },
@@ -26,18 +28,18 @@ export default {
             if (newVal) {
                 this.show()
             } else if (oldVal && !this._createAPI_reuse) {
-                this.hide();
+                this.hide()
             }
         }, {
                 immediate: true
-            });
+            })
     },
     methods: {
         show() {
-            this.isVisible = true;
+            this.isVisible = true
         },
         hide() {
-            this.isVisible = false;
+            this.isVisible = false
         }
     }
 }

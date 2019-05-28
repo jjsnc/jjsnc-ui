@@ -155,7 +155,7 @@ export default {
       component.show();
       setTimeout(() => {
         component.hide();
-      }, 1000);
+      }, 30000);
     }
   },
   components: {
@@ -178,11 +178,12 @@ export default {
 };
 </script>
 <style>
-.home {
+
+/* .home {
   padding: 20px;
   background: #efeff4;
   height: 100vh;
-}
+} */
 </style>
 
 

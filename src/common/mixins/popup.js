@@ -1,10 +1,12 @@
 export default {
-    props:{
-        zIndex:Number,
-        default:100
-    },
-    maskCloseble:{
-        type:Boolean,
-        default:false
+    props: {
+        zIndex: {
+            type: Number,
+            default: 100
+        },
+        maskClosable: {
+            type: Boolean,
+            default: false
+        }
     }
 }

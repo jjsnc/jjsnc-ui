@@ -1,5 +1,5 @@
 <template>
-  <div class="jjsnc-popup" :style="{'z-index':zIndex}" :class="rootClass" v-show="isVisible">
+  <div class="jjsnc-popup" :style="{'z-index': zIndex}" :class="rootClass" v-show="isVisible">
     <div class="jjsnc-popup-mask" @touchmove.prevent @click="maskClick">
       <slot name="mask"></slot>
     </div>
@@ -11,11 +11,13 @@
     </div>
   </div>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 const COMPONENT_NAME = "jjsnc-popup";
 const EVENT_MASK_CLICK = "mask-click";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [visibilityMixin, popupMixin],
@@ -47,7 +49,7 @@ export default {
         "jjsnc-popup_mask": this.mask
       };
       if (this.type) {
-        cls[`[jjsnc-${this.type}]`] = true;
+        cls[`jjsnc-${this.type}`] = true;
       }
       return cls;
     },
@@ -102,14 +104,12 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 .jjsnc-popup-mask {
   display: none;
   overflow: hidden;
   background-color: $popup-mask-bgc;
   opacity: $popup-mask-opacity;
   pointer-events: auto;
-  // fix some android webview opacity render bug
   &::before {
     content: ".";
     display: block;
@@ -120,9 +120,8 @@ export default {
   }
 }
 .jjsnc-popup-container {
-  transform: (100%, 100%);
+  transform: translate(100%, 100%);
 }
-
 .jjsnc-popup-content {
   position: absolute;
   top: 0;
@@ -132,22 +131,22 @@ export default {
   transform: translate(-100%, -100%);
   pointer-events: auto;
 }
-
 .jjsnc-popup-center,
 .jjsnc-popup-right,
 .jjsnc-popup-left {
   .jjsnc-popup-content {
     top: -50%;
     left: -50%;
+    width: auto;
     max-width: 100%;
     transform: translate(0, 0);
   }
-  .jjsnc-popup-right,
-  .jjsnc-popup-left {
-    .jjsnc-popup-content {
-      height: 100%;
-      top: -100%;
-    }
+}
+.jjsnc-popup-right,
+.jjsnc-popup-left {
+  .jjsnc-popup-content {
+    height: 100%;
+    top: -100%;
   }
 }
 .jjsnc-popup-center {
@@ -158,10 +157,16 @@ export default {
 .jjsnc-popup-top {
   .jjsnc-popup-content {
     top: -100%;
+    left: -100%;
+    transform: translate(0, 0);
+  }
+}
+.jjsnc-popup-right {
+  .jjsnc-popup-content {
+    top: -100%;
     right: 100%;
   }
 }
-
 .jjsnc-popup-left {
   .jjsnc-popup-content {
     left: -100%;
