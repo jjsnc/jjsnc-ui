@@ -110,17 +110,19 @@
       :readonly="readonly"
       :disabled="disabled"
       :autofocus="autofocus"
-    ></jjsnc-textarea> -->
-    <jjsncSelect
+    ></jjsnc-textarea>-->
+    <!-- <jjsncSelect
       v-model="value"
       :options="options"
-    ></jjsncSelect>
+    ></jjsncSelect>-->
+    <jjsnc-popup type="my-popup" ref="myPopup">My Popup Content 1</jjsnc-popup>
+    <jjsnc-button @click="showPopup('myPopup')">Show Popup</jjsnc-button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-// import jjsncButton from "@/components/button/button.vue";
+import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -135,11 +137,11 @@
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
 // import jjsncSelect from "@/components/select/select.vue";
+import jjsncPopup from "@/components/popup/popup.vue";
 export default {
   name: "home",
   data() {
-    return {
-    }
+    return {};
   },
   methods: {
     clickHandler() {
@@ -147,10 +149,17 @@ export default {
     },
     changeHandler() {
       // if you clicked different tab, this methods can be emitted
+    },
+    showPopup(refId) {
+      const component = this.$refs[refId];
+      component.show();
+      setTimeout(() => {
+        component.hide();
+      }, 1000);
     }
   },
   components: {
-    // jjsncButton,
+    jjsncButton,
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
@@ -164,11 +173,11 @@ export default {
     // jjsncCheckerItem
     // jjsncInput
     // jjsncTextarea
+    jjsncPopup
   }
 };
 </script>
 <style>
-
 .home {
   padding: 20px;
   background: #efeff4;
