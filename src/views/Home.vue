@@ -178,12 +178,17 @@ export default {
 };
 </script>
 <style>
-
 /* .home {
   padding: 20px;
   background: #efeff4;
   height: 100vh;
 } */
+
+.jjsnc-popup-content {
+  padding: 20px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+}
 </style>
 
 
