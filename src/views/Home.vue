@@ -115,7 +115,9 @@
       v-model="value"
       :options="options"
     ></jjsncSelect>-->
-    <jjsnc-popup type="my-popup" ref="myPopup">My Popup Content 1</jjsnc-popup>
+    <!-- <jjsnc-popup type="my-popup" ref="myPopup">My Popup Content 1</jjsnc-popup>
+    <jjsnc-button @click="showPopup('myPopup')">Show Popup</jjsnc-button> -->
+        <jjsnc-popup type="my-popup" :mask="mask" ref="myPopup">My Popup Content 1</jjsnc-popup>
     <jjsnc-button @click="showPopup('myPopup')">Show Popup</jjsnc-button>
   </div>
 </template>
@@ -141,7 +143,9 @@ import jjsncPopup from "@/components/popup/popup.vue";
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      mask:false
+    };
   },
   methods: {
     clickHandler() {
@@ -155,7 +159,7 @@ export default {
       component.show();
       setTimeout(() => {
         component.hide();
-      }, 2000);
+      }, 1000);
     }
   },
   components: {
@@ -164,14 +168,14 @@ export default {
     // jjsncTip,
     // jjsncCheckbox,
     // jjsncCheckboxGroup,
-    // jjsncToolbar
+    // jjsncToolbar,
     // jjsncTabBar,
     // jjsncTab,
     // jjsncRadioGroup,
-    // jjsncRadio
+    // jjsncRadio,
     // jjsncChecker,
-    // jjsncCheckerItem
-    // jjsncInput
+    // jjsncCheckerItem,
+    // jjsncInput,
     // jjsncTextarea
     jjsncPopup
   }
