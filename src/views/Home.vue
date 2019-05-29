@@ -180,28 +180,23 @@ export default {
           title: "Picker",
           data: [column1],
           onSelect: this.selectHandle,
-          onCancel: this.cancelHandle
+          onCancel: this.cancelHandle,
+          onChange: this.changeHandle
         });
       }
       this.picker.show();
     },
     selectHandle(selectedVal, selectedIndex, selectedText) {
-      this.$createDialog({
-        type: "warn",
-        content: `Selected Item: <br/> - value: ${selectedVal.join(
-          ", "
-        )} <br/> - index: ${selectedIndex.join(
-          ", "
-        )} <br/> - text: ${selectedText.join(" ")}`,
-        icon: "cubeic-alert"
-      }).show();
+      // eslint-disable-next-line
+      console.log(selectedVal, selectedIndex, selectedText);
     },
     cancelHandle() {
-      this.$createToast({
-        type: "correct",
-        txt: "Picker canceled",
-        time: 1000
-      }).show();
+      // eslint-disable-next-line
+      console.log("取消");
+    },
+    changeHandle(i, j) {
+      // eslint-disable-next-line
+      console.log(i, j);
     }
   },
   components: {
