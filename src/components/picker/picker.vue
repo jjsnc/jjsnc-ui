@@ -54,6 +54,7 @@ import jjsncPopup from "../popup/popup.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 import basicPickerMixin from '../../common/mixins/basic-picker';
+  import pickerMixin from '../../common/mixins/picker'
 import localeMixin from "../../common/mixins/locale";
 const COMPONENT_NAME = "jjsnc-picker";
 
