@@ -128,7 +128,7 @@
       ref="myPopup4"
     >My Popup Content 4</jjsnc-popup>
     <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button> -->
-    <jjsncPicker></jjsncPicker>
+    <jjsnc-button @click="showPicker">Picker</jjsnc-button>
   </div>
 </template>
 
@@ -136,7 +136,7 @@
 // @ is an alias to /src
 // const positions = ["top", "right", "bottom", "left", "center"];
 // let cur = 0;
-// import jjsncButton from "@/components/button/button.vue";
+import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -152,7 +152,8 @@
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
 // import jjsncSelect from "@/components/select/select.vue";
 // import jjsncPopup from "@/components/popup/popup.vue";
-import jjsncPicker from "@/components/picker/picker.vue"
+const column1 = [{ text: '剧毒', value: '剧毒'}, { text: '蚂蚁', value: '蚂蚁' },
+  { text: '幽鬼', value: '幽鬼' }]
 export default {
   name: "home",
   data() {
@@ -165,10 +166,35 @@ export default {
     },
     changeHandler() {
       // if you clicked different tab, this methods can be emitted
+    },
+        showPicker() {
+      if (!this.picker) {
+        this.picker = this.$createPicker({
+          title: 'Picker',
+          data: [column1],
+          onSelect: this.selectHandle,
+          onCancel: this.cancelHandle
+        })
+      }
+      this.picker.show()
+    },
+    selectHandle(selectedVal, selectedIndex, selectedText) {
+      this.$createDialog({
+        type: 'warn',
+        content: `Selected Item: <br/> - value: ${selectedVal.join(', ')} <br/> - index: ${selectedIndex.join(', ')} <br/> - text: ${selectedText.join(' ')}`,
+        icon: 'cubeic-alert'
+      }).show()
+    },
+    cancelHandle() {
+      this.$createToast({
+        type: 'correct',
+        txt: 'Picker canceled',
+        time: 1000
+      }).show()
     }
   },
   components: {
-    // jjsncButton,
+    jjsncButton,
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
@@ -183,7 +209,6 @@ export default {
     // jjsncInput,
     // jjsncTextarea
     // jjsncPopup
-      jjsncPicker
   }
 };
 </script>

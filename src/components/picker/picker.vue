@@ -20,19 +20,20 @@
               <h2 v-if="subtitle" class="jjsnc-picker-subtitle" v-html="subtitle"></h2>
             </div>
           </div>
+
           <div class="jjsnc-picker-content">
             <i class="border-bottom-1px"></i>
             <i class="border-top-1px"></i>
             <div class="jjsnc-picker-wheel-wrapper" ref="wheelWrapper">
               <div
-                v-for="(data, index) in finalData"
+                v-for="(data,index) in finalData"
                 :key="index"
-                :style="{order:_getFlexOrder(data)}"
+                :style="{ order: _getFlexOrder(data)}"
               >
                 <!-- The class name of the ul and li need be configured to BetterScroll. -->
                 <ul class="jjsnc-picker-wheel-scroll">
                   <li
-                    v-for="(item, index) in data"
+                    v-for="(item,index) in data"
                     class="jjsnc-picker-wheel-item"
                     :key="index"
                     v-html="item[textKey]"
@@ -41,6 +42,7 @@
               </div>
             </div>
           </div>
+
           <div class="jjsnc-picker-footer"></div>
         </div>
       </transition>
@@ -48,14 +50,15 @@
   </transition>
 </template>
 
-<script>
-import Bscroll from "better-scroll";
+<script type="text/ecmascript-6">
+import BScroll from "better-scroll";
 import jjsncPopup from "../popup/popup.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 import basicPickerMixin from "../../common/mixins/basic-picker";
 import pickerMixin from "../../common/mixins/picker";
 import localeMixin from "../../common/mixins/locale";
+
 const COMPONENT_NAME = "jjsnc-picker";
 
 const EVENT_SELECT = "select";
@@ -93,6 +96,7 @@ export default {
         return;
       }
       this.hide();
+
       let changed = false;
       let pickerSelectedText = [];
 
@@ -122,7 +126,9 @@ export default {
         this._values[i] = value;
         pickerSelectedText[i] = text;
       }
+
       this.$emit(EVENT_SELECT, this._values, this._indexes, pickerSelectedText);
+
       if (changed) {
         this.$emit(
           EVENT_VALUE_CHANGE,
@@ -143,6 +149,7 @@ export default {
       if (this.isVisible) {
         return;
       }
+
       this.isVisible = true;
       if (!this.wheels || this.dirty) {
         this.$nextTick(() => {
@@ -167,6 +174,7 @@ export default {
         return;
       }
       this.isVisible = false;
+
       for (let i = 0; i < this.finalData.length; i++) {
         this.wheels[i].disable();
       }
@@ -240,7 +248,7 @@ export default {
     },
     _createWheel(wheelWrapper, i) {
       if (!this.wheels[i]) {
-        const wheel = (this.wheels[i] = new Bscroll(wheelWrapper.children[i], {
+        const wheel = (this.wheels[i] = new BScroll(wheelWrapper.children[i], {
           wheel: {
             selectedIndex: this._indexes[i] || 0,
             wheelWrapperClass: "jjsnc-picker-wheel-scroll",
@@ -262,7 +270,7 @@ export default {
       if (this.wheels.length > dataLength) {
         const extraWheels = this.wheels.splice(dataLength);
         extraWheels.forEach(wheel => {
-          wheel.destory();
+          wheel.destroy();
         });
       }
     },
@@ -274,7 +282,7 @@ export default {
         })
       );
     },
-    getFlexOrder(data) {
+    _getFlexOrder(data) {
       if (data[0]) {
         return data[0][this.orderKey];
       }
@@ -284,7 +292,7 @@ export default {
   beforeDestroy() {
     this.wheels &&
       this.wheels.forEach(wheel => {
-        wheel.destory();
+        wheel.destroy();
       });
     this.wheels = null;
   },
@@ -367,7 +375,7 @@ $picker-lr-padding: 16px;
 }
 
 .jjsnc-picker-title {
-   font-size: $fontsize-large-x;
+  font-size: $fontsize-large-x;
   line-height: 25px;
   font-weight: normal;
   color: $picker-title-color;
