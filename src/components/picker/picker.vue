@@ -56,7 +56,6 @@ import popupMixin from "../../common/mixins/popup";
 import basicPickerMixin from "../../common/mixins/basic-picker";
 import pickerMixin from "../../common/mixins/picker";
 import localeMixin from "../../common/mixins/locale";
-import popup from "../../common/mixins/popup";
 const COMPONENT_NAME = "jjsnc-picker";
 
 const EVENT_SELECT = "select";
@@ -66,7 +65,7 @@ const EVENT_CHANGE = "change";
 
 export default {
   name: COMPONENT_NAME,
-  mixins: [visibilityMixin, popup, basicPickerMixin, pickerMixin, localeMixin],
+  mixins: [visibilityMixin, popupMixin, basicPickerMixin, pickerMixin, localeMixin],
   props: {
     pending: {
       type: Boolean,
@@ -245,7 +244,7 @@ export default {
           observeDOM: false
         }));
         wheel.on("scrollEnd", () => {
-          this.$emit(EVENT_CANCEL, i, wheel.getSelectedIndex());
+          this.$emit(EVENT_CHANGE, i, wheel.getSelectedIndex());
         });
       } else {
         this.wheels[i].refresh();
