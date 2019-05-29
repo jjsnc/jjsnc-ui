@@ -127,7 +127,7 @@
       :mask-closable="true"
       ref="myPopup4"
     >My Popup Content 4</jjsnc-popup>
-    <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button> -->
+    <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button>-->
     <jjsnc-button @click="showPicker">Picker</jjsnc-button>
   </div>
 </template>
@@ -152,49 +152,60 @@ import jjsncButton from "@/components/button/button.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
 // import jjsncSelect from "@/components/select/select.vue";
 // import jjsncPopup from "@/components/popup/popup.vue";
-const column1 = [{ text: '剧毒', value: '剧毒'}, { text: '蚂蚁', value: '蚂蚁' },
-  { text: '幽鬼', value: '幽鬼' }]
+const column1 = [
+  { text: "剧毒", value: "剧毒" },
+  { text: "蚂蚁", value: "蚂蚁" },
+  { text: "幽鬼", value: "幽鬼" },
+  { text: "输出", value: "输出" },
+  { text: "控制", value: "控制" },
+  { text: "核心", value: "核心" },
+  { text: "爆发", value: "爆发" },
+  { text: "剧毒", value: "剧毒" },
+  { text: "蚂蚁", value: "蚂蚁" },
+  { text: "幽鬼", value: "幽鬼" },
+  { text: "输出", value: "输出" },
+  { text: "控制", value: "控制" },
+  { text: "核心", value: "核心" },
+  { text: "爆发", value: "爆发" }
+];
 export default {
   name: "home",
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
-    clickHandler() {
-      // if you clicked home tab, then print 'Home'
-    },
-    changeHandler() {
-      // if you clicked different tab, this methods can be emitted
-    },
-        showPicker() {
+    showPicker() {
       if (!this.picker) {
         this.picker = this.$createPicker({
-          title: 'Picker',
+          title: "Picker",
           data: [column1],
           onSelect: this.selectHandle,
           onCancel: this.cancelHandle
-        })
+        });
       }
-      this.picker.show()
+      this.picker.show();
     },
     selectHandle(selectedVal, selectedIndex, selectedText) {
       this.$createDialog({
-        type: 'warn',
-        content: `Selected Item: <br/> - value: ${selectedVal.join(', ')} <br/> - index: ${selectedIndex.join(', ')} <br/> - text: ${selectedText.join(' ')}`,
-        icon: 'cubeic-alert'
-      }).show()
+        type: "warn",
+        content: `Selected Item: <br/> - value: ${selectedVal.join(
+          ", "
+        )} <br/> - index: ${selectedIndex.join(
+          ", "
+        )} <br/> - text: ${selectedText.join(" ")}`,
+        icon: "cubeic-alert"
+      }).show();
     },
     cancelHandle() {
       this.$createToast({
-        type: 'correct',
-        txt: 'Picker canceled',
+        type: "correct",
+        txt: "Picker canceled",
         time: 1000
-      }).show()
+      }).show();
     }
   },
   components: {
-    jjsncButton,
+    jjsncButton
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
@@ -219,11 +230,11 @@ export default {
   height: 100vh;
 } */
 
-.jjsnc-popup-content {
+/* .jjsnc-popup-content {
   padding: 20px;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.8);
-}
+
+} */
 </style>
 
 

@@ -305,6 +305,7 @@ export default {
 <style lang="scss">
 @import "../../common/scss/mixin";
 @import "../../common/scss/variable";
+@import "../../common/scss/index";
 
 $picker-lr-padding: 16px;
 
