@@ -344,7 +344,7 @@ $picker-lr-padding: 16px;
   right: 0;
   color: $picker-confirm-btn-color;
   &:active {
-    color: $picker-confirm-btn-active-clolr;
+    color: $picker-confirm-btn-active-color;
   }
 }
 
@@ -367,7 +367,7 @@ $picker-lr-padding: 16px;
 }
 
 .jjsnc-picker-title {
-  font-size: $fontsize-large-x;
+   font-size: $fontsize-large-x;
   line-height: 25px;
   font-weight: normal;
   color: $picker-title-color;

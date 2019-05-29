@@ -121,21 +121,22 @@
     <jjsnc-button @click="showPopup('myPopup')">Show Popup</jjsnc-button>-->
     <!-- <jjsnc-popup type="my-popup" :mask="false" content="<i>My Popup Content 3</i>" ref="myPopup3"/>
     <jjsnc-button @click="showPopup('myPopup3')">Show Popup - with content</jjsnc-button>-->
-    <jjsnc-popup
+    <!-- <jjsnc-popup
       type="my-popup"
       :position="position"
       :mask-closable="true"
       ref="myPopup4"
     >My Popup Content 4</jjsnc-popup>
-    <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button>
+    <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button> -->
+    <jjsncPicker></jjsncPicker>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-const positions = ["top", "right", "bottom", "left", "center"];
-let cur = 0;
-import jjsncButton from "@/components/button/button.vue";
+// const positions = ["top", "right", "bottom", "left", "center"];
+// let cur = 0;
+// import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -150,14 +151,12 @@ import jjsncButton from "@/components/button/button.vue";
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
 // import jjsncSelect from "@/components/select/select.vue";
-import jjsncPopup from "@/components/popup/popup.vue";
-
+// import jjsncPopup from "@/components/popup/popup.vue";
+import jjsncPicker from "@/components/picker/picker.vue"
 export default {
   name: "home",
   data() {
     return {
-      mask: false,
-      position: ""
     };
   },
   methods: {
@@ -166,28 +165,10 @@ export default {
     },
     changeHandler() {
       // if you clicked different tab, this methods can be emitted
-    },
-    // showPopup(refId) {
-    //   const component = this.$refs[refId];
-    //   component.show();
-    //   setTimeout(() => {
-    //     component.hide();
-    //   }, 1000);
-    // },
-    showPopup() {
-      this.position = positions[cur++];
-      if (cur === positions.length) {
-        cur = 0;
-      }
-      const component = this.$refs.myPopup4;
-      component.show();
-      setTimeout(() => {
-        component.hide();
-      }, 20000000);
     }
   },
   components: {
-    jjsncButton,
+    // jjsncButton,
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
@@ -201,7 +182,8 @@ export default {
     // jjsncCheckerItem,
     // jjsncInput,
     // jjsncTextarea
-    jjsncPopup
+    // jjsncPopup
+      jjsncPicker
   }
 };
 </script>
