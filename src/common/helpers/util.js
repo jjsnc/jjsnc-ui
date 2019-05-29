@@ -1,26 +1,26 @@
-import { camelize } from "../lang/string";
+import { camelize } from '../lang/string'
 
 function findIndex(ary, fn) {
     if (ary.findIndex) {
-        return ary.findIndex(fn);
+        return ary.findIndex(fn)
     }
     /* istanbul ignore next */
-    let index = -1;
+    let index = -1
     /* istanbul ignore next */
     ary.some(function (item, i, ary) {
-        const ret = fn.call(this, item, i, ary);
+        const ret = fn.call(this, item, i, ary)
         if (ret) {
-            index = i;
-            return ret;
+            index = i
+            return ret
         }
     })
     /* istanbul ignore next */
-    return index;
+    return index
 }
 
 function deepAssign(to, from) {
     for (let key in from) {
-        if (!to[key] || to[key] !== 'object') {
+        if (!to[key] || typeof to[key] !== 'object') {
             to[key] = from[key]
         } else {
             deepAssign(to[key], from[key])
@@ -35,20 +35,20 @@ function createAddAPI(baseObj) {
                 [args[0]]: args[1]
             }
         }
-        deepAssign(baseObj, args[0]);
+        deepAssign(baseObj, args[0])
     }
 }
 
 function judgeTypeFnCreator(type) {
-    const toString = Object.prototype.toString;
+    const toString = Object.prototype.toString
     return function isType(o) {
-        return toString.call(o) === `[object ${type}]`;
+        return toString.call(o) === `[object ${type}]`
     }
 }
 
 const typesReset = {
     _set(obj, key, value) {
-        obj[key] = value;
+        obj[key] = value
     },
     string(obj, key) {
         typesReset._set(obj, key, '')
@@ -57,7 +57,7 @@ const typesReset = {
         typesReset._set(obj, key, 0)
     },
     boolean(obj, key) {
-        typesReset._set(obj, key, false);
+        typesReset._set(obj, key, false)
     },
     object(obj, key, value) {
         if (Array.isArray(value)) {
@@ -67,126 +67,126 @@ const typesReset = {
         }
     }
 }
-
-
 function resetTypeValue(obj, key, defVal) {
     if (defVal !== undefined) {
-        return typesReset._set(obj, key, defVal);
+        return typesReset._set(obj, key, defVal)
     }
     if (key) {
-        const value = obj[key];
-        const resetHandler = typesReset[typeof value];
-        resetHandler && resetHandler(obj, key, value);
+        const value = obj[key]
+        const resetHandler = typesReset[typeof value]
+        resetHandler && resetHandler(obj, key, value)
     } else {
         Object.keys(obj).forEach((key) => {
             resetTypeValue(obj, key)
-        });
+        })
     }
 }
 
-
 function parallel(tasks, cb) {
-    let doneCount = 0;
-    let results = [];
-    const tasksLen = tasks.length;
+    let doneCount = 0
+    let results = []
+    const tasksLen = tasks.length
     if (!tasksLen) {
-        return cb(results);
+        return cb(results)
     }
     tasks.forEach((task, i) => {
         task((ret) => {
-            doneCount += 1;
-            results[i] = ret;
+            doneCount += 1
+            results[i] = ret
             if (doneCount === tasksLen) {
-                cb(results);
+                // all tasks done
+                cb(results)
             }
         })
-    });
-
+    })
 }
 
-
 function cb2PromiseWithResolve(cb) {
-    let promise;
+    let promise
     if (typeof window.Promise !== 'undefined') {
-        const _cb = cb;
+        const _cb = cb
         promise = new window.Promise((resolve) => {
             cb = (data) => {
                 _cb && _cb(data)
-                resolve(data);
+                resolve(data)
             }
         })
-        promise.resolve = cb;
+        promise.resolve = cb
     }
-    return promise;
+    return promise
 }
 
 function debounce(func, wait, immediate, initValue) {
-    let timeout;
-    let result = initValue;
-    const later = function (content, args) {
-        timeout = null;
+    let timeout
+    let result = initValue
+
+    const later = function (context, args) {
+        timeout = null
         if (args) {
-            result = func.apply(content, args);
+            result = func.apply(context, args)
         }
     }
+
     const debounced = function (...args) {
         if (timeout) {
-            clearTimeout(timeout);
+            clearTimeout(timeout)
         }
         if (immediate) {
-            const callNow = !timeout;
+            const callNow = !timeout
+            timeout = setTimeout(later, wait)
             if (callNow) {
-                result = func.apply(this, args);
+                result = func.apply(this, args)
             }
         } else {
             timeout = setTimeout(() => {
-                later(this, args);
-            }, wait);
+                later(this, args)
+            }, wait)
         }
-        return result;
+
+        return result
     }
+
     debounced.cancel = function () {
-        clearTimeout(timeout);
-        timeout = null;
+        clearTimeout(timeout)
+        timeout = null
     }
-    return debounced;
+
+    return debounced
 }
 
 function processComponentName(Component, { prefix = '', firstUpperCase = false } = {}) {
-    const name = Component.name;
-    const pureName = name.replace('^jjsnc-/i', '');
-    let camelizeName = `${camelize(`${prefix}${pureName}`)}`;
+    const name = Component.name
+    const pureName = name.replace(/^jjsnc-/i, '')
+    let camelizeName = `${camelize(`${prefix}${pureName}`)}`
     /* istanbul ignore if */
     if (firstUpperCase) {
-        camelizeName = camelizeName.charAt(0).toUpperCase() + camelizeName.slice(1);
+        camelizeName = camelizeName.charAt(0).toUpperCase() + camelizeName.slice(1)
     }
-    return camelizeName;
-
+    return camelizeName
 }
+
 function parsePath(obj, path = '') {
-    const segments = path.split('.');
-    let result = obj;
+    const segments = path.split('.')
+    let result = obj
     for (let i = 0; i < segments.length; i++) {
-        const key = segments[i];
+        const key = segments[i]
+        /* istanbul ignore if */
         if (isUndef(result[key])) {
-            result = '';
-            break;
+            result = ''
+            break
         } else {
-            result = result[key];
+            result = result[key]
         }
     }
-    return result;
+    return result
 }
 
-const isFunc = judgeTypeFnCreator('Function');
-const isUndef = judgeTypeFnCreator('Undefined');
-const isArray = judgeTypeFnCreator('Array');
-const isString = judgeTypeFnCreator('String');
-const isObject = judgeTypeFnCreator('Object');
-const isNumber = judgeTypeFnCreator('Number');
-
-
-
+const isFunc = judgeTypeFnCreator('Function')
+const isUndef = judgeTypeFnCreator('Undefined')
+const isArray = judgeTypeFnCreator('Array')
+const isString = judgeTypeFnCreator('String')
+const isObject = judgeTypeFnCreator('Object')
+const isNumber = judgeTypeFnCreator('Number')
 
 export {
     findIndex,
@@ -204,5 +204,4 @@ export {
     isString,
     isObject,
     isNumber
-
 }

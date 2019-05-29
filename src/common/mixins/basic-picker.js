@@ -9,13 +9,13 @@ export default {
         data: {
             type: Array,
             default() {
-                return [];
+                return []
             }
         },
         selectedIndex: {
             type: Array,
             default() {
-                []
+                return []
             }
         },
         alias: {
@@ -27,10 +27,10 @@ export default {
     },
     computed: {
         valueKey() {
-            return this.alias.value || DEFAULT_KEYS.value;
+            return this.alias.value || DEFAULT_KEYS.value
         },
         textKey() {
-            return this.alias.text || DEFAULT_KEYS.text;
+            return this.alias.text || DEFAULT_KEYS.text
         },
         orderKey() {
             return DEFAULT_KEYS.order
@@ -41,8 +41,8 @@ export default {
     },
     watch: {
         // Merge the watch handlers of data and selectedIndex into one.
-        merge(newValue) {
-            this.setData(newValue[0], newValue[1]);
+        merge(newVal) {
+            this.setData(newVal[0], newVal[1])
         }
     }
 }

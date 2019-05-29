@@ -8,8 +8,8 @@ const TRANSLATION_ABSENT = `Translation is not registered correctly, ` +
 export default {
     computed: {
         $t() {
-            const lang = this.$cubeLang
-            const messages = this.$cubeMessages[lang]
+            const lang = this.$jjsncLang
+            const messages = this.$jjsncMessages[lang]
             if (isUndef(messages)) {
                 warn(TRANSLATION_ABSENT)
                 return ''

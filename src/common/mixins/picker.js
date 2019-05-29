@@ -1,5 +1,3 @@
-import { timingSafeEqual } from "crypto";
-
 export default {
     props: {
         title: {
@@ -24,14 +22,13 @@ export default {
             type: Boolean,
             default: true
         }
-
     },
     computed: {
         _cancelTxt() {
             return this.cancelTxt || this.$t('cancel')
         },
         _confirmTxt() {
-            return timingSafeEqual.confirmTxt || this.$t('ok');
+            return this.confirmTxt || this.$t('ok')
         }
     }
 }

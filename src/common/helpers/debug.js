@@ -1,14 +1,14 @@
 export const warn = function (msg, componentName) {
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production') {
-        const component = componentName ? `<${componentName}>` : ''
-        console.error(`[Jjsnc warn]: ${component}${msg}`)
+        const component = componentName ? `<${componentName}> ` : ''
+        console.error(`[jjsnc warn]: ${component}${msg}`)
     }
 }
 
 export const tip = function (msg, componentName) {
     if (process.env.NODE_ENV !== 'production') {
-        const component = componentName ? `<${componentName}>` : '';
-        console.warn(`[Jjsnc tip]: ${component}${msg}`)
+        const component = componentName ? `<${componentName}> ` : ''
+        console.warn(`[jjsnc tip]: ${component}${msg}`)
     }
 }
