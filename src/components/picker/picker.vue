@@ -49,9 +49,21 @@
 </template>
 
 <script>
-// import Bscroll from  'better-scroll';
+import Bscroll from "better-scroll";
 import jjsncPopup from "../popup/popup.vue";
+import visibilityMixin from "../../common/mixins/visibility";
+import popupMixin from "../../common/mixins/popup";
+import basicPickerMixin from '../../common/mixins/basic-picker';
+import localeMixin from "../../common/mixins/locale";
+const COMPONENT_NAME = "jjsnc-picker";
+
+const EVENT_SELECT = "select";
+const EVENT_VALUE_CHANGE = "value-change";
+const EVENT_CANCEL = "cancel";
+const EVENT_CHANGE = "change";
+
 export default {
+  data() {},
   components: {
     jjsncPopup
   }
