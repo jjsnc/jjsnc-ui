@@ -65,7 +65,13 @@ const EVENT_CHANGE = "change";
 
 export default {
   name: COMPONENT_NAME,
-  mixins: [visibilityMixin, popupMixin, basicPickerMixin, pickerMixin, localeMixin],
+  mixins: [
+    visibilityMixin,
+    popupMixin,
+    basicPickerMixin,
+    pickerMixin,
+    localeMixin
+  ],
   props: {
     pending: {
       type: Boolean,
@@ -289,4 +295,145 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../common/scss/mixin";
+@import "../../common/scss/variable";
+
+$picker-lr-padding: 16px;
+
+.jjsnc-picker-fade-enter,
+.jjsnc-picker-fade-leave-active {
+  opacity: 0;
+}
+.jjsnc-picker-fade-enter-active,
+.jjsnc-picker-fade-enter-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.jjsnc-picker-panel {
+  height: 273px;
+  text-align: center;
+  font-size: $fontsize-medium;
+  background: $picker-bgc;
+}
+
+.jjsnc-picker-move-enter,
+.jjsnc-picker-move-leave-active {
+  transform: translate3d(0, 100%, 0);
+}
+
+.jjsnc-picker-move-enter-active,
+.jjsnc-picker-move-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.jjsnc-picker-choose {
+  position: relative;
+  height: 60px;
+}
+.jjsnc-picker-confirm,
+.jjsnc-picker-cancel {
+  font-size: $fontsize-medium;
+  line-height: 60px;
+  padding: 0 $picker-lr-padding;
+  box-sizing: content-box;
+  font-size: $fontsize-medium;
+}
+
+.jjsnc-picker-confirm {
+  position: absolute;
+  right: 0;
+  color: $picker-confirm-btn-color;
+  &:active {
+    color: $picker-confirm-btn-active-clolr;
+  }
+}
+
+.jjsnc-picker-cancel {
+  position: absolute;
+  left: 0;
+  color: $picker-cancel-btn-color;
+  &:active {
+    color: $picker-cancel-btn-active-color;
+  }
+}
+
+.jjsnc-picker-title-group {
+  padding: 0 60px;
+  display: flex;
+  height: 100%;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.jjsnc-picker-title {
+  font-size: $fontsize-large-x;
+  line-height: 25px;
+  font-weight: normal;
+  color: $picker-title-color;
+}
+
+.jjsnc-picker-subtitle {
+  margin-top: 2px;
+  line-height: 16px;
+  font-size: $fontsize-small;
+  color: $picker-subtitle-color;
+}
+
+.jjsnc-picker-content {
+  position: relative;
+  top: 20px;
+  > i {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    width: 100%;
+    height: 68px;
+    pointer-events: none;
+    transform: translateZ(0);
+  }
+  > .border-bottom-1px {
+    top: 0;
+    background: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.8)
+    );
+  }
+  > .border-top-1px {
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.8)
+    );
+  }
+}
+.jjsnc-picker-wheel-wrapper {
+  display: flex;
+  padding: 0 $picker-lr-padding;
+  > div {
+    height: 173px;
+    overflow: hidden;
+    font-size: $fontsize-large-xx;
+  }
+}
+.jjsnc-picker-wheel-scroll {
+  padding: 0;
+  margin-top: 68px;
+  line-height: 36px;
+  list-style: none;
+}
+
+.jjsnc-picker-wheel-item {
+  list-style: none;
+  height: 36px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: $picker-item-color;
+}
+
+.jjsnc-picker-footer {
+  height: 20px;
+}
 </style>
