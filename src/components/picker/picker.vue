@@ -312,8 +312,9 @@ $picker-lr-padding: 16px;
 .jjsnc-picker-fade-leave-active {
   opacity: 0;
 }
+
 .jjsnc-picker-fade-enter-active,
-.jjsnc-picker-fade-enter-leave-active {
+.jjsnc-picker-fade-leave-active {
   transition: all 0.3s ease-in-out;
 }
 
@@ -338,6 +339,7 @@ $picker-lr-padding: 16px;
   position: relative;
   height: 60px;
 }
+
 .jjsnc-picker-confirm,
 .jjsnc-picker-cancel {
   font-size: $fontsize-medium;
@@ -417,15 +419,18 @@ $picker-lr-padding: 16px;
     );
   }
 }
+
 .jjsnc-picker-wheel-wrapper {
   display: flex;
   padding: 0 $picker-lr-padding;
   > div {
+    @include flex-fix();
     height: 173px;
     overflow: hidden;
     font-size: $fontsize-large-xx;
   }
 }
+
 .jjsnc-picker-wheel-scroll {
   padding: 0;
   margin-top: 68px;
