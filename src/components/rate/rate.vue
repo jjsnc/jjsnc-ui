@@ -123,18 +123,16 @@ export default {
 
 <style lang="scss">
 @import "../../common/scss/variable";
-.jjsnc-rate{
-    list-style: none;
-    display: inline-flex;
-    vertical-align: top;
-    flex-wrap: nowrap;
-    max-width: 100%;
+.jjsnc-rate {
+  list-style: none;
+  display: inline-flex;
+  vertical-align: top;
+  flex-wrap: nowrap;
+  max-width: 100%;
 }
- .cube-rate-justify{
-    width: 100%;
-    justify-content: space-between;
- }
- 
-leftAmount
+.cube-rate-justify {
+  width: 100%;
+  justify-content: space-between;
+}
 </style>
 
