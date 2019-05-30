@@ -124,7 +124,7 @@
       ref="myPopup4"
     >My Popup Content 4</jjsnc-popup>
     <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button>-->
-    <jjsncSelect
+    <!-- <jjsncSelect
       v-model="value"
       :title="title"
       :options="options"
@@ -132,7 +132,8 @@
       :auto-pop="autoPop"
       :disabled="disabled"
       @change="change"
-    ></jjsncSelect>
+    ></jjsncSelect>-->
+    <jjsnc-switch v-model="value">Switch</jjsnc-switch>
   </div>
 </template>
 
@@ -155,38 +156,17 @@
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
 // import jjsncPopup from "@/components/popup/popup.vue";
-import jjsncSelect from "@/components/select/select.vue";
+// import jjsncSelect from "@/components/select/select.vue";
+import jjsncSwitch from "@/components/switch/switch.vue";
 
 export default {
   name: "home",
   data() {
     return {
-      options: [2013, 2014, 2015, 2016, 2017, 2018],
-      value: 2016,
-      title: "入职时间",
-      placeholder: "请选择入职时间",
-      autoPop: false,
-      disabled: false
+      value: true
     };
   },
-  methods: {
-    selectHandle(selectedVal, selectedIndex, selectedText) {
-      // eslint-disable-next-line
-      console.log(selectedVal, selectedIndex, selectedText);
-    },
-    cancelHandle() {
-      // eslint-disable-next-line
-      console.log("取消");
-    },
-    change(value, index, text) {
-      // eslint-disable-next-line
-      console.log("change", value, index, text);
-    },
-    changeHandle(i, j) {
-      // eslint-disable-next-line
-      console.log(i, j);
-    }
-  },
+  methods: {},
   components: {
     // jjsncButton,
     // jjsncLoading,
@@ -203,7 +183,8 @@ export default {
     // jjsncInput,
     // jjsncTextarea
     // jjsncPopup
-    jjsncSelect
+    // jjsncSelect
+    jjsncSwitch
   }
 };
 </script>
