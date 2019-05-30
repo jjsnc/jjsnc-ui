@@ -1,12 +1,12 @@
 <template>
-  <li class="jjsnc-rate-item" :class="{'jjsnc-rate-item_active':index <=$parent.tempValue}">
+  <li class="jjsnc-rate-item" :class="{ 'jjsnc-rate-item_active': index <= $parent.tempValue }">
     <slot>
       <div class="jjsnc-rate-item-def"></div>
     </slot>
   </li>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-rate-item";
 export default {
   name: COMPONENT_NAME,
@@ -26,7 +26,7 @@ export default {
   flex: 0 1 auto;
   margin-right: 6px;
   &::after {
-    contain: "";
+    content: "";
     display: block;
     padding: 50% 0;
   }
@@ -44,7 +44,7 @@ export default {
   }
 }
 .jjsnc-rate-item_active {
-  .jjsnc-rate-item_def {
+  .jjsnc-rate-item-def {
     @include bg-image("evaluation_icon_star");
   }
 }

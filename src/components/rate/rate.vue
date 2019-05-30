@@ -4,25 +4,26 @@
     ref="rateContainer"
     class="jjsnc-rate"
     :class="rateClass"
-    @touchStart.stop="handleStart"
+    @touchstart.stop="handleStart"
     @touchmove.stop.prevent="handleMove"
-    @touchEnd.stop="handleEnd"
+    @touchend.stop="handleEnd"
     @mousedown.stop="handleStart"
     @mousemove.stop="handleMove"
     @mouseup.stop="handleEnd"
   >
     <slot>
-      <jjsnc-rate-item v-for="n in max" :key="n"></jjsnc-rate-item>
+      <jjsnc-rate-item v-for="n in max" :key="n" :index="n"></jjsnc-rate-item>
     </slot>
   </ul>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import jjsncRateItem from "./rate-item.vue";
 const COMPONENT_NAME = "jjsnc-rate";
 const EVENT_INPUT = "input";
 
 const EVENT_TYPE_MOUSE = "mouse";
+
 export default {
   name: COMPONENT_NAME,
   props: {
@@ -49,7 +50,7 @@ export default {
     };
   },
   created() {
-    this.mousePresssed = false;
+    this.mousePressed = false;
   },
   computed: {
     rateClass() {
@@ -67,34 +68,34 @@ export default {
     handleStart(e) {
       if (!this.disabled) {
         if (e.type.indexOf(EVENT_TYPE_MOUSE) > -1) {
-          this.mousePresssed = true;
+          this.mousePressed = true;
           document.addEventListener("mouseup", this.handleEnd);
-          document.addEventListener("moussemove", this.handleMove);
+          document.addEventListener("mousemove", this.handleMove);
         }
         const rect = this.$refs.rateContainer.getBoundingClientRect();
         this.left = rect.left;
-        this.containerWitth = rect.width;
+        this.containerWidth = rect.width;
       }
     },
     handleMove(e) {
       if (
         !this.disabled &&
-        (e.type.indexOf(EVENT_TYPE_MOUSE) === -1 || this.mousePresssed)
+        (e.type.indexOf(EVENT_TYPE_MOUSE) === -1 || this.mousePressed)
       ) {
         this.computeTempValue(
-          e.type.indexOf(EVENT_TYPE_MOUSE) === -1 ? e.touches(0) : e
+          e.type.indexOf(EVENT_TYPE_MOUSE) === -1 ? e.touches[0] : e
         );
       }
     },
     handleEnd(e) {
       if (
         !this.disabled &&
-        (e.type.indexOf(EVENT_TYPE_MOUSE) === -1 || this.mousePresssed)
+        (e.type.indexOf(EVENT_TYPE_MOUSE) === -1 || this.mousePressed)
       ) {
         if (e.type.indexOf(EVENT_TYPE_MOUSE) > -1) {
-          this.mousePresssed = false;
+          this.mousePressed = false;
           document.removeEventListener("mouseup", this.handleEnd);
-          document.removeEventListener("moussemove", this.handleMove);
+          document.removeEventListener("mousemove", this.handleMove);
         }
         this.computeTempValue(
           e.type.indexOf(EVENT_TYPE_MOUSE) > -1 ? e : e.changedTouches[0]
@@ -104,7 +105,7 @@ export default {
     },
     computeTempValue(touch) {
       let leftAmount = Math.ceil(
-        ((touch.clientX - this.left) / this.containerWitth) * this.max
+        ((touch.clientX - this.left) / this.containerWidth) * this.max
       );
       if (leftAmount > 0 && leftAmount <= this.max) {
         this.tempValue = leftAmount;
@@ -130,7 +131,7 @@ export default {
   flex-wrap: nowrap;
   max-width: 100%;
 }
-.cube-rate-justify {
+.jjsnc-rate-justify {
   width: 100%;
   justify-content: space-between;
 }
