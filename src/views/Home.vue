@@ -111,10 +111,6 @@
       :disabled="disabled"
       :autofocus="autofocus"
     ></jjsnc-textarea>-->
-    <!-- <jjsncSelect
-      v-model="value"
-      :options="options"
-    ></jjsncSelect>-->
     <!-- <jjsnc-popup type="my-popup" ref="myPopup">My Popup Content 1</jjsnc-popup>
     <jjsnc-button @click="showPopup('myPopup')">Show Popup</jjsnc-button>-->
     <!-- <jjsnc-popup type="my-popup" :mask="mask" ref="myPopup">My Popup Content 1</jjsnc-popup>
@@ -128,7 +124,15 @@
       ref="myPopup4"
     >My Popup Content 4</jjsnc-popup>
     <jjsnc-button @click="showPopup">top/right/bottom/left/center</jjsnc-button>-->
-    <jjsnc-button @click="showPicker">Picker</jjsnc-button>
+    <jjsncSelect
+      v-model="value"
+      :title="title"
+      :options="options"
+      :placeholder="placeholder"
+      :auto-pop="autoPop"
+      :disabled="disabled"
+      @change="change"
+    ></jjsncSelect>
   </div>
 </template>
 
@@ -136,7 +140,7 @@
 // @ is an alias to /src
 // const positions = ["top", "right", "bottom", "left", "center"];
 // let cur = 0;
-import jjsncButton from "@/components/button/button.vue";
+// import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -150,42 +154,22 @@ import jjsncButton from "@/components/button/button.vue";
 // import jjsncCheckerItem from "@/components/checker/checker-item.vue";
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncTextarea from "@/components/textarea/textarea.vue";
-// import jjsncSelect from "@/components/select/select.vue";
 // import jjsncPopup from "@/components/popup/popup.vue";
-const column1 = [
-  { text: "剧毒", value: "剧毒" },
-  { text: "蚂蚁", value: "蚂蚁" },
-  { text: "幽鬼", value: "幽鬼" },
-  { text: "输出", value: "输出" },
-  { text: "控制", value: "控制" },
-  { text: "核心", value: "核心" },
-  { text: "爆发", value: "爆发" },
-  { text: "剧毒", value: "剧毒" },
-  { text: "蚂蚁", value: "蚂蚁" },
-  { text: "幽鬼", value: "幽鬼" },
-  { text: "输出", value: "输出" },
-  { text: "控制", value: "控制" },
-  { text: "核心", value: "核心" },
-  { text: "爆发", value: "爆发" }
-];
+import jjsncSelect from "@/components/select/select.vue";
+
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      options: [2013, 2014, 2015, 2016, 2017, 2018],
+      value: 2016,
+      title: "入职时间",
+      placeholder: "请选择入职时间",
+      autoPop: false,
+      disabled: false
+    };
   },
   methods: {
-    showPicker() {
-      if (!this.picker) {
-        this.picker = this.$createPicker({
-          title: "Picker",
-          data: [column1],
-          onSelect: this.selectHandle,
-          onCancel: this.cancelHandle,
-          onChange: this.changeHandle
-        });
-      }
-      this.picker.show();
-    },
     selectHandle(selectedVal, selectedIndex, selectedText) {
       // eslint-disable-next-line
       console.log(selectedVal, selectedIndex, selectedText);
@@ -194,13 +178,17 @@ export default {
       // eslint-disable-next-line
       console.log("取消");
     },
+    change(value, index, text) {
+      // eslint-disable-next-line
+      console.log("change", value, index, text);
+    },
     changeHandle(i, j) {
       // eslint-disable-next-line
       console.log(i, j);
     }
   },
   components: {
-    jjsncButton
+    // jjsncButton,
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
@@ -215,15 +203,16 @@ export default {
     // jjsncInput,
     // jjsncTextarea
     // jjsncPopup
+    jjsncSelect
   }
 };
 </script>
 <style>
-/* .home {
+.home {
   padding: 20px;
   background: #efeff4;
   height: 100vh;
-} */
+}
 
 /* .jjsnc-popup-content {
   padding: 20px;
