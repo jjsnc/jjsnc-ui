@@ -8,9 +8,11 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-switch";
+
 const EVENT_INPUT = "input";
+
 export default {
   name: COMPONENT_NAME,
   props: {
@@ -42,8 +44,11 @@ export default {
 <style lang="scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/index";
+
+
 $switch-width: 48px;
 $switch-height: 28px;
+
 .jjsnc-switch {
   display: flex;
   position: relative;
@@ -61,14 +66,14 @@ $switch-height: 28px;
         transform: scale(0);
       }
       &::after {
-        transform: translate($switch-width - $switch-height);
+        transform: translateX($switch-width - $switch-height);
       }
     }
     &:disabled + .jjsnc-switch-ui {
       opacity: 0.3;
     }
   }
-  .jjsnc-switch.ui {
+  .jjsnc-switch-ui {
     position: relative;
     display: block;
     width: $switch-width;
@@ -87,9 +92,9 @@ $switch-height: 28px;
       height: 100%;
       border-radius: $switch-height;
       background-color: $switch-off-bgc;
-      transition: transform 0.4s ease-in-out;
+      transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.28);
     }
-    &::before {
+    &::after {
       width: $switch-height;
       background-color: $color-white;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
