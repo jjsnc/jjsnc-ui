@@ -295,4 +295,26 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../common/scss/variable";
+.jjsnc-validator {
+  .jjsnc-checkbox,
+  .jjsnc-radio {
+    color: inherit;
+  }
+  .jjsnc-input {
+    input {
+      color: inherit;
+    }
+  }
+  .jjsnc-textarea {
+    color: inherit;
+  }
+  .jjsnc-select {
+    color: inherit;
+  }
+}
+.jjsnc-validator-msg-def {
+  font-size: $fontsize-medium;
+  color: $validator-msg-def-color;
+}
 </style>
