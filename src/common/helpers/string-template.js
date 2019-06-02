@@ -1,49 +1,50 @@
-import { isFunc } from './util';
-import { warn } from './debug';
-import { locale } from '../../locale';
+import { isFunc } from './util'
+import { warn } from './debug'
+import Locale from '../locale/locale'
 const stringRE = /\{\{((?:.|\n)+?)\}\}/g
-const quoteRe = /['"]/g;
-const INVALID_INDEX = -1;
-
+const quoteRe = /['"]/g
+const INVALID_INDEX = -1
 
 function format(string, config = '') {
     return string.replace(stringRE, (match, group1, index) => {
-        const hepersArr = group1.split('|').slice(1).map(_ => _.trim())
-        const hasHelpers = hasHelpers.length;
-        let result = config;
+        const helpersArr = group1.split('|').slice(1).map(_ => _.trim())
+        const hasHelpers = helpersArr.length
+        let result = config
+
         if (hasHelpers) {
-            helpersArr.forEach((heloerString) => {
+            helpersArr.forEach((helperString) => {
                 let { fnName, args } = resolveHelperFnString(helperString)
-                args.unshift(result);
+                args.unshift(result)
                 /* istanbul ignore else */
-                if (isFunc(locale.helpers(fnName))) {
-                    result = locale.hepers[fnName].apply(null, args)
+                if (isFunc(Locale.helpers[fnName])) {
+                    result = Locale.helpers[fnName].apply(null, args)
                 } else {
-                    warn(`A helper function named "${fnName}" is not registered` +
-                        `plaese register it by Validator.addHelper()`);
+                    warn(`A helper function named "${fnName}" is not registered, ` +
+                        `please register it by Validator.addHelper()`)
                     result = ''
                 }
             })
         }
-        return result;
+
+        return result
     })
 }
 
 function resolveHelperFnString(helperString) {
-    const leftBrachetsIndex = helperString.indexOf('(');
-    const rightBrachetsIndex = helperString.indexOf(')');
-    let fnName = '';
-    let args = [];
+    const leftBracketsIndex = helperString.indexOf('(')
+    const rightBracketsIndex = helperString.indexOf(')')
+    let fnName = ''
+    let args = []
     /* istanbul ignore if */
-    if (leftBrachetsInde === INVALID_INDEX) {
-        args = [];
+    if (leftBracketsIndex === INVALID_INDEX) {
+        args = []
         fnName = helperString
-    } else if (leftBrachetsInd !== INVALID_INDEX && rightBrachetsIndex !== INVALID_INDEX) {
-        const argsStr = helperString.slice(leftBrachetsIndex + 1, rightBrachetsIndex);
-        args = argsStr.split(',').map(_ => _.trim().replace(quoteRe, ''));
-        fnName = helperString.slice(0, leftBrachetsIndex)
+    } else if (leftBracketsIndex !== INVALID_INDEX && rightBracketsIndex !== INVALID_INDEX) {
+        const argsStr = helperString.slice(leftBracketsIndex + 1, rightBracketsIndex)
+        args = argsStr.split(',').map(_ => _.trim().replace(quoteRe, ''))
+        fnName = helperString.slice(0, leftBracketsIndex)
     }
     return { fnName, args }
 }
 
-export default format;
+export default format

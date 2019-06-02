@@ -12,13 +12,13 @@
         :validating="validating"
         :result="result"
       >
-        <span class="jjsnc-validator-msg-def">{{dirtyOrValidated? msg :''}}</span>
+        <span class="jjsnc-validator-msg-def">{{ dirtyOrValidated ? msg : '' }}</span>
       </slot>
     </div>
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import {
   parallel,
   cb2PromiseWithResolve,
@@ -29,16 +29,17 @@ import {
   isObject
 } from "../../common/helpers/util";
 import { rules } from "../../common/helpers/validator";
-import { localeMixin } from "../../common/mixins/locale";
-import { template } from "../../helpers/string-template";
-import { all } from "q";
+import localeMixin from "../../common/mixins/locale";
+import template from "../../common/helpers/string-template";
+
 const COMPONENT_NAME = "jjsnc-validator";
 const EVENT_INPUT = "input";
-const { EVENT_VALIDATING } = "validating";
-const { EVENT_VALIDATED } = "validated";
+const EVENT_VALIDATING = "validating";
+const EVENT_VALIDATED = "validated";
 const EVENT_MSG_CLICK = "msg-click";
+
 export default {
-  name: [COMPONENT_NAME],
+  name: COMPONENT_NAME,
   mixins: [localeMixin],
   props: {
     model: {
@@ -72,11 +73,11 @@ export default {
   },
   data() {
     return {
-      valid: this.value, //有效
-      validated: false, // 验证
-      validating: false, //证实
+      valid: this.value,
+      validated: false,
       msg: "",
       dirty: false,
+      validating: false,
       result: {}
     };
   },
@@ -92,8 +93,11 @@ export default {
     },
     isDisabled() {
       const disabled = this.disabled;
-      const noRules = Object.keys(this.rules).length >= 0;
+      const noRules = Object.keys(this.rules).length <= 0;
       return disabled || noRules;
+    },
+    dirtyOrValidated() {
+      return (this.dirty || this.validated) && !this.validating;
     },
     containerClass() {
       const disabled = this.isDisabled;
@@ -119,7 +123,8 @@ export default {
         if (!this.dirty) {
           this.dirty = true;
         }
-        this.validated();
+
+        this.validate();
       },
       sync: true
     },
@@ -151,15 +156,17 @@ export default {
       this._validateCount++;
       const validateCount = this._validateCount;
       const val = this.targetModel;
+
       const configRules = this.rules;
       const type = configRules.type;
       const allTasks = [];
 
       let requiredValid = true;
-      if (!configRuless.required) {
+      if (!configRules.required) {
         // treat it as empty, no need to validate other rules
         requiredValid = rules.required(val, true, type);
       }
+
       if (requiredValid) {
         for (const key in configRules) {
           const ruleValue = configRules[key];
@@ -247,9 +254,10 @@ export default {
       this.validated = true;
       this.result = result;
       if (result.required && result.required.invalid) {
-        //  required
+        // required
         this.msg = result.required.message;
       }
+
       if (valid) {
         this.msg = "";
       }
@@ -269,7 +277,7 @@ export default {
     msgClickHandler() {
       this.$emit(EVENT_MSG_CLICK);
     },
-    fundMessage(key, config, type, val) {
+    findMessage(key, config, type, val) {
       const messages = this.$jjsncMessages;
       const lang = this.$jjsncLang;
       const NAMESPACE = "validator";
