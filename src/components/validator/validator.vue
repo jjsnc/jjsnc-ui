@@ -37,9 +37,34 @@ const { EVENT_VALIDATING } = "validating";
 const { EVENT_VALIDATED } = "validated";
 const EVENT_MSG_CLICK = "msg-click";
 export default {
+  name: [COMPONENT_NAME],
+  mixins: [localeMixin],
   props: {
+    model: {
+      required: true
+    },
+    modelKey: {
+      type: String,
+      default: ""
+    },
+    rules: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
+    messages: {
+      type: [Object, String],
+      default() {
+        return {};
+      }
+    },
     value: {},
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    immediate: {
       type: Boolean,
       default: false
     }
