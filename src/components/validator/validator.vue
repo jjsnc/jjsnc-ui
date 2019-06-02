@@ -28,7 +28,13 @@ import {
   isArray,
   isObject
 } from "../../common/helpers/util";
-import {rules} from "../../common/helpers/validator"
+import { rules } from "../../common/helpers/validator";
+import { localeMixin } from "../../common/mixins/locale";
+import { template } from "../../helpers/string-template";
+const COMPONENT_NAME = "jjsnc-validator";
+const EVENT_INPUT = "input";
+const { EVENT_VALIDATING } = "validating";
+const { EVENT_VALIDATED } = "validated";
 const EVENT_MSG_CLICK = "msg-click";
 export default {
   props: {
