@@ -8,13 +8,13 @@ export const STATUS_ERROR = 'error'
 export const STATUS_SUCCESS = 'success'
 
 export function processFiles(files, eachProcessFile, eachCb, cb) {
-    const fileItems = [];
-    const len = files.length;
-    let processedLen = 0;
+    const fileItems = []
+    const len = files.length
+    let processedLen = 0
     for (let i = 0; i < len; i++) {
         processFile(files[i], i, eachProcessFilem, function (item, index) {
             processedLen++
-            fileItems[index] = item;
+            fileItems[index] = item
             eachCb(item, index)
             if (processedLen === len) {
                 return cb(fileItems)
@@ -30,7 +30,7 @@ export function processFile(file, i, eachProcessFile, cb) {
 }
 export function newFile(name = '', size = 0, status = '', progress = 0, file = null) {
     const base64 = (file && file.base64) || ''
-    const url = base64 ? '' : createURL(file);
+    const url = base64 ? '' : createURL(file)
     return {
         name,
         size,
@@ -43,14 +43,14 @@ export function newFile(name = '', size = 0, status = '', progress = 0, file = n
 }
 function createURL(file) {
     if (file && URL) {
-        return URL.createObjectURL(file);
+        return URL.createObjectURL(file)
     }
     return ''
 }
 
 export function evalOpts(data, ...args) {
     if (typeof data === 'function') {
-        return data.apply(this, args);
+        return data.apply(this, args)
     }
     return data
 }
