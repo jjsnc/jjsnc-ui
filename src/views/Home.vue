@@ -134,7 +134,7 @@
       @change="change"
     ></jjsncSelect>-->
     <!-- <jjsnc-switch v-model="value">Switch</jjsnc-switch> -->
-    <jjsnc-rate v-model="value"></jjsnc-rate>
+    <!-- <jjsnc-rate v-model="value"></jjsnc-rate> -->
   </div>
 </template>
 
@@ -159,13 +159,12 @@
 // import jjsncPopup from "@/components/popup/popup.vue";
 // import jjsncSelect from "@/components/select/select.vue";
 // import jjsncSwitch from "@/components/switch/switch.vue";
-import jjsncRate from "@/components/rate/rate.vue";
+// import jjsncRate from "@/components/rate/rate.vue";
 
 export default {
   name: "home",
   data() {
     return {
-      value: 3
     };
   },
   methods: {},
@@ -187,16 +186,16 @@ export default {
     // jjsncPopup
     // jjsncSelect
     // jjsncSwitch
-    jjsncRate
+    // jjsncRate
   }
 };
 </script>
 <style>
-.home {
+/* .home {
   padding: 20px;
   background: #efeff4;
   height: 100vh;
-}
+} */
 
 /* .jjsnc-popup-content {
   padding: 20px;
