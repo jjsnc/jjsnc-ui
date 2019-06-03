@@ -1,6 +1,6 @@
 import { isFunc } from './util'
 import { warn } from './debug'
-import Locale from '../locale/locale'
+import Locale from '../../modules/locale'
 const stringRE = /\{\{((?:.|\n)+?)\}\}/g
 const quoteRe = /['"]/g
 const INVALID_INDEX = -1

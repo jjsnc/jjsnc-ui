@@ -135,6 +135,8 @@
     ></jjsncSelect>-->
     <!-- <jjsnc-switch v-model="value">Switch</jjsnc-switch> -->
     <!-- <jjsnc-rate v-model="value"></jjsnc-rate> -->
+    <jjsnc-input v-model="text" placeholder="E-mail"></jjsnc-input>
+    <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages"></jjsnc-validator>
   </div>
 </template>
 
@@ -160,11 +162,27 @@
 // import jjsncSelect from "@/components/select/select.vue";
 // import jjsncSwitch from "@/components/switch/switch.vue";
 // import jjsncRate from "@/components/rate/rate.vue";
+import jjsncInput from "@/components/input/input.vue";
+import jjsncValidator from "@/components/validator/validator.vue";
 
 export default {
   name: "home",
   data() {
     return {
+      text: "",
+      valid: undefined,
+      rules: {
+        required: true,
+        type: "email",
+        // pattern: /didi.com$/,
+        custom: val => {
+          return val.length >= 12;
+        }
+      },
+      messages: {
+        pattern: "The E-mail suffix need to be didi.com.",
+        custom: "The E-mail need contain at least 12 characters."
+      }
     };
   },
   methods: {},
@@ -187,6 +205,8 @@ export default {
     // jjsncSelect
     // jjsncSwitch
     // jjsncRate
+    jjsncInput,
+    jjsncValidator
   }
 };
 </script>
