@@ -135,8 +135,27 @@
     ></jjsncSelect>-->
     <!-- <jjsnc-switch v-model="value">Switch</jjsnc-switch> -->
     <!-- <jjsnc-rate v-model="value"></jjsnc-rate> -->
-    <jjsnc-input v-model="text" placeholder="E-mail"></jjsnc-input>
-    <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages"></jjsnc-validator>
+    <!-- <jjsnc-input v-model="text" placeholder="E-mail"></jjsnc-input>
+    <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages"></jjsnc-validator>-->
+    <!-- <jjsnc-validator :model="text" :rules="rules" v-model="valid">
+      <jjsnc-input v-model="text"></jjsnc-input>
+    </jjsnc-validator>-->
+    <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages">
+      <jjsnc-input v-model="text" placeholder="component name"></jjsnc-input>
+      <div slot="message" class="custom-msg" slot-scope="props">
+        <div v-if="(props.dirty || props.validated) && !valid">
+          <i class="dd-jjsncic-important"></i>
+          {{ props.message }}
+          <div>
+            <span
+              v-for="(item, index) in Object.values(props.result)"
+              :key="index"
+              v-if="item.inValid"
+            >{{ item.message + ' ' }}</span>
+          </div>
+        </div>
+      </div>
+    </jjsnc-validator>
   </div>
 </template>
 
@@ -169,19 +188,16 @@ export default {
   name: "home",
   data() {
     return {
-      text: "",
       valid: undefined,
+      text: "",
       rules: {
-        required: true,
-        type: "email",
-        // pattern: /didi.com$/,
-        custom: val => {
-          return val.length >= 12;
-        }
+        type: "string",
+        pattern: /^jjsnc-/,
+        min: 8,
+        max: 10
       },
       messages: {
-        pattern: "The E-mail suffix need to be didi.com.",
-        custom: "The E-mail need contain at least 12 characters."
+        pattern: 'The component name need start with "jjsnc-"'
       }
     };
   },
@@ -210,11 +226,20 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
 .home {
   padding: 20px;
   background: #efeff4;
   height: 100vh;
+}
+
+.jjsnc-validator_warn {
+  input {
+    border: solid 1px yellow;
+  }
+}
+.custom-msg {
+    color: orange;
 }
 
 /* .jjsnc-popup-content {
