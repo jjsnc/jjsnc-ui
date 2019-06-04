@@ -16,22 +16,22 @@ export default function ajaxUpload(file, options, changeHandler) {
         prop = 'file',
         progressInterval = 100,
         checkSuccess = function () { return true }
-    } = options;
-    const realTarget = evalOpts(target, file);
+    } = options
+    const realTarget = evalOpts(target, file)
     file.progress = 0
     file.status = STATUS_UPLOADING
     const xhr = new window.XMLHttpRequest()
 
-    file.xhr = xhr;
+    file.xhr = xhr
     let progressTid = 0
     if (xhr.upload) {
         let lastProgressTime = Date.now()
         xhr.upload.onprogress = function (e) {
             if (e.total > 0) {
                 if (progressTid) {
-                    clearTimeout(progressTid);
-                    const now = Date.now();
-                    const diff = now - lastProgressTime;
+                    clearTimeout(progressTid)
+                    const now = Date.now()
+                    const diff = now - lastProgressTime
                     if (diff >= progressInterval) {
                         computed()
                     } else {
@@ -44,8 +44,8 @@ export default function ajaxUpload(file, options, changeHandler) {
                 }
             }
             function computed() {
-                file.progress = e.loaded / e.total;
-                lastProgressTime = Date.now();
+                file.progress = e.loaded / e.total
+                lastProgressTime = Date.now()
             }
         }
     }
@@ -63,7 +63,7 @@ export default function ajaxUpload(file, options, changeHandler) {
             return
         }
         setResponse()
-        const response = file.response;
+        const response = file.response
         if (checkSuccess.length <= 2) {
             const isSuccess = checkSuccess(response, file)
             setStatus(isSuccess ? STATUS_SUCCESS : STATUS_ERROR)
@@ -106,11 +106,11 @@ export default function ajaxUpload(file, options, changeHandler) {
     }
 
     function setResponse() {
-        let response = xhr.responseText || xhr.response;
+        let response = xhr.responseText || xhr.response
         try {
             response = JSON.parse(response)
         } catch (e) {
-            file.response = response;
+            file.response = response
             file.responseHeaders = xhr.getAllResponseHeaders()
         }
     }
