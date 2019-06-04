@@ -17,12 +17,14 @@ export default function ajaxUpload(file, options, changeHandler) {
         progressInterval = 100,
         checkSuccess = function () { return true }
     } = options
+
     const realTarget = evalOpts(target, file)
+
     file.progress = 0
     file.status = STATUS_UPLOADING
-    const xhr = new window.XMLHttpRequest()
 
-    file.xhr = xhr
+    const xhr = new window.XMLHttpRequest()
+    file._xhr = xhr
     let progressTid = 0
     if (xhr.upload) {
         let lastProgressTime = Date.now()
@@ -50,13 +52,13 @@ export default function ajaxUpload(file, options, changeHandler) {
         }
     }
 
-    const formData = new window.formData()
+    const formData = new window.FormData()
     const realData = evalOpts(data, file)
     Object.keys(realData).forEach((key) => {
         formData.append(key, realData[key])
     })
-
     formData.append(fileName, file[prop])
+
     xhr.onload = function () {
         if (xhr.status < 200 || xhr.status >= 300) {
             setStatus(STATUS_ERROR)
@@ -64,10 +66,12 @@ export default function ajaxUpload(file, options, changeHandler) {
         }
         setResponse()
         const response = file.response
+
         if (checkSuccess.length <= 2) {
             const isSuccess = checkSuccess(response, file)
             setStatus(isSuccess ? STATUS_SUCCESS : STATUS_ERROR)
         } else {
+            // callback
             checkSuccess(response, file, (isSuccess) => {
                 setStatus(isSuccess ? STATUS_SUCCESS : STATUS_ERROR)
             })
@@ -86,17 +90,15 @@ export default function ajaxUpload(file, options, changeHandler) {
     if (withCredentials) {
         xhr.withCredentials = true
     }
-
     const realHeaders = evalOpts(headers, file)
-
     Object.keys(realHeaders).forEach((key) => {
         xhr.setRequestHeader(key, realHeaders[key])
     })
     if (timeout > 0) {
         xhr.timeout = timeout
     }
-    xhr.send(formData)
 
+    xhr.send(formData)
     function setStatus(status) {
         clearTimeout(progressTid)
         progressTid = 0
@@ -104,18 +106,12 @@ export default function ajaxUpload(file, options, changeHandler) {
         file.status = status
         changeHandler && changeHandler(file)
     }
-
     function setResponse() {
         let response = xhr.responseText || xhr.response
         try {
             response = JSON.parse(response)
-        } catch (e) {
-            file.response = response
-            file.responseHeaders = xhr.getAllResponseHeaders()
-        }
+        } catch (e) { }
+        file.response = response
+        file.responseHeaders = xhr.getAllResponseHeaders()
     }
-
-
-
-
 }
