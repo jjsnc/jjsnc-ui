@@ -14,10 +14,11 @@
     >
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import btnMixin from "./btn-mixin";
+
 const COMPONENT_NAME = "jjsnc-upload-btn";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [btnMixin],
