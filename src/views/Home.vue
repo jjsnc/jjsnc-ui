@@ -157,7 +157,7 @@
       </div>
     </jjsnc-validator>-->
     <jjsnc-upload
-      action="//jsonplaceholder.typicode.com/photos/"
+      action="http://localhost:8080/photos/"
       :simultaneous-uploads="1"
       @files-added="filesAdded"
     />
@@ -206,12 +206,8 @@ export default {
           hasIgnore = true;
         }
       }
-      hasIgnore &&
-        this.$createToast({
-          type: "warn",
-          time: 1000,
-          txt: "You selected >1M files"
-        }).show();
+      hasIgnore && alert('You selected >1M files')
+        
     }
   },
   components: {
