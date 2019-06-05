@@ -1,23 +1,20 @@
 <template>
   <div class="jjsnc-upload-file" :class="fileCls" @click="clickHandler">
-    <slot>
-      :img-style="fileStyle"
-      :progress="fileProgress"
-    </slot>
-    <div class="jjsnc-upload-file-def" :style="fileStyle">
-      <i class="jjsncic-wrong" @click.stop="removeFile"></i>
-      <div class="jjsnc-upload-file-state" :class="fileStatusCls">
-        <i class="jjsnc-upload-file-status" :class="statusCls"></i>
-        <span class="jjsnc-upload-file-progress">{{fileProgress}}</span>
+    <slot :img-style="fileStyle" :progress="fileProgress">
+      <div class="jjsnc-upload-file-def" :style="fileStyle">
+        <i class="jjsncic-wrong" @click.stop="removeFile"></i>
+        <div class="jjsnc-upload-file-state" :class="fileStatusCls">
+          <i class="jjsnc-upload-file-status" :class="statusCls"></i>
+          <span class="jjsnc-upload-file-progress">{{fileProgress}}</span>
+        </div>
       </div>
-    </div>
+    </slot>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import { STATUS_SUCCESS, STATUS_ERROR } from "./util";
-const COMPONENT_NAME = "jjsnc-upload-file";
 
+const COMPONENT_NAME = "jjsnc-upload-file";
 const STATUS_CLASS_MAP = {
   success: "jjsncic-right",
   error: "jjsncic-warn"
@@ -25,6 +22,7 @@ const STATUS_CLASS_MAP = {
 const EVENT_CLICK = "click";
 
 export default {
+  name: COMPONENT_NAME,
   props: {
     file: {
       type: Object,
