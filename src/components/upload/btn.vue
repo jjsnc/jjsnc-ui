@@ -34,7 +34,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" >
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
 .jjsnc-upload-btn {
@@ -46,7 +46,6 @@ export default {
     }
   }
 }
-
 .jjsnc-upload-input {
   position: absolute;
   top: 0;
@@ -57,13 +56,13 @@ export default {
   font-size: 0;
   opacity: 0;
 }
-
 .jjsnc-upload-btn-def {
   position: relative;
   width: 80px;
   height: 80px;
   box-sizing: border-box;
-  background-color: $upload-btn-box-shadow;
+  background-color: $upload-btn-bgc;
+  box-shadow: $upload-btn-box-shadow;
   border-radius: 2px;
   @include border-1px($upload-btn-border-color, 2px);
   > i {
