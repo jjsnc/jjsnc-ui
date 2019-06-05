@@ -140,7 +140,7 @@
     <!-- <jjsnc-validator :model="text" :rules="rules" v-model="valid">
       <jjsnc-input v-model="text"></jjsnc-input>
     </jjsnc-validator>-->
-    <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages">
+    <!-- <jjsnc-validator v-model="valid" :model="text" :rules="rules" :messages="messages">
       <jjsnc-input v-model="text" placeholder="component name"></jjsnc-input>
       <div slot="message" class="custom-msg" slot-scope="props">
         <div v-if="(props.dirty || props.validated) && !valid">
@@ -155,7 +155,7 @@
           </div>
         </div>
       </div>
-    </jjsnc-validator>
+    </jjsnc-validator> -->
   </div>
 </template>
 
@@ -181,24 +181,13 @@
 // import jjsncSelect from "@/components/select/select.vue";
 // import jjsncSwitch from "@/components/switch/switch.vue";
 // import jjsncRate from "@/components/rate/rate.vue";
-import jjsncInput from "@/components/input/input.vue";
-import jjsncValidator from "@/components/validator/validator.vue";
+// import jjsncInput from "@/components/input/input.vue";
+// import jjsncValidator from "@/components/validator/validator.vue";
 
 export default {
   name: "home",
   data() {
     return {
-      valid: undefined,
-      text: "",
-      rules: {
-        type: "string",
-        pattern: /^jjsnc-/,
-        min: 8,
-        max: 10
-      },
-      messages: {
-        pattern: 'The component name need start with "jjsnc-"'
-      }
     };
   },
   methods: {},
@@ -221,8 +210,8 @@ export default {
     // jjsncSelect
     // jjsncSwitch
     // jjsncRate
-    jjsncInput,
-    jjsncValidator
+    // jjsncInput,
+    // jjsncValidator
   }
 };
 </script>
