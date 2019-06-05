@@ -155,7 +155,12 @@
           </div>
         </div>
       </div>
-    </jjsnc-validator> -->
+    </jjsnc-validator>-->
+    <jjsnc-upload
+      action="//jsonplaceholder.typicode.com/photos/"
+      :simultaneous-uploads="1"
+      @files-added="filesAdded"
+    />
   </div>
 </template>
 
@@ -183,14 +188,32 @@
 // import jjsncRate from "@/components/rate/rate.vue";
 // import jjsncInput from "@/components/input/input.vue";
 // import jjsncValidator from "@/components/validator/validator.vue";
+import jjsncUpload from "@/components/upload/upload.vue";
 
 export default {
   name: "home",
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {},
+  methods: {
+    filesAdded(files) {
+      let hasIgnore = false;
+      const maxSize = 1 * 1024 * 1024; // 1M
+      for (let k in files) {
+        const file = files[k];
+        if (file.size > maxSize) {
+          file.ignore = true;
+          hasIgnore = true;
+        }
+      }
+      hasIgnore &&
+        this.$createToast({
+          type: "warn",
+          time: 1000,
+          txt: "You selected >1M files"
+        }).show();
+    }
+  },
   components: {
     // jjsncButton,
     // jjsncLoading,
@@ -212,6 +235,7 @@ export default {
     // jjsncRate
     // jjsncInput,
     // jjsncValidator
+    jjsncUpload
   }
 };
 </script>
@@ -228,7 +252,7 @@ export default {
   }
 }
 .custom-msg {
-    color: orange;
+  color: orange;
 }
 
 /* .jjsnc-popup-content {
