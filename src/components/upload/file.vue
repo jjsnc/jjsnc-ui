@@ -43,7 +43,7 @@ export default {
       ) {
         return "jjsnc-upload-file_stat";
       }
-      return null
+      return null;
     },
     fileStyle() {
       const url = this.file.url || this.file.base64;
@@ -78,12 +78,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../common/scss/variable.scss";
-@import "../../common/scss/mixin.scss";
+@import "../../common/scss/variable";
+@import "../../common/scss/mixin";
 .jjsnc-upload-file {
   position: relative;
 }
-
 .jjsnc-upload-file-def {
   position: relative;
   width: 80px;
