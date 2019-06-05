@@ -43,7 +43,7 @@ export default {
       ) {
         return "jjsnc-upload-file_stat";
       }
-      return undefined;
+      return null
     },
     fileStyle() {
       const url = this.file.url || this.file.base64;
