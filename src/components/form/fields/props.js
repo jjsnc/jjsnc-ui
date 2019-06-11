@@ -1,6 +1,6 @@
 const toButtonHandler = (field, type) => {
     field.type = 'button'
-    if (!filed.props) {
+    if (!field.props) {
         field.props = {}
     }
     field.props.type = type
