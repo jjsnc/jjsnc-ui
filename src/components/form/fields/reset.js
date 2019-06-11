@@ -1,4 +1,4 @@
-const typesRestMap = {
+const typesResetMap = {
     checkbox() {
         /* istanbul ignore next */
         return false
@@ -8,12 +8,11 @@ const typesRestMap = {
         return null
     }
 }
-
-function getResetValueType(type) {
-    const resetHandler = typesRestMap[type]
+function getResetValueByType(type) {
+    const resetHandler = typesResetMap[type]
     return resetHandler && resetHandler()
 }
 
 export {
-    getResetValueType
+    getResetValueByType
 }
