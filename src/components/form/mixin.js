@@ -17,6 +17,5 @@ export default {
             const valid = this.valid
             return valid === undefined ? valid : !valid
         }
-
     }
 }
