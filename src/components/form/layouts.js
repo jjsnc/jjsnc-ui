@@ -1,9 +1,7 @@
 const LAYOUTS = {
     STANDARD: 'standard',
-    CLASIC: 'classic',
+    CLASSIC: 'classic',
     FRESH: 'fresh'
-
-
 }
 
 export default LAYOUTS
