@@ -172,6 +172,7 @@
     ></jjsnc-form>-->
     <jjsnc-button @click="showToastTime">Toast - time 1s</jjsnc-button>
     <jjsnc-button @click="showToastTime0">Toast - time 0</jjsnc-button>
+    <jjsnc-button @click="showToastMask">Toast- with mask</jjsnc-button>
   </div>
 </template>
 
@@ -225,6 +226,13 @@ export default {
       setTimeout(() => {
         toast.hide();
       }, 2000);
+    },
+    showToastMask() {
+      const toast = this.$createToast({
+        txt: "Loading...",
+        mask: true
+      });
+      toast.show();
     }
   },
   components: {
