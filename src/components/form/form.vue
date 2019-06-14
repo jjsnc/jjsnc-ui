@@ -17,13 +17,13 @@
     </slot>
   </form>
 </template>
+
 <script>
 import { dispatchEvent } from "../../common/helpers/dom";
 import { cb2PromiseWithResolve } from "../../common/helpers/util";
 import jjsncFormGroup from "./form-group.vue";
 import LAYOUTS from "./layouts";
 import mixin from "./mixin";
-import validatorVue from "../validator/validator.vue";
 
 const COMPONENT_NAME = "jjsnc-form";
 const EVENT_SUBMIT = "submit";
@@ -48,7 +48,6 @@ export default {
       type: Object,
       default() {
         /* istanbul ignore next */
-
         return {};
       }
     },
@@ -146,7 +145,7 @@ export default {
       const submited = submitResult => {
         if (submitResult) {
           this.$emit(EVENT_VALID, this.validity);
-          this.$$emit(EVENT_SUBMIT, e, this.model);
+          this.$emit(EVENT_SUBMIT, e, this.model);
         } else {
           e.preventDefault();
           this.$emit(EVENT_INVALID, this.validity);
@@ -186,7 +185,7 @@ export default {
     },
     syncValidatorValues() {
       this.fields.forEach(fieldComponent => {
-        fieldComponent.syncValidatorValues();
+        fieldComponent.syncValidatorValue();
       });
     },
     validate(cb) {
@@ -226,7 +225,7 @@ export default {
     setPending(pending = false) {
       this.pending = pending;
     },
-    updateValidating(modelKey, valid, result, dirty) {
+    updateValidity(modelKey, valid, result, dirty) {
       const curResult = this.validity[modelKey];
       if (
         curResult &&
@@ -252,10 +251,10 @@ export default {
           validity[key] = val;
         }
       }
+
       let dirty = false;
       let invalid = false;
       let valid = true;
-
       let firstInvalidFieldKey = "";
       this.fields.forEach(fieldComponent => {
         const modelKey = fieldComponent.fieldValue.modelKey;
@@ -265,7 +264,7 @@ export default {
             if (retVal.dirty) {
               dirty = true;
             }
-            if (retVal === false) {
+            if (retVal.valid === false) {
               valid = false;
             } else if (valid && !retVal.valid) {
               valid = retVal.valid;
@@ -276,16 +275,16 @@ export default {
               invalid = true;
               firstInvalidFieldKey = modelKey;
             }
+          } else if (fieldComponent.hasRules) {
+            if (valid) {
+              valid = undefined;
+            }
+            validity[modelKey] = {
+              valid: undefined,
+              result: {},
+              dirty: false
+            };
           }
-        } else if (fieldComponent.hasRules) {
-          if (valid) {
-            valid = undefined;
-          }
-          validity[modelKey] = {
-            valid: undefined,
-            result: {},
-            dirty: false
-          };
         }
       });
       this.validity = validity;
