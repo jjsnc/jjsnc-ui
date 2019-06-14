@@ -107,5 +107,134 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "../../common/scss/variable.scss";
+.jjsnc-toast {
+  &.jjsnc-popup {
+    z-index: 900;
+  }
+  .jjsnc-popup-content {
+    display: flex;
+    align-items: center;
+    padding: 13px 16px;
+    color: $toast-color;
+    background-color: $toast-bgc;
+    border-radius: 2px;
+  }
+}
+.jjsnc-toast-icon {
+  width: 24px;
+  height: 24px;
+  font-size: $fontsize-large-xxx;
+}
+.jjsnc-toast-tip {
+  line-height: 20px;
+  font-size: $fontsize-medium;
+  max-width: 12em;
+  max-height: 40px;
+  overflow: hidden;
+}
+.jjsnc-toast-icon, .jjsnc-loading {
+  ~ .jjsnc-toast-tip {
+    margin-left: 8px;
+  }
+}
+
+.jjsnc-toast-fade-enter-active {
+  animation: toast-in 0.2s;
+}
+.jjsnc-toast-fade-leave-active {
+  animation: toast-out 0.2s;
+}
+
+@-webkit-keyframes toast-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes toast-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes toast-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes toast-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes toast-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes toast-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes toast-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes toast-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 </style>
 
