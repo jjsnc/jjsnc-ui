@@ -169,8 +169,9 @@
       @validate="validateHandler"
       @submit="submitHandler"
       @reset="resetHandler"
-    ></jjsnc-form> -->
-
+    ></jjsnc-form>-->
+    <jjsnc-button @click="showToastTime">Toast - time 1s</jjsnc-button>
+    <jjsnc-button @click="showToastTime0">Toast - time 0</jjsnc-button>
   </div>
 </template>
 
@@ -178,7 +179,7 @@
 // @ is an alias to /src
 // const positions = ["top", "right", "bottom", "left", "center"];
 // let cur = 0;
-// import jjsncButton from "@/components/button/button.vue";
+import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -205,13 +206,29 @@
 export default {
   name: "home",
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
+    showToastTime() {
+      const toast = this.$createToast({
+        time: 1000,
+        txt: "Toast time 1s"
+      });
+      toast.show();
+    },
+    showToastTime0() {
+      const toast = this.$createToast({
+        time: 0,
+        txt: "Toast time 0"
+      });
+      toast.show();
+      setTimeout(() => {
+        toast.hide();
+      }, 2000);
+    }
   },
   components: {
-    // jjsncButton,
+    jjsncButton
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,

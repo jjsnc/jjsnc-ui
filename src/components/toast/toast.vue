@@ -21,7 +21,7 @@ import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 import { setTimeout } from "timers";
 
-const COMPONENT_NAME = "jjsnc_toast";
+const COMPONENT_NAME = "jjsnc-toast";
 
 const EVENT_TIMEOUT = "timeout";
 export default {
