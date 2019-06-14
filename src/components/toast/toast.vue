@@ -18,7 +18,7 @@
 import jjsncLoading from "../loading/loading.vue";
 import jjsncPopup from "../popup/popup.vue";
 import visibilityMixin from "../../common/mixins/visibility";
-import popupMixin from "../../common/mixins/popupƒ";
+import popupMixin from "../../common/mixins/popup";
 import { setTimeout } from "timers";
 
 const COMPONENT_NAME = "jjsnc_toast";
@@ -107,7 +107,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../common/scss/variable.scss";
+@import "../../common/scss/variable";
 .jjsnc-toast {
   &.jjsnc-popup {
     z-index: 900;
