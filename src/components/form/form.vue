@@ -329,7 +329,7 @@ export default {
 <style lang="scss">
 @import "../../common/scss/variable.scss";
 @import "../../common/scss/mixin.scss";
-
+@import "../../common/scss/index";
 .jjsnc-form {
   position: relative;
   font-size: $fontsize-large;

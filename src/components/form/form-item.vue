@@ -275,6 +275,8 @@
     components
   }
 </script>
+
+
 <style lang="scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
