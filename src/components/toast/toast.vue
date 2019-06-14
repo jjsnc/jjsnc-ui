@@ -13,17 +13,16 @@
     </jjsnc-popup>
   </transition>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import jjsncLoading from "../loading/loading.vue";
 import jjsncPopup from "../popup/popup.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
-import { setTimeout } from "timers";
 
 const COMPONENT_NAME = "jjsnc-toast";
 
 const EVENT_TIMEOUT = "timeout";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [visibilityMixin, popupMixin],
@@ -133,7 +132,8 @@ export default {
   max-height: 40px;
   overflow: hidden;
 }
-.jjsnc-toast-icon, .jjsnc-loading {
+.jjsnc-toast-icon,
+.jjsnc-loading {
   ~ .jjsnc-toast-tip {
     margin-left: 8px;
   }
@@ -235,6 +235,5 @@ export default {
     opacity: 0;
   }
 }
-
 </style>
 
