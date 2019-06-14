@@ -23,6 +23,7 @@ import { cb2PromiseWithResolve } from "../../common/helpers/util";
 import jjsncFormGroup from "./form-group.vue";
 import LAYOUTS from "./layouts";
 import mixin from "./mixin";
+import validatorVue from "../validator/validator.vue";
 
 const COMPONENT_NAME = "jjsnc-form";
 const EVENT_SUBMIT = "submit";
@@ -240,10 +241,267 @@ export default {
         result,
         dirty
       });
+    },
+    setValidity(key, val) {
+      let validity = {};
+      if (key) {
+        Object.assign(validity, this.validity);
+        if (val === undefined) {
+          delete validity[key];
+        } else {
+          validity[key] = val;
+        }
+      }
+      let dirty = false;
+      let invalid = false;
+      let valid = true;
+
+      let firstInvalidFieldKey = "";
+      this.fields.forEach(fieldComponent => {
+        const modelKey = fieldComponent.fieldValue.modelKey;
+        if (modelKey) {
+          const retVal = validity[modelKey];
+          if (retVal) {
+            if (retVal.dirty) {
+              dirty = true;
+            }
+            if (retVal === false) {
+              valid = false;
+            } else if (valid && !retVal.valid) {
+              valid = retVal.valid;
+            }
+
+            if (!invalid && retVal.valid === false) {
+              // invalid
+              invalid = true;
+              firstInvalidFieldKey = modelKey;
+            }
+          }
+        } else if (fieldComponent.hasRules) {
+          if (valid) {
+            valid = undefined;
+          }
+          validity[modelKey] = {
+            valid: undefined,
+            result: {},
+            dirty: false
+          };
+        }
+      });
+      this.validity = validity;
+      this.dirty = dirty;
+      this.originValid = valid;
+      this.setFirstInvalid(firstInvalidFieldKey);
+      this.validatedCount++;
+    },
+    setFirstInvalid(key) {
+      if (!key) {
+        this.firstInvalidField = null;
+        this.firstInvalidFieldIndex = -1;
+        return;
+      }
+      this.fields.some((fieldComponent, index) => {
+        if (fieldComponent.fieldValue.modelKey === key) {
+          this.firstInvalidField = fieldComponent;
+          this.firstInvalidFieldIndex = index;
+          return true;
+        }
+      });
+    },
+    addField(fieldComponent) {
+      this.fields.push(fieldComponent);
+    },
+    destroyField(fieldComponent) {
+      const i = this.fields.indexOf(fieldComponent);
+      this.fields.splice(i, 1);
+      this.setValidity(fieldComponent.fieldValue.modelKey);
     }
+  },
+  beforeDestroy() {
+    this.form = null;
+    this.firstInvalidField = null;
+  },
+  components: {
+    jjsncFormGroup
   }
 };
 </script>
 
 <style lang="scss">
+@import "../../common/scss/variable.scss";
+@import "../../common/scss/mixin.scss";
+
+.jjsnc-form {
+  position: relative;
+  font-size: $fontsize-large;
+  line-height: 1.429;
+  color: $form-color;
+  background-color: $form-bgc;
+}
+.jjsnc-form_groups {
+  .jjsnc-form-group-legend {
+    padding: 10px 15px;
+    &:empty {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+}
+.jjsnc-form_standard {
+  .jjsnc-form-item {
+    min-height: 46px;
+  }
+  .jjsnc-form-field {
+    flex: 1;
+    font-size: $fontsize-medium;
+  }
+  .jjsnc-validator {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .jjsnc-validator_invalid {
+    color: $form-invalid-color;
+  }
+  .jjsnc-validator-content {
+    flex: 1;
+  }
+  .jjsnc-validator-msg-def {
+    font-size: 0;
+  }
+  .jjsnc-validator_invalid {
+    .jjsnc-validator-msg {
+      &::before {
+        content: "\e614";
+        padding-left: 5px;
+        font-family: "jjsnc-icon" !important;
+        font-size: $fontsize-large-xx;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+  }
+  .jjsnc-form-label {
+    width: 100px;
+    padding-right: 10px;
+  }
+  .jjsnc-checkbox-group,
+  .jjsnc-radio-group {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  .jjsnc-input {
+    input {
+      padding: 13px 0;
+      background-color: transparent;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  .jjsnc-textarea-wrapper {
+    padding: 13px 0;
+    height: 20px;
+    &.jjsnc-textarea_expanded {
+      height: 60px;
+      padding-bottom: 20px;
+      .jjsnc-textarea-indicator {
+        bottom: 2px;
+      }
+    }
+    .jjsnc-textarea {
+      padding: 0;
+      background-color: transparent;
+    }
+    &::after {
+      display: none;
+    }
+  }
+  .jjsnc-select {
+    padding-left: 0;
+    background-color: transparent;
+    &::after {
+      display: none;
+    }
+  }
+  .jjsnc-upload-def {
+    padding: 5px 0;
+    .jjsnc-upload-btn,
+    .jjsnc-upload-file {
+      margin: 5px 10px 5px 0;
+    }
+  }
+}
+.jjsnc-form_classic {
+  .jjsnc-form-item {
+    display: block;
+    padding: 15px;
+    &:last-child {
+      padding-bottom: 30px;
+    }
+    &::after {
+      display: none;
+    }
+    .jjsnc-validator-msg {
+      position: absolute;
+      margin-top: 3px;
+      &::before {
+        display: none;
+      }
+    }
+    .jjsnc-validator-msg-def {
+      font-size: $fontsize-small;
+    }
+  }
+  .jjsnc-form-item_btn {
+    padding-top: 0;
+    padding-bottom: 0;
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  .jjsnc-form-label {
+    padding-bottom: 15px;
+  }
+}
+.jjsnc-form_fresh {
+  .jjsnc-form-item {
+    display: block;
+    padding: 2em 15px 10px;
+    &::after {
+      display: none;
+    }
+    .jjsnc-validator-msg {
+      position: absolute;
+      top: 1em;
+      right: 15px;
+      bottom: auto;
+      margin-top: -0.4em;
+      font-size: $fontsize-small;
+      &::before {
+        display: none;
+      }
+    }
+    .jjsnc-validator-msg-def {
+      font-size: 100%;
+    }
+  }
+  .jjsnc-form-item_btn {
+    padding-top: 0;
+    padding-bottom: 0;
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  .jjsnc-form-label {
+    position: absolute;
+    top: 1em;
+    margin-top: -0.4em;
+    font-size: $fontsize-small;
+  }
+}
 </style>
