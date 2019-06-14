@@ -276,9 +276,8 @@
   }
 </script>
 
-
-<style lang="scss">
-@import "../../common/scss/variable";
+<style lang="scss" rel="stylesheet/scss">
+  @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
 
 .jjsnc-form-item {

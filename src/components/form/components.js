@@ -12,23 +12,23 @@ import jjsncTextarea from '../textarea/textarea.vue'
 import jjsncUpload from '../upload/upload.vue'
 
 const allComponents = [
-    jjsncButton,
-    jjsncCheckbox,
-    jjsncCheckboxGroup,
-    jjsncChecker,
-    jjsncInput,
-    jjsncRadio,
-    jjsncRadioGroup,
-    jjsncRate,
-    jjsncSelect,
-    jjsncSwitch,
-    jjsncTextarea,
-    jjsncUpload
+  jjsncButton,
+  jjsncCheckbox,
+  jjsncCheckboxGroup,
+  jjsncChecker,
+  jjsncInput,
+  jjsncRadio,
+  jjsncRadioGroup,
+  jjsncRate,
+  jjsncSelect,
+  jjsncSwitch,
+  jjsncTextarea,
+  jjsncUpload
 ]
 
 const components = {}
 allComponents.forEach((Component) => {
-    components[Component.name] = Component
+  components[Component.name] = Component
 })
 
 export default components

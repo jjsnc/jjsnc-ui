@@ -3,7 +3,7 @@
     <p class="jjsnc-form-group-legend">{{legend}}</p>
     <div class="jjsnc-form-group-content">
       <slot>
-        <jjsnc-form-item v-for="(field, index) in fields" :key="index" :field="field"></jjsnc-form-item>
+        <jjsnc-form-item v-for="(field, index) in fields" :key="index" :field="field"/>
       </slot>
     </div>
   </div>
@@ -12,7 +12,7 @@
 <script>
 import jjsncFormItem from "./form-item.vue";
 
-const COMPONENT_NAME = "jsnc-form-group";
+const COMPONENT_NAME = "jjsnc-form-group";
 export default {
   name: COMPONENT_NAME,
   props: {
@@ -40,9 +40,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "../../common/scss/variable.scss";
-@import "../../common/scss/mixin.scss";
+<style lang="scss" rel="stylesheet/scss">
+@import "../../common/scss/variable";
+@import "../../common/scss/mixin";
 
 .jjsnc-form-group {
   overflow: hidden;
@@ -52,5 +52,4 @@ export default {
   color: $form-group-legend-color;
   background-color: $form-group-legend-bgc;
 }
-
 </style>

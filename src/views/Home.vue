@@ -161,14 +161,15 @@
       :simultaneous-uploads="1"
       @files-added="filesAdded"
     />-->
-<jjsnc-form
-  :model="model"
-  :schema="schema"
-  :immediate-validate="false"
-  :options="options"
-  @validate="validateHandler"
-  @submit="submitHandler"
-  @reset="resetHandler"></jjsnc-form>
+    <jjsnc-form
+      :model="model"
+      :schema="schema"
+      :immediate-validate="false"
+      :options="options"
+      @validate="validateHandler"
+      @submit="submitHandler"
+      @reset="resetHandler"
+    ></jjsnc-form>
   </div>
 </template>
 
@@ -199,9 +200,6 @@
 // import jjsncUpload from "@/components/upload/upload.vue";
 import jjsncForm from "@/components/form/form.vue";
 
-
-
-
 export default {
   name: "home",
   data() {
@@ -211,25 +209,25 @@ export default {
       model: {
         checkboxValue: false,
         checkboxGroupValue: [],
-        inputValue: '',
-        radioValue: '',
+        inputValue: "",
+        radioValue: "",
         rateValue: 0,
         selectValue: 2018,
         switchValue: true,
-        textareaValue: '',
+        textareaValue: "",
         uploadValue: []
       },
       schema: {
         groups: [
           {
-            legend: '基础',
+            legend: "基础",
             fields: [
               {
-                type: 'checkbox',
-                modelKey: 'checkboxValue',
+                type: "checkbox",
+                modelKey: "checkboxValue",
                 props: {
                   option: {
-                    label: 'Checkbox',
+                    label: "Checkbox",
                     value: true
                   }
                 },
@@ -237,48 +235,48 @@ export default {
                   required: true
                 },
                 messages: {
-                  required: 'Please check this field'
+                  required: "Please check this field"
                 }
               },
               {
-                type: 'checkbox-group',
-                modelKey: 'checkboxGroupValue',
-                label: 'CheckboxGroup',
+                type: "checkbox-group",
+                modelKey: "checkboxGroupValue",
+                label: "CheckboxGroup",
                 props: {
-                  options: ['1', '2', '3']
+                  options: ["1", "2", "3"]
                 },
                 rules: {
                   required: true
                 }
               },
               {
-                type: 'input',
-                modelKey: 'inputValue',
-                label: 'Input',
+                type: "input",
+                modelKey: "inputValue",
+                label: "Input",
                 props: {
-                  placeholder: '请输入'
+                  placeholder: "请输入"
                 },
                 rules: {
                   required: true
                 },
                 // validating when blur
-                trigger: 'blur'
+                trigger: "blur"
               },
               {
-                type: 'radio-group',
-                modelKey: 'radioValue',
-                label: 'Radio',
+                type: "radio-group",
+                modelKey: "radioValue",
+                label: "Radio",
                 props: {
-                  options: ['1', '2', '3']
+                  options: ["1", "2", "3"]
                 },
                 rules: {
                   required: true
                 }
               },
               {
-                type: 'select',
-                modelKey: 'selectValue',
-                label: 'Select',
+                type: "select",
+                modelKey: "selectValue",
+                label: "Select",
                 props: {
                   options: [2015, 2016, 2017, 2018, 2019, 2020]
                 },
@@ -287,17 +285,17 @@ export default {
                 }
               },
               {
-                type: 'switch',
-                modelKey: 'switchValue',
-                label: 'Switch',
+                type: "switch",
+                modelKey: "switchValue",
+                label: "Switch",
                 rules: {
                   required: true
                 }
               },
               {
-                type: 'textarea',
-                modelKey: 'textareaValue',
-                label: 'Textarea',
+                type: "textarea",
+                modelKey: "textareaValue",
+                label: "Textarea",
                 rules: {
                   required: true
                 },
@@ -308,50 +306,52 @@ export default {
             ]
           },
           {
-            legend: '高级',
+            legend: "高级",
             fields: [
               {
-                type: 'rate',
-                modelKey: 'rateValue',
-                label: 'Rate',
+                type: "rate",
+                modelKey: "rateValue",
+                label: "Rate",
                 rules: {
                   required: true
                 }
               },
               {
-                type: 'upload',
-                modelKey: 'uploadValue',
-                label: 'Upload',
+                type: "upload",
+                modelKey: "uploadValue",
+                label: "Upload",
                 events: {
-                  'file-removed': (...args) => {
-                    console.log('file removed', args)
+                  "file-removed": (...args) => {
+                    // console.log("file removed", args);
                   }
                 },
                 rules: {
                   required: true,
                   uploaded: (val, config) => {
-                    return Promise.all(val.map((file, i) => {
-                      return new Promise((resolve, reject) => {
-                        if (file.uploadedUrl) {
-                          return resolve()
-                        }
-                        // fake request
-                        setTimeout(() => {
-                          if (i % 2) {
-                            reject(new Error())
-                          } else {
-                            file.uploadedUrl = 'uploaded/url'
-                            resolve()
+                    return Promise.all(
+                      val.map((file, i) => {
+                        return new Promise((resolve, reject) => {
+                          if (file.uploadedUrl) {
+                            return resolve();
                           }
-                        }, 1000)
+                          // fake request
+                          setTimeout(() => {
+                            if (i % 2) {
+                              reject(new Error());
+                            } else {
+                              file.uploadedUrl = "uploaded/url";
+                              resolve();
+                            }
+                          }, 1000);
+                        });
                       })
-                    })).then(() => {
-                      return true
-                    })
+                    ).then(() => {
+                      return true;
+                    });
                   }
                 },
                 messages: {
-                  uploaded: '上传失败'
+                  uploaded: "上传失败"
                 }
               }
             ]
@@ -359,12 +359,12 @@ export default {
           {
             fields: [
               {
-                type: 'submit',
-                label: 'Submit'
+                type: "submit",
+                label: "Submit"
               },
               {
-                type: 'reset',
-                label: 'Reset'
+                type: "reset",
+                label: "Reset"
               }
             ]
           }
@@ -372,22 +372,23 @@ export default {
       },
       options: {
         scrollToInvalidField: true,
-        layout: 'standard' // classic fresh
+        layout: "standard" // classic fresh
       }
-    }
+    };
   },
   methods: {
     submitHandler(e) {
-      e.preventDefault()
-      console.log('submit', e)
+      e.preventDefault();
+      // console.log('submit', e)
     },
     validateHandler(result) {
-      this.validity = result.validity
-      this.valid = result.valid
-      console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
+      this.validity = result.validity;
+      this.valid = result.valid;
+      // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
     },
     resetHandler(e) {
-      console.log('reset', e)
+      e.preventDefault();
+      // console.log('reset', e)
     }
   },
   components: {

@@ -326,10 +326,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 @import "../../common/scss/variable.scss";
 @import "../../common/scss/mixin.scss";
-@import "../../common/scss/index";
+
 .jjsnc-form {
   position: relative;
   font-size: $fontsize-large;
