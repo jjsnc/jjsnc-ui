@@ -6,10 +6,11 @@
     :selected-index="pickerSelectedIndex"
     :pending="pending"
     :title="title"
-    :subtitle="title"
+    :subtitle="subtitle"
     :z-index="zIndex"
     :cancel-txt="_cancelTxt"
-    :swipe-itme="swipeTime"
+    :confirm-txt="_confirmTxt"
+    :swipe-time="swipeTime"
     :mask-closable="maskClosable"
     @select="_pickerSelect"
     @cancel="_pickerCancel"
@@ -17,7 +18,7 @@
   ></jjsnc-picker>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import jjsncPicker from "../picker/picker.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
@@ -101,11 +102,14 @@ export default {
               : this.$refs.picker.refillColumn(i, columnData);
         }
         data = data.length ? data[this.pickerSelectedIndex[i]].children : null;
+
         i++;
       }
+
       if (i < this.pickerData.length) {
         this.pickerData.splice(i, this.pickerData.length - i);
       }
+
       this.pickerData = this.pickerData.slice();
     }
   },
@@ -114,7 +118,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-</style>
-
