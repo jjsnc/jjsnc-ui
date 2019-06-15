@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
-import picker from '@/components/picker/picker.vue'
-import toast from '@/components/toast/toast.vue'
+import Picker from '@/components/picker/picker.vue'
+import Toast from '@/components/toast/toast.vue'
+import CascadePicker from '@/components/toast/toast.vue'
 import createAPI from '@/common/helpers/create-api'
-createAPI(Vue, picker, ['select', 'cancel', 'change'], true)
-createAPI(Vue, toast, ['timeout'], true)
+createAPI(Vue, Picker, ['select', 'cancel', 'change'], true)
+createAPI(Vue, Toast, ['timeout'], true)
+createAPI(Vue, CascadePicker, ['select', 'cancel', 'change'])
 Vue.config.productionTip = false
 
 new Vue({
