@@ -257,22 +257,24 @@ export default {
       this.cascadePicker.show();
     },
     selectHandle(selectedVal, selectedIndex, selectedText) {
-      this.$createDialog({
-        type: "warn",
-        content: `Selected Item: <br/> - value: ${selectedVal.join(
-          ", "
-        )} <br/> - index: ${selectedIndex.join(
-          ", "
-        )} <br/> - text: ${selectedText.join(" ")}`,
-        icon: "jjsncic-alert"
-      }).show();
+      // this.$createDialog({
+      //   type: "warn",
+      //   content: `Selected Item: <br/> - value: ${selectedVal.join(
+      //     ", "
+      //   )} <br/> - index: ${selectedIndex.join(
+      //     ", "
+      //   )} <br/> - text: ${selectedText.join(" ")}`,
+      //   icon: "jjsncic-alert"
+      // }).show();
+      alert('0000')
     },
     cancelHandle() {
-      this.$createToast({
-        type: "correct",
-        txt: "Picker canceled",
-        time: 1000
-      }).show();
+      alert('123')
+      // this.$createToast({
+      //   type: "correct",
+      //   txt: "Picker canceled",
+      //   time: 1000
+      // }).show();
     }
   },
   components: {

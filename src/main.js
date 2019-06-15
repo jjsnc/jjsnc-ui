@@ -8,8 +8,10 @@ import CascadePicker from '@/components/cascade-picker/cascade-picker.vue'
 import createAPI from '@/common/helpers/create-api'
 createAPI(Vue, Picker, ['select', 'cancel', 'change'], true)
 createAPI(Vue, Toast, ['timeout'], true)
-createAPI(Vue, CascadePicker, ['select', 'cancel', 'change'])
+createAPI(Vue, CascadePicker, ['select', 'cancel', 'change'], true)
 Vue.config.productionTip = false
+
+
 
 new Vue({
   router,
