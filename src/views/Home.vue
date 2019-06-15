@@ -170,9 +170,10 @@
       @submit="submitHandler"
       @reset="resetHandler"
     ></jjsnc-form>-->
-    <jjsnc-button @click="showToastTime">Toast - time 1s</jjsnc-button>
+    <!-- <jjsnc-button @click="showToastTime">Toast - time 1s</jjsnc-button>
     <jjsnc-button @click="showToastTime0">Toast - time 0</jjsnc-button>
-    <jjsnc-button @click="showToastMask">Toast- with mask</jjsnc-button>
+    <jjsnc-button @click="showToastMask">Toast- with mask</jjsnc-button>-->
+    <jjsnc-button @click="showCascadePicker">Cascade Picker</jjsnc-button>
   </div>
 </template>
 
@@ -203,36 +204,75 @@ import jjsncButton from "@/components/button/button.vue";
 // import jjsncUpload from "@/components/upload/upload.vue";
 // import jjsncForm from "@/components/form/form.vue";
 // import jjsncToast from "@/components/toast/toast.vue";
-
+const cascadeData = [
+  {
+    value: "Fruit",
+    text: "Fruit",
+    children: [
+      {
+        value: "Apple",
+        text: "Apple",
+        children: [{ value: 1, text: "One" }, { value: 2, text: "Two" }]
+      },
+      {
+        value: "Orange",
+        text: "Orange",
+        children: [{ value: 3, text: "Three" }, { value: 4, text: "Four" }]
+      }
+    ]
+  },
+  {
+    value: "Drink",
+    text: "Drink",
+    children: [
+      {
+        value: "Coffee",
+        text: "Coffee",
+        children: [{ value: 1, text: "One" }, { value: 2, text: "Two" }]
+      },
+      {
+        value: "Tea",
+        text: "Tea",
+        children: [{ value: 1, text: "One" }, { value: 3, text: "Three" }]
+      }
+    ]
+  }
+];
 export default {
   name: "home",
   data() {
     return {};
   },
+  mounted() {
+    this.cascadePicker = this.$createCascadePicker({
+      title: "Cascade Picker",
+      data: cascadeData,
+      selectedIndex: [0, 1, 0],
+      onSelect: this.selectHandle,
+      onCancel: this.cancelHandle
+    });
+  },
   methods: {
-    showToastTime() {
-      const toast = this.$createToast({
-        time: 1000,
-        txt: "Toast time 1s"
-      });
-      toast.show();
+    showCascadePicker() {
+      this.cascadePicker.show();
     },
-    showToastTime0() {
-      const toast = this.$createToast({
-        time: 0,
-        txt: "Toast time 0"
-      });
-      toast.show();
-      setTimeout(() => {
-        toast.hide();
-      }, 2000);
+    selectHandle(selectedVal, selectedIndex, selectedText) {
+      this.$createDialog({
+        type: "warn",
+        content: `Selected Item: <br/> - value: ${selectedVal.join(
+          ", "
+        )} <br/> - index: ${selectedIndex.join(
+          ", "
+        )} <br/> - text: ${selectedText.join(" ")}`,
+        icon: "jjsncic-alert"
+      }).show();
     },
-    showToastMask() {
-      const toast = this.$createToast({
-        txt: "Loading...",
-        mask: true
-      });
-      toast.show();
+    cancelHandle() {
+      this.$createToast({
+        type: "correct",
+        txt: "Picker canceled",
+        time: 1000
+      }).show();
     }
   },
   components: {
