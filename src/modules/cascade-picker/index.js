@@ -13,5 +13,4 @@ CascadePicker.install = function (Vue) {
 }
 
 CascadePicker.Picker = Picker
-
 export default CascadePicker

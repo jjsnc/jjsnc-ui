@@ -13,7 +13,10 @@ import './registerServiceWorker'
 
 Vue.config.productionTip = false
 import jjsncButton from './modules/button/'
+import CascadePicker from './modules/cascade-picker/'
+
 Vue.use(jjsncButton.install)
+Vue.use(CascadePicker.install)
 
 
 new Vue({

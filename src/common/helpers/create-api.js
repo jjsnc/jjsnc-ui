@@ -5,4 +5,3 @@ export default function createAPI(Vue, Component, events, single) {
     const api = Vue.createAPI(Component, events, single)
     return api
 }
-
