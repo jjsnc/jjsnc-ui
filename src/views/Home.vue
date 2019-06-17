@@ -173,7 +173,7 @@
     <!-- <jjsnc-button @click="showToastTime">Toast - time 1s</jjsnc-button>
     <jjsnc-button @click="showToastTime0">Toast - time 0</jjsnc-button>
     <jjsnc-button @click="showToastMask">Toast- with mask</jjsnc-button>-->
-    <jjsnc-button @click="showCascadePicker">Cascade Picker</jjsnc-button>
+    <jjsnc-button >Cascade Picker</jjsnc-button>
   </div>
 </template>
 
@@ -181,7 +181,7 @@
 // @ is an alias to /src
 // const positions = ["top", "right", "bottom", "left", "center"];
 // let cur = 0;
-import jjsncButton from "@/components/button/button.vue";
+// import jjsncButton from "@/components/button/button.vue";
 // import jjsncLoading from "@/components/loading/loading.vue";
 // import jjsncTip from "@/components/tip/tip.vue";
 // import jjsncCheckbox from "@/components/checkbox/checkbox.vue";
@@ -204,81 +204,24 @@ import jjsncButton from "@/components/button/button.vue";
 // import jjsncUpload from "@/components/upload/upload.vue";
 // import jjsncForm from "@/components/form/form.vue";
 // import jjsncToast from "@/components/toast/toast.vue";
-const cascadeData = [
-  {
-    value: "Fruit",
-    text: "Fruit",
-    children: [
-      {
-        value: "Apple",
-        text: "Apple",
-        children: [{ value: 1, text: "One" }, { value: 2, text: "Two" }]
-      },
-      {
-        value: "Orange",
-        text: "Orange",
-        children: [{ value: 3, text: "Three" }, { value: 4, text: "Four" }]
-      }
-    ]
-  },
-  {
-    value: "Drink",
-    text: "Drink",
-    children: [
-      {
-        value: "Coffee",
-        text: "Coffee",
-        children: [{ value: 1, text: "One" }, { value: 2, text: "Two" }]
-      },
-      {
-        value: "Tea",
-        text: "Tea",
-        children: [{ value: 1, text: "One" }, { value: 3, text: "Three" }]
-      }
-    ]
-  }
-];
 export default {
   name: "home",
   data() {
     return {};
   },
   mounted() {
-    this.cascadePicker = this.$createCascadePicker({
-      title: "Cascade Picker",
-      data: cascadeData,
-      selectedIndex: [0, 1, 0],
-      onSelect: this.selectHandle,
-      onCancel: this.cancelHandle
-    });
   },
   methods: {
     showCascadePicker() {
       this.cascadePicker.show();
     },
-    selectHandle(selectedVal, selectedIndex, selectedText) {
-      // this.$createDialog({
-      //   type: "warn",
-      //   content: `Selected Item: <br/> - value: ${selectedVal.join(
-      //     ", "
-      //   )} <br/> - index: ${selectedIndex.join(
-      //     ", "
-      //   )} <br/> - text: ${selectedText.join(" ")}`,
-      //   icon: "jjsncic-alert"
-      // }).show();
-      alert('0000')
+    selectHandle() {
     },
     cancelHandle() {
-      alert('123')
-      // this.$createToast({
-      //   type: "correct",
-      //   txt: "Picker canceled",
-      //   time: 1000
-      // }).show();
     }
   },
   components: {
-    jjsncButton
+    // jjsncButton
     // jjsncLoading,
     // jjsncTip,
     // jjsncCheckbox,
