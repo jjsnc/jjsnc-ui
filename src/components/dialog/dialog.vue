@@ -204,7 +204,7 @@ export default {
 <style lang="scss">
 @import "../../common/scss/variable.scss";
 @import "../../common/scss/mixin.scss";
-
+@import "../../common/scss/index";
 .jjsnc-dialog-main {
   width: 270px;
   padding: 0;
