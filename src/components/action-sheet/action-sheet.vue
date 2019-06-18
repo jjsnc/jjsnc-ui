@@ -2,7 +2,7 @@
   <transition name="jjsnc-action-sheet-fade">
     <jjsnc-popup
       type="action-sheet"
-      :class="{'jjsnc-action-sheet_picker':pickerStyle}"
+      :class="{'jjsnc-action-sheet_picker': pickerStyle}"
       :center="false"
       :mask="true"
       :z-index="zIndex"
@@ -12,10 +12,10 @@
       <transition name="jjsnc-action-sheet-move">
         <div class="jjsnc-action-sheet-panel jjsnc-safe-area-pb" v-show="isVisible" @click.stop>
           <h1
-            class="jjsnc-action-sheet-title border-tottom-1px"
+            class="jjsnc-action-sheet-title border-bottom-1px"
             v-show="pickerStyle || title"
           >{{title}}</h1>
-          <div class="jjsnc-action-sheet-centent">
+          <div class="jjsnc-action-sheet-content">
             <ul class="jjsnc-action-sheet-list">
               <li
                 class="jjsnc-action-sheet-item border-bottom-1px"
@@ -23,9 +23,9 @@
                 :key="index"
                 :data-align="item.align"
                 :class="[
-                 item.class || '',
-                 index===active? 'jjsnc-action-sheet-item_active': ''
-                 ]"
+                  item.class || '',
+                  index === active ? 'jjsnc-action-sheet-item_active': ''
+                ]"
                 v-html="item.content"
                 @click="itemClick(item, index)"
               ></li>
@@ -41,7 +41,7 @@
   </transition>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import jjsncPopup from "../popup/popup.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
@@ -50,6 +50,7 @@ import localeMixin from "../../common/mixins/locale";
 const COMPONENT_NAME = "jjsnc-action-sheet";
 const EVENT_SELECT = "select";
 const EVENT_CANCEL = "cancel";
+
 export default {
   name: COMPONENT_NAME,
   mixins: [visibilityMixin, popupMixin, localeMixin],
