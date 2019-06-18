@@ -124,18 +124,20 @@ export default {
       type: Boolean,
       default: false
     },
-    confirmBtn :{
+    confirmBtn: {
       type: [Object, String],
-      default(){
+      default() {
         return {
           ...defConfirmBtn
-        }
+        };
       }
     },
-    cancelBtn :{
+    cancelBtn: {
       type: [Object, String],
-      default(){
-        ...defCancelBtn
+      default() {
+        return {
+          ...defCancelBtn
+        };
       }
     }
   },
