@@ -17,7 +17,7 @@ export default {
         type: "alert",
         title: "我是标题",
         content: "我是内容",
-        icon: "cubeic-alert"
+        icon: "jjsncic-alert"
       }).show();
     }
   },

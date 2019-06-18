@@ -10,23 +10,22 @@
     >
       <div class="jjsnc-dialog-main">
         <span class="jjsnc-dialog-close" v-show="showClose" @click="close">
-          <i class="jjsncie-close"></i>
+          <i class="jjsncic-close"></i>
         </span>
         <div :class="containerClass">
           <p class="jjsnc-dialog-icon" v-if="icon">
             <i :class="icon"></i>
           </p>
-          <h2 v-if="title|| $slots.title" class="jjsnc-dialog-title">
+          <h2 v-if="title || $slots.title" class="jjsnc-dialog-title">
             <slot name="title">
               <p class="jjsnc-dialog-title-def">{{title}}</p>
             </slot>
           </h2>
           <div class="jjsnc-dialog-content">
-            <slot name="center">
+            <slot name="content">
               <div class="jjsnc-dialog-content-def">
-                <p v-html="content" v-if="content">
-                  <jjsnc-input v-bind="prompt" v-model="promptValue" v-if="isPrompt"></jjsnc-input>
-                </p>
+                <p v-html="content" v-if="content"></p>
+                <jjsnc-input v-bind="prompt" v-model="promptValue" v-if="isPrompt"/>
               </div>
             </slot>
           </div>
@@ -46,14 +45,14 @@
                 @click="confirm"
               >{{_confirmBtn.text}}</a>
             </slot>
-          </div>x
+          </div>
         </div>
       </div>
     </jjsnc-popup>
   </transition>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import jjsncPopup from "../popup/popup.vue";
 import jjsncInput from "../input/input.vue";
 import visibilityMixin from "../../common/mixins/visibility";
@@ -65,22 +64,19 @@ const EVENT_CONFIRM = "confirm";
 const EVENT_CANCEL = "cancel";
 const EVENT_CLOSE = "close";
 
-const defHref = "javascropt:;";
-
+const defHref = "javascript:;";
 const defConfirmBtn = {
   textType: "ok",
-  active: "true",
-  disabled: "false",
+  active: true,
+  disabled: false,
   href: defHref
 };
-
 const defCancelBtn = {
   textType: "cancel",
   active: false,
   disabled: false,
   href: defHref
 };
-
 const parseBtn = function(btn, defBtn) {
   if (typeof btn === "string") {
     btn = {
@@ -200,7 +196,6 @@ export default {
   }
 };
 </script>
-
 <style lang="scss">
 @import "../../common/scss/variable.scss";
 @import "../../common/scss/mixin.scss";
@@ -213,7 +208,8 @@ export default {
   border-radius: 2px;
   background-color: $dialog-bgc;
 }
-.jjsnc-dialog-confirm, .jjsnc-dialog-alert {
+.jjsnc-dialog-confirm,
+.jjsnc-dialog-alert {
   position: relative;
   overflow: hidden;
 }
@@ -277,7 +273,8 @@ export default {
     }
   }
 }
-.jjsnc-dialog-confirm, .jjsnc-dialog-prompt {
+.jjsnc-dialog-confirm,
+.jjsnc-dialog-prompt {
   .jjsnc-dialog-btns {
     .jjsnc-dialog-btn {
       width: 50%;
@@ -445,7 +442,6 @@ export default {
     transform: scale(1);
   }
 }
-
 </style>
 
 
