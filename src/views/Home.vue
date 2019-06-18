@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <jjsnc-button>Cascade Picker</jjsnc-button>
+    <jjsnc-button @click="showAlert">Cascade Picker</jjsnc-button>
   </div>
 </template>
 
@@ -11,7 +11,16 @@ export default {
     return {};
   },
   mounted() {},
-  methods: {},
+  methods: {
+    showAlert() {
+      this.$createDialog({
+        type: "alert",
+        title: "我是标题",
+        content: "我是内容",
+        icon: "cubeic-alert"
+      }).show();
+    }
+  },
   components: {}
 };
 </script>
