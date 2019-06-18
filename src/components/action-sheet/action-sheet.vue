@@ -10,7 +10,7 @@
       @mask-click="maskClick"
     >
       <transition name="jjsnc-action-sheet-move">
-        <div class="jjsnc-action-sheet-panel jjsnc-safe-area-pb" v-show="isVisoble" @click.stop>
+        <div class="jjsnc-action-sheet-panel jjsnc-safe-area-pb" v-show="isVisible" @click.stop>
           <h1
             class="jjsnc-action-sheet-title border-tottom-1px"
             v-show="pickerStyle || title"
