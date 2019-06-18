@@ -31,10 +31,21 @@
             </slot>
           </div>
           <div class="jjsnc-dialog-btns" :class="{'border-right-1px': isConfirm || isPrompt}">
-              <slot name="btns">
-              <a :href="_cancelBtn.href" class="jjsnc-dialog-btn border-top-1px" :class="{'jjsnc-dialog-btn_highlight': _cancelBtn.active, 'jjsnc-dialog-btn_disabled': _cancelBtn.disabled}" v-if="isConfirm || isPrompt" @click="cancel">{{_cancelBtn.text}}</a>
-              <a :href="_confirmBtn.href" class="jjsnc-dialog-btn border-top-1px" :class="{'jjsnc-dialog-btn_highlight': _confirmBtn.active, 'jjsnc-dialog-btn_disabled': _confirmBtn.disabled}" @click="confirm">{{_confirmBtn.text}}</a>
-              </slot>
+            <slot name="btns">
+              <a
+                :href="_cancelBtn.href"
+                class="jjsnc-dialog-btn border-top-1px"
+                :class="{'jjsnc-dialog-btn_highlight': _cancelBtn.active, 'jjsnc-dialog-btn_disabled': _cancelBtn.disabled}"
+                v-if="isConfirm || isPrompt"
+                @click="cancel"
+              >{{_cancelBtn.text}}</a>
+              <a
+                :href="_confirmBtn.href"
+                class="jjsnc-dialog-btn border-top-1px"
+                :class="{'jjsnc-dialog-btn_highlight': _confirmBtn.active, 'jjsnc-dialog-btn_disabled': _confirmBtn.disabled}"
+                @click="confirm"
+              >{{_confirmBtn.text}}</a>
+            </slot>
           </div>x
         </div>
       </div>
@@ -45,16 +56,89 @@
 <script>
 import jjsncPopup from "../popup/popup.vue";
 import jjsncInput from "../input/input.vue";
-import visibilityMixin from '../../common/mixins/visibility'
-import popupMixin from '../../common/mixins/popup'
-import localeMixin from '../../common/mixins/locale'
+import visibilityMixin from "../../common/mixins/visibility";
+import popupMixin from "../../common/mixins/popup";
+import localeMixin from "../../common/mixins/locale";
 
-const COMPONENT_NAME =  'jjsnc-dialog'
-const EVENT_CONFIRM = 'confirm'
-const EVENT_CANCEL = 'cancel'
+const COMPONENT_NAME = "jjsnc-dialog";
+const EVENT_CONFIRM = "confirm";
+const EVENT_CANCEL = "cancel";
+const EVENT_CLOSE = "close";
 
+const defHref = "javascropt:;";
+
+const defConfirmBtn = {
+  textType: "ok",
+  active: "true",
+  disabled: "false",
+  href: defHref
+};
+
+const defCancelBtn = {
+  textType: "cancel",
+  active: false,
+  disabled: false,
+  href: defHref
+};
+
+const parseBtn = function(btn, defBtn) {
+  if (typeof btn === "string") {
+    btn = {
+      text: btn
+    };
+  }
+  const text = defBtn && this.$t(defBtn.textType);
+  return Object.assign({}, defBtn, { text }, btn);
+};
 
 export default {
+  name: "COMPONENT_NAME",
+  mixins: [visibilityMixin, popupMixin, localeMixin],
+  props: {
+    type: {
+      type: String,
+      default: "alert"
+    },
+    prompt: {
+      type: Object,
+      default() {
+        return {
+          value: "",
+          placeholder: ""
+        };
+      }
+    },
+    icon: {
+      type: String,
+      default: ""
+    },
+    title: {
+      type: String,
+      default: ""
+    },
+    content: {
+      type: String,
+      default: ""
+    },
+    showClose: {
+      type: Boolean,
+      default: false
+    },
+    confirmBtn :{
+      type: [Object, String],
+      default(){
+        return {
+          ...defConfirmBtn
+        }
+      }
+    },
+    cancelBtn :{
+      type: [Object, String],
+      default(){
+        ...defCancelBtn
+      }
+    }
+  },
   components: {
     jjsncPopup,
     jjsncInput
