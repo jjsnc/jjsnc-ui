@@ -15,10 +15,12 @@ Vue.config.productionTip = false
 import jjsncButton from './modules/button/'
 import CascadePicker from './modules/cascade-picker/'
 import Dialog from './modules/dialog/'
+import Toast from './modules/toast/'
 
 Vue.use(jjsncButton.install)
 Vue.use(CascadePicker.install)
 Vue.use(Dialog)
+Vue.use(Toast)
 
 
 new Vue({

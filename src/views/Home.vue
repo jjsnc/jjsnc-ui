@@ -13,11 +13,20 @@ export default {
   mounted() {},
   methods: {
     showAlert() {
-      this.$createDialog({
-        type: "alert",
+      this.dialog = this.$createDialog({
+        type: "prompt",
         title: "我是标题",
-        content: "我是内容",
-        icon: "jjsncic-alert"
+        prompt: {
+          value: "",
+          placeholder: "请输入"
+        },
+        onConfirm: (e, promptValue) => {
+          this.$createToast({
+            type: "warn",
+            time: 1000,
+            txt: `Prompt value: ${promptValue || ""}`
+          }).show();
+        }
       }).show();
     }
   },
