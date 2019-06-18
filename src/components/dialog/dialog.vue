@@ -92,7 +92,7 @@ const parseBtn = function(btn, defBtn) {
 };
 
 export default {
-  name: "COMPONENT_NAME",
+  name: COMPONENT_NAME,
   mixins: [visibilityMixin, popupMixin, localeMixin],
   props: {
     type: {
@@ -139,6 +139,59 @@ export default {
           ...defCancelBtn
         };
       }
+    }
+  },
+  data() {
+    return {
+      defHref,
+      promptValue: this.prompt.value
+    };
+  },
+  computed: {
+    _confirmBtn() {
+      return parseBtn.call(this, this.confirmBtn, defConfirmBtn);
+    },
+    _cancelBtn() {
+      return parseBtn.call(this, this.cancelBtn, defCancelBtn);
+    },
+    isConfirm() {
+      return this.type === "confirm";
+    },
+    isPrompt() {
+      return this.type === "prompt";
+    },
+    containerClass() {
+      return `jjsnc-dialog-${this.type}`;
+    }
+  },
+  watch: {
+    "prompt.value": {
+      handler: function(newVal) {
+        this.promptValue = newVal;
+      }
+    }
+  },
+  methods: {
+    maskClick(e) {
+      this.maskClosable && this.cancel(e);
+    },
+    confirm(e) {
+      if (this._confirmBtn.disabled) {
+        return;
+      }
+      this.hide();
+      this.$emit(EVENT_CONFIRM, e, this.promptValue);
+    },
+    cancel(e) {
+      if (this._cancelBtn.disabled) {
+        return;
+      }
+      this.hide();
+      this.$emit(EVENT_CANCEL, e);
+    },
+    close(e) {
+      this.hide();
+      this.$emit(EVENT_CLOSE, e);
     }
   },
   components: {
