@@ -1,13 +1,14 @@
 <template>
   <div class="jjsnc-slide-item">
     <slot>
-      <a href="item.url">
+      <a :href="item.url">
         <img :src="item.image">
       </a>
     </slot>
   </div>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-slide-item";
 export default {
   name: COMPONENT_NAME,
@@ -22,6 +23,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss">
 .jjsnc-slide-item {
   float: left;
