@@ -1,6 +1,18 @@
 <template>
   <div class="home">
-    <jjsnc-slide ref="slide" :data="items" @change="changePage">
+    <jjsnc-slide
+      ref="slide"
+      :data="items"
+      @change="changePage"
+      :initial-index="1"
+      :loop="true"
+      :auto-play="true"
+      :interval="6000"
+      :threshold="0.4"
+      :speed="600"
+      @scroll="scroll"
+      :options="options"
+    >
       <jjsnc-slide-item
         v-for="(item, index) in items"
         :key="index"
@@ -10,6 +22,14 @@
           <img :src="item.image">
         </a>
       </jjsnc-slide-item>
+      <template slot="dots" slot-scope="props">
+        <span
+          class="my-dot"
+          :class="{active: props.current === index}"
+          v-for="(item, index) in props.dots"
+          :key="index"
+        >{{index + 1}}</span>
+      </template>
     </jjsnc-slide>
   </div>
 </template>
@@ -21,6 +41,10 @@ export default {
   name: "home",
   data() {
     return {
+      options: {
+        listenScroll: true,
+        probeType: 3
+      },
       items: [
         {
           url: "http://www.didichuxing.com/",
@@ -47,6 +71,8 @@ export default {
     },
     clickHandler(item, index) {
       console.log(item, index);
+    },
+    scroll({ x, y }) {
     }
   },
   components: {
