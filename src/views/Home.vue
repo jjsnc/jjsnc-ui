@@ -1,11 +1,22 @@
 <template>
   <div class="home">
-    <jjsnc-slide :data='items'></jjsnc-slide>
+    <jjsnc-slide ref="slide" :data="items" @change="changePage">
+      <jjsnc-slide-item
+        v-for="(item, index) in items"
+        :key="index"
+        @click.native="clickHandler(item, index)"
+      >
+        <a :href="item.url">
+          <img :src="item.image">
+        </a>
+      </jjsnc-slide-item>
+    </jjsnc-slide>
   </div>
 </template>
 
 <script>
 import jjsncSlide from "../components/slide/slide";
+import jjsncSlideItem from "../components/slide/slide-item";
 export default {
   name: "home",
   data() {
@@ -30,13 +41,24 @@ export default {
     };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    changePage(current) {
+      console.log("当前轮播图序号为:" + current);
+    },
+    clickHandler(item, index) {
+      console.log(item, index);
+    }
+  },
   components: {
-    jjsncSlide
+    jjsncSlide,
+    jjsncSlideItem
   }
 };
 </script>
 <style lang="scss">
+.jjsnc-slide {
+  height: 150px;
+}
 .home {
   padding: 20px;
   background: #efeff4;
