@@ -12,20 +12,21 @@
     </div>
     <div class="jjsnc-slide-dots" v-if="showDots">
       <slot name="dots" :current="currentPageIndex" :dots="dots">
-        <span :class="{active:currentPageIndex===index}" v-for="(item, index) in dots" :key="index"></span>
+        <span
+          :class="{active: currentPageIndex === index}"
+          v-for="(item, index) in dots"
+          :key="index"
+        ></span>
       </slot>
     </div>
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import jjsncSlideItem from "./slide-item.vue";
 import BScroll from "better-scroll";
 import scrollMixin from "../../common/mixins/scroll";
 import deprecatedMixin from "../../common/mixins/deprecated";
-import { networkInterfaces } from "os";
-import { clearTimeout, clearInterval } from "timers";
-import { DEFAULT_ENCODING } from "crypto";
 
 const COMPONENT_NAME = "jjsnc-slide";
 const EVENT_CHANGE = "change";
@@ -124,14 +125,19 @@ export default {
       "allowVertical"
     ];
     needRefreshProps.forEach(key => {
-      // To fix the render bug when add items since loop.
-      if (key === "data") {
-        this._destory();
-      }
-      /* istanbul ignore next */
-      this.$nextTick(() => {
-        this.refresh();
-      });
+      this._dataWatchers.push(
+        this.$watch(key, () => {
+          // To fix the render bug when add items since loop.
+          if (key === "data") {
+            this._destroy();
+          }
+
+          /* istanbul ignore next */
+          this.$nextTick(() => {
+            this.refresh();
+          });
+        })
+      );
     });
   },
   watch: {
@@ -142,7 +148,7 @@ export default {
     }
   },
   methods: {
-    clickIndex(item, index) {
+    clickItem(item, index) {
       /* istanbul ignore next */
       this.$emit(EVENT_SELECT, item, index);
     },
@@ -151,8 +157,9 @@ export default {
       if (this.slide === null) {
         return;
       }
-      this._destory();
+      this._destroy();
       clearTimeout(this._timer);
+
       if (this.slide && this.refreshResetCurrent) {
         this.currentPageIndex = 0;
       }
@@ -169,8 +176,8 @@ export default {
         this._play();
       }
     },
-    _destory() {
-      this.slide && this.slide.destory();
+    _destroy() {
+      this.slide && this.slide.destroy();
     },
     _refresh() {
       this._updateSlideDom(true);
@@ -182,7 +189,7 @@ export default {
     _setSlideStyle(isResize) {
       this.children = this.$refs.slideGroup.children;
 
-      const target = this.children === DIRECTION_H ? "width" : "height";
+      const target = this.direction === DIRECTION_H ? "width" : "height";
       let allSize = 0;
       const slideSize = this.$refs.slide[
         `client${target[0].toUpperCase() + target.slice(1)}`
@@ -204,7 +211,7 @@ export default {
 
       const options = Object.assign(
         {},
-        DEFAULT_ENCODING,
+        DEFAULT_OPTIONS,
         {
           scrollX: this.direction === DIRECTION_H,
           scrollY: this.direction === DIRECTION_V,
@@ -218,22 +225,27 @@ export default {
         },
         this.options
       );
+
       this.slide = new BScroll(this.$refs.slide, options);
+
       this.slide.on("scrollEnd", this._onScrollEnd);
+
       this._goToPage(this.currentPageIndex, 0);
+
       /* dispatch scroll position constantly */
       if (this.options.listenScroll && this.options.probeType === 3) {
-        this.slice.on("scroll", this._onScroll);
+        this.slide.on("scroll", this._onScroll);
       }
       const slideEl = this.$refs.slide;
       slideEl.removeEventListener("touchend", this._touchEndEvent, false);
       this._touchEndEvent = () => {
         if (this.autoPlay) {
-          this._play;
+          this._play();
         }
       };
       slideEl.addEventListener("touchend", this._touchEndEvent, false);
-      this.slice.on("beforeScrollStart", () => {
+
+      this.slide.on("beforeScrollStart", () => {
         if (this.autoPlay) {
           clearTimeout(this._timer);
         }
@@ -246,13 +258,15 @@ export default {
         this.currentPageIndex = pageIndex;
         this.$emit(EVENT_CHANGE, pageIndex);
       }
+
       this.$emit(EVENT_SCROLL_END, pageIndex);
+
       if (this.autoPlay) {
         this._play();
       }
     },
-    _onScroll(ops) {
-      this.$emit(EVENT_SELECT, ops);
+    _onScroll(pos) {
+      this.$emit(EVENT_SCROLL, pos);
     },
     _initDots() {
       this.dots = new Array(this.children.length);
@@ -302,6 +316,7 @@ export default {
     this.$nextTick(() => {
       this.refresh();
     });
+
     window.addEventListener("resize", this._resizeHandler);
   },
   activated() {
@@ -309,7 +324,7 @@ export default {
     if (this.autoPlay) {
       this._play();
     }
-    window.addEventListener("resie", this._resizeHandler);
+    window.addEventListener("resize", this._resizeHandler);
   },
   deactivated() {
     /* istanbul ignore next */
@@ -317,7 +332,7 @@ export default {
   },
   destroyed() {
     this._deactivated();
-    this._destory();
+    this._destroy();
     this.slide = null;
 
     this._dataWatchers.forEach(cancalWatcher => {
@@ -330,6 +345,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss">
 </style>
 
