@@ -1,44 +1,39 @@
 <template>
   <div class="home">
-    <jjsnc-button @click="showDefault">Cascade Picker</jjsnc-button>
+    <jjsnc-slide :data='items'></jjsnc-slide>
   </div>
 </template>
 
 <script>
+import jjsncSlide from "../components/slide/slide";
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      items: [
+        {
+          url: "http://www.didichuxing.com/",
+          image:
+            "//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide01.png"
+        },
+        {
+          url: "http://www.didichuxing.com/",
+          image:
+            "//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide02.png"
+        },
+        {
+          url: "http://www.didichuxing.com/",
+          image:
+            "//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide03.png"
+        }
+      ]
+    };
   },
   mounted() {},
-  methods: {
-    showDefault() {
-      this.$createActionSheet({
-        title: "我是标题~~~",
-        data: [
-          {
-            content: "<em>align - center</em>",
-            class: "cube-foo"
-          },
-          {
-            content: "align - left",
-            align: "left"
-          },
-          {
-            content: "align - right",
-            align: "right"
-          }
-        ],
-        onSelect: (item, index) => {
-          this.$createToast({
-            txt: `Clicked ${item.content}`,
-            time: 1000
-          }).show();
-        }
-      }).show();
-    }
-  },
-  components: {}
+  methods: {},
+  components: {
+    jjsncSlide
+  }
 };
 </script>
 <style lang="scss">
