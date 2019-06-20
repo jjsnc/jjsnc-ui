@@ -347,6 +347,43 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../common/scss/variable.scss";
+.jjsnc-slide {
+  position: relative;
+  min-height: 1px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.jjsnc-slide-group {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.jjsnc-slide-dots {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  left: 0;
+  padding: 0 6px;
+  font-size: 0;
+  text-align: center;
+  transform: translateZ(1px);
+  > span {
+    display: inline-block;
+    vertical-align: bottom;
+    margin: 0 1px;
+    width: 10px;
+    height: 1px;
+    background: $slide-dot-bgc;
+    &.active {
+      background: $slide-dot-active-bgc;
+    }
+  }
+}
+
 </style>
 
 
