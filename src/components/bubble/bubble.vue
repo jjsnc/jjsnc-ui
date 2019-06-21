@@ -1,7 +1,8 @@
 <template>
   <canvas ref="bubble" :width="width" :height="height" :style="style"></canvas>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 export default {
   props: {
     y: {
@@ -25,7 +26,7 @@ export default {
     }
   },
   mounted() {
-    this.radio = window.devicePixelRatio;
+    this.ratio = window.devicePixelRatio;
     this.width *= this.ratio;
     this.height *= this.ratio;
     this.initRadius = 18 * this.ratio;
@@ -50,16 +51,20 @@ export default {
       ctx.clearRect(0, 0, bubble.width, bubble.height);
 
       this._drawBubble(ctx);
+
       this._drawArrow(ctx);
     },
     _drawBubble(ctx) {
       ctx.save();
       ctx.beginPath();
+
       const rate = this.distance / this.maxDistance;
       const headRadius =
         this.initRadius - (this.initRadius - this.minHeadRadius) * rate;
+
       this.headCenter.y =
-        this.initCenterY - (this.initRadius - this.minTailRadius) * rate;
+        this.initCenterY - (this.initRadius - this.minHeadRadius) * rate;
+
       // upper semicircle
       ctx.arc(
         this.headCenter.x,
@@ -69,6 +74,7 @@ export default {
         Math.PI,
         true
       );
+
       // left bessel
       const tailRadius =
         this.initRadius - (this.initRadius - this.minTailRadius) * rate;
@@ -76,6 +82,7 @@ export default {
         x: this.headCenter.x,
         y: this.headCenter.y + this.distance
       };
+
       const tailPointL = {
         x: tailCenter.x - tailRadius,
         y: tailCenter.y
@@ -84,16 +91,18 @@ export default {
         x: tailPointL.x,
         y: tailPointL.y - this.distance / 2
       };
+
       ctx.quadraticCurveTo(
         controlPointL.x,
         controlPointL.y,
         tailPointL.x,
         tailPointL.y
       );
+
       // lower semicircle
       ctx.arc(tailCenter.x, tailCenter.y, tailRadius, Math.PI, 0, true);
 
-      //right bessel
+      // right bessel
       const headPointR = {
         x: this.headCenter.x + headRadius,
         y: this.headCenter.y
@@ -108,7 +117,8 @@ export default {
         headPointR.x,
         headPointR.y
       );
-      ctx.fillStyle = "rgb(170,170, 170)";
+
+      ctx.fillStyle = "rgb(170,170,170)";
       ctx.fill();
       ctx.strokeStyle = "rgb(153,153,153)";
       ctx.stroke();
@@ -119,7 +129,6 @@ export default {
       ctx.beginPath();
 
       const rate = this.distance / this.maxDistance;
-
       const arrowRadius =
         this.initArrowRadius -
         (this.initArrowRadius - this.minArrowRadius) * rate;
