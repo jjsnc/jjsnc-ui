@@ -8,6 +8,7 @@ import jjsncSlideItem from "./slide/slide-item.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 import { isAndroid } from "../../common/helpers/env";
+import { clearTimeout } from "timers";
 
 const COMPONENT_NAME = "cube-image-preview";
 const EVENT_CHANGE = "change";
@@ -156,7 +157,83 @@ export default {
       } else {
         slide.enable();
       }
+    },
+    slideScrollEndHandler() {
+      this.$refs.items.forEach(scrollItem => {
+        this.scrollEndHandler(scrollItem.scroll);
+      });
+    },
+    _scroll() {
+      const slide = this.$refs.slide.slide;
+      slide.disable();
+      slide.refresh();
+      slide.enable();
+    },
+    _slide(scroll) {
+      this.$refs.slide.slide.enable();
+      scroll.disable();
+    },
+    beforeScrollHandler() {
+      // for touchstart scrollEnd
+      // cancel it, do not enable slide
+      clearTimeout(this.enableSlideTid);
+    },
+    scrollEndHandler(scroll) {
+      clearTimeout(this.enableSlideTid);
+      if (this.dblZooming) {
+        this.dblZooming = false;
+        clearTimeout(this.clickTid);
+      }
+      this._hasEnableSlide = false;
+      this._scrolling = false;
+      scroll.enable();
+      this.enableSlideTid = setTimeout(() => {
+        this.$refs.slide.slide.enable();
+      });
+    },
+    checkBoundary(scroll, pos) {
+      if (scroll.distX && Math.abs(scroll.distX) > Math.abs(scroll.distY)) {
+        this._scrolling = true;
+        const reached =
+          scroll.distX > 0
+            ? pos.x >= scroll.minScrollX
+            : pos.x <= scroll.minScrollX;
+        if (reached) {
+          this._hasEnableSlide = true;
+          this._slide(scroll);
+        } else {
+          if (!this._hasEnableSlide) {
+            this._scroll(scroll);
+          }
+        }
+      } else if (scroll.distY) {
+        this._scrolling = true;
+        this._scroll(scroll);
+      }
+    },
+    zoomStartHandler(scroll) {
+      this._scroll(scroll);
+    },
+    dblclickHandler(index, e) {
+      const scroll = this.$refs.items[index].scroll;
+      this.dblZooming = true;
+      this.zoomTo(scroll, scroll.scale > 1 ? 1 : 2, e);
+      scroll.disable();
+    },
+    itemClickHandler() {
+      clearTimeout(this.clickTid);
+      this.clickTid = setTimeout(() => {
+        !this.dblZooming && this.hide();
+      }, this.scrollOptions.bounceTime);
+    },
+    zoomTo(scroll, scale, e) {
+      scroll.zoomTo(scale, e.pageX, e.pageY);
     }
+  },
+  components: {
+    jjsncPopup,
+    jjsncSlide,
+    jjsncSlideItem
   }
 };
 </script>
