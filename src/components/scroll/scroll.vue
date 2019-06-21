@@ -52,9 +52,177 @@
 </template>
 
 <script>
+import BScroll from "better-scroll";
+import Loading from "../loading/loading.vue";
+import Bubble from "../bubble/bubble.vue";
+import scrollMixin from "../../common/mixins/scroll";
+import deprecatedMixin from "../../common/deprecated";
+import { getRect } from "../../common/helpers/dom";
+import { camelize } from "../../common/lang/string";
 
+const COMPONENT_NAME = "jjsnc-scroll";
+const DIRECTION_H = "horizontal";
+const DIRECTION_V = "vertical";
+const DEFAULT_REFRESH_TXT = "Refresh success";
+const DEFAULT_STOP_TIME = 600;
 
-export default {};
+const EVENT_CLICK = "click";
+const EVENT_PULLING_DOWN = "pulling-down";
+const EVENT_PULLING_UP = "pulling-up";
+
+const EVENT_SCROLL = "scroll";
+const EVENT_BEFORE_SCROLL_START = "before-scroll-start";
+const EVENT_SCROLL_END = "scroll-end";
+const NEST_MODE_NONE = "none";
+const NEST_MODE_NATIVE = "native";
+const SCROLL_EVENTS = [
+  EVENT_SCROLL,
+  EVENT_BEFORE_SCROLL_START,
+  EVENT_SCROLL_END
+];
+
+const DEFAULT_OPTIONS = {
+  observeDOM: true,
+  click: true,
+  probeType: 1,
+  scrollbar: false,
+  pullDownRefresh: false,
+  pullUpload: false
+};
+
+export default {
+  name: COMPONENT_NAME,
+  mixins: [scrollMixin, deprecatedMixin],
+  provide() {
+    return {
+      parentScroll: this
+    };
+  },
+  inject: {
+    parentScroll: {
+      default: null
+    }
+  },
+  props: {
+    data: Array,
+    default() {
+      return [];
+    },
+    scrollEvents: {
+      type: Array,
+      default() {
+        return [];
+      },
+      validator(arr) {
+        return arr.every(item => {
+          return SCROLL_EVENTS.indexOf(item) !== -1;
+        });
+      }
+    },
+    // TODO: plan to remove at 1.10.0
+    listenScroll: {
+      type: Boolean,
+      default: undefined,
+      deprecated: {
+        replacedBy: "scroll-events"
+      }
+    },
+    listenBeforeScroll: {
+      type: Boolean,
+      default: undefined,
+      deprecated: {
+        replacedBy: "scroll-events"
+      }
+    },
+    direction: {
+      type: String,
+      default: DIRECTION_V
+    },
+    refreshDelay: {
+      type: Number,
+      default: 20
+    },
+    nestMode: {
+      type: String,
+      default: NEST_MODE_NONE
+    }
+  },
+  data() {
+    return {
+      beforePullDown: true,
+      isPullingDown: false,
+      isPullUpLoad: false,
+      pullUpNoMore: false,
+      bubbleY: 0,
+      pullDownStyle: "",
+      pullDownStop: 40,
+      pullDownHeight: 60,
+      pullUpHeight: 0
+    };
+  },
+  computed: {
+    pullDownRefresh() {
+      let pullDownRefresh = this.options.pullDownRefresh;
+      if (!pullDownRefresh) {
+        return pullDownRefresh;
+      }
+      if (pullDownRefresh === true) {
+        pullDownRefresh = {};
+      }
+
+      return Object.assign({ stop: this.pullDownStop, pullDownRefresh });
+    },
+    pullUpload() {
+      return this.options.pullUpload;
+    },
+    pullUpTxt() {
+      const pullUpload = this.pullUpload;
+      const txt = pullUpload && pullUpload.txt;
+      const moreTxt = (txt && txt.more) || "";
+      const noMoreTxt = (txt && txt.noMore) || "";
+      return this.pullUpNoMore ? noMoreTxt : moreTxt;
+    },
+    refreshTxt() {
+      const pullDownRefresh = this.pullDownRefresh;
+      return (pullDownRefresh && pullDownRefresh.txt) || DEFAULT_REFRESH_TXT;
+    },
+    finalScrollEvents() {
+      const finalScrollEvents = this.scrollEvents.slice();
+      if (!finalScrollEvents.length) {
+        this.listenScroll && finalScrollEvents.push(EVENT_SCROLL);
+        this.listenBeforeScroll &&
+          finalScrollEvents.push(EVENT_BEFORE_SCROLL_START);
+      }
+      return finalScrollEvents;
+    },
+    needListenScroll() {
+      return (
+        this.finalScrollEvents.indexOf(EVENT_SCROLL) !== -1 || this.parentScroll
+      );
+    }
+  },
+  watch: {
+    data() {
+      setTimeout(() => {
+        this.forceUpdate(true);
+      }, this.refreshDelay);
+    },
+    pullDownRefresh: {
+      handler(newVal, oldVal) {
+        if (newVal) {
+          this.scroll.openPullDown(newVal);
+          if (!oldVal) {
+              this._onPullDownRefresh()
+              this._pullDownRefreshChangeHandler()
+          }
+        }
+      }
+    }
+  },
+  methods:{
+      
+  }
+};
 </script>
 <style lang="scss">
 </style>
