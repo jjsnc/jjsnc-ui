@@ -264,7 +264,35 @@ export default {
         return;
       }
       this._calculateMinHeight();
-      
+
+      let options = Object.assign(
+        {},
+        DEFAULT_OPTIONS,
+        {
+          scrollY: this.direction === DIRECTION_V,
+          scrollX: this.direction === DIRECTION_H,
+          probeType: this.needListenScroll ? 3 : 1
+        },
+        this.options
+      );
+
+      this.scroll = new BScroll(this.$refs.wrapper, options);
+
+      this.parentScroll &&
+        this.nestMode !== NEST_MODE_NONE &&
+        this._handleNestScroll();
+
+      this._listenScrollEvents();
+
+      if (this.pullDownRefresh) {
+        this._onPullDownRefresh();
+        this._pullDownRefreshChangeHandler();
+      }
+
+      if (this.pullUpload) {
+        this._onPullUpLoad();
+        this._pullUpLoadChangeHandler();
+      }
     },
     disable() {},
     enable() {},
@@ -275,7 +303,13 @@ export default {
     clickItem() {},
     forceUpdate() {},
     resetPullUpTxt() {},
-    _listenScrollEvents() {},
+    _listenScrollEvents() {
+      this.finalScrollEvents.forEach(() => {
+        this.scroll.on(camelize(event), (...args) => {
+          this.$emit(event, ...args);
+        });
+      });
+    },
     _handleNestScroll() {
       // waiting scroll initial
     },
