@@ -419,7 +419,7 @@ export default {
       if (freeScroll) {
         return reachBoundaryX || reachBoundaryY;
       }
-      
+
       let reachBoundary;
       if (this.scroll.movingDirectionX) {
         reachBoundary = reachBoundaryX;
@@ -449,14 +449,21 @@ export default {
       this.scroll.on("pullingDown", this._pullDownHandle);
       this.scroll.on("scroll", this._pullDownScrollHandle);
     },
-    _offPullDownRefresh() {},
+    _offPullDownRefresh() {
+      this.scroll.off('pullingDown', this._pullDownHandle)
+      this.scroll.off('scroll', this._pullDownScrollHandle)
+    },
     _pullDownRefreshChangeHandler() {
       this.$nextTick(() => {
         this._getPullDownEleHeight();
         this._calculateMinHeight();
       });
     },
-    _pullDownHandle() {},
+    _pullDownHandle() {
+      if (this.resetPullDownTimer) {
+        clearTimeout(this.resetPullDownTimer)
+      }
+    },
     _pullDownScrollHandle() {},
     _pullUpLoadChangeHandler() {
       this.$nextTick(() => {
