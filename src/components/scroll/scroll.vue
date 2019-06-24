@@ -1,7 +1,7 @@
 <template>
   <div ref="wrapper" class="jjsnc-scroll-wrapper">
     <div class="jjsnc-scroll-content">
-      <div class="jjsnc-scroll-list-wrapper">
+      <div ref="listWrapper" class="jjsnc-scroll-list-wrapper">
         <slot>
           <ul class="jjsnc-scroll-list">
             <li
@@ -13,10 +13,10 @@
           </ul>
         </slot>
       </div>
-      <slot name="pullup" :pullUpload="pullUpload" :isPullUpLoad="isPullUpLoad">
-        <div class="jjsnc-pullup-wrapper" v-if="pullUpload">
+      <slot name="pullup" :pullUpLoad="pullUpLoad" :isPullUpLoad="isPullUpLoad">
+        <div class="jjsnc-pullup-wrapper" v-if="pullUpLoad">
           <div class="before-trigger" v-if="!isPullUpLoad">
-            <span>{{pullUpTxt}}</span>
+            <span>{{ pullUpTxt }}</span>
           </div>
           <div class="after-trigger" v-else>
             <loading></loading>
@@ -26,7 +26,7 @@
     </div>
     <div v-if="pullDownRefresh" class="jjsnc-pulldown" ref="pulldown">
       <slot
-        name="pulldonw"
+        name="pulldown"
         :pullDownRefresh="pullDownRefresh"
         :pullDownStyle="pullDownStyle"
         :beforePullDown="beforePullDown"
@@ -42,7 +42,7 @@
               <loading></loading>
             </div>
             <div v-show="!isPullingDown" class="jjsnc-pulldown-loaded">
-              <span>{{refreshTxt}}</span>
+              <span>{{ refreshTxt }}</span>
             </div>
           </div>
         </div>
@@ -51,12 +51,12 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import BScroll from "better-scroll";
 import Loading from "../loading/loading.vue";
 import Bubble from "../bubble/bubble.vue";
 import scrollMixin from "../../common/mixins/scroll";
-import deprecatedMixin from "../../common/deprecated";
+import deprecatedMixin from "../../common/mixins/deprecated";
 import { getRect } from "../../common/helpers/dom";
 import { camelize } from "../../common/lang/string";
 
@@ -73,8 +73,10 @@ const EVENT_PULLING_UP = "pulling-up";
 const EVENT_SCROLL = "scroll";
 const EVENT_BEFORE_SCROLL_START = "before-scroll-start";
 const EVENT_SCROLL_END = "scroll-end";
+
 const NEST_MODE_NONE = "none";
 const NEST_MODE_NATIVE = "native";
+
 const SCROLL_EVENTS = [
   EVENT_SCROLL,
   EVENT_BEFORE_SCROLL_START,
@@ -87,7 +89,7 @@ const DEFAULT_OPTIONS = {
   probeType: 1,
   scrollbar: false,
   pullDownRefresh: false,
-  pullUpload: false
+  pullUpLoad: false
 };
 
 export default {
@@ -104,9 +106,11 @@ export default {
     }
   },
   props: {
-    data: Array,
-    default() {
-      return [];
+    data: {
+      type: Array,
+      default() {
+        return [];
+      }
     },
     scrollEvents: {
       type: Array,
@@ -169,17 +173,17 @@ export default {
       if (pullDownRefresh === true) {
         pullDownRefresh = {};
       }
-
-      return Object.assign({ stop: this.pullDownStop, pullDownRefresh });
+      return Object.assign({ stop: this.pullDownStop }, pullDownRefresh);
     },
-    pullUpload() {
-      return this.options.pullUpload;
+    pullUpLoad() {
+      return this.options.pullUpLoad;
     },
     pullUpTxt() {
-      const pullUpload = this.pullUpload;
-      const txt = pullUpload && pullUpload.txt;
+      const pullUpLoad = this.pullUpLoad;
+      const txt = pullUpLoad && pullUpLoad.txt;
       const moreTxt = (txt && txt.more) || "";
       const noMoreTxt = (txt && txt.noMore) || "";
+
       return this.pullUpNoMore ? noMoreTxt : moreTxt;
     },
     refreshTxt() {
@@ -188,6 +192,7 @@ export default {
     },
     finalScrollEvents() {
       const finalScrollEvents = this.scrollEvents.slice();
+
       if (!finalScrollEvents.length) {
         this.listenScroll && finalScrollEvents.push(EVENT_SCROLL);
         this.listenBeforeScroll &&
@@ -216,23 +221,25 @@ export default {
             this._pullDownRefreshChangeHandler();
           }
         }
+
         if (!newVal && oldVal) {
-          this.scroll.closePulldown();
+          this.scroll.closePullDown();
           this._offPullDownRefresh();
           this._pullDownRefreshChangeHandler();
         }
       },
       deep: true
     },
-    pullUpload: {
+    pullUpLoad: {
       handler(newVal, oldVal) {
         if (newVal) {
-          this.scroll.openPullDown(newVal);
+          this.scroll.openPullUp(newVal);
           if (!oldVal) {
             this._onPullUpLoad();
             this._pullUpLoadChangeHandler();
           }
         }
+
         if (!newVal && oldVal) {
           this.scroll.closePullUp();
           this._offPullUpLoad();
@@ -256,7 +263,7 @@ export default {
     });
   },
   beforeDestroy() {
-    this.$destroy();
+    this.destroy();
   },
   methods: {
     initScroll() {
@@ -289,7 +296,7 @@ export default {
         this._pullDownRefreshChangeHandler();
       }
 
-      if (this.pullUpload) {
+      if (this.pullUpLoad) {
         this._onPullUpLoad();
         this._pullUpLoadChangeHandler();
       }
@@ -323,7 +330,7 @@ export default {
         this._reboundPullDown(() => {
           this._afterPullDown(dirty);
         });
-      } else if (this.pullUpload && this.isPullUpLoad) {
+      } else if (this.pullUpLoad && this.isPullUpLoad) {
         this.isPullUpLoad = false;
         this.scroll.finishPullUp();
         this.pullUpNoMore = !dirty || nomore;
@@ -336,7 +343,7 @@ export default {
       this.pullUpNoMore = false;
     },
     _listenScrollEvents() {
-      this.finalScrollEvents.forEach(() => {
+      this.finalScrollEvents.forEach(event => {
         this.scroll.on(camelize(event), (...args) => {
           this.$emit(event, ...args);
         });
@@ -359,6 +366,7 @@ export default {
             // so here we reset inner scroll's 'initiated' manually.
             innerScroll.initiated = false;
           });
+
           scroll.on("beforeScrollStart", () => {
             this.touchStartMoment = true;
             const anotherScroll = arr[(index + 1) % 2];
@@ -378,7 +386,6 @@ export default {
           }
 
           const reachBoundary = this._checkReachBoundary(pos);
-
           if (reachBoundary) {
             innerScroll.resetPosition();
             innerScroll.disable();
@@ -409,13 +416,13 @@ export default {
           ? pos.y <= this.scroll.maxScrollY
           : false;
       const freeScroll = this.scroll.freeScroll;
-
       const hasHorizontalScroll = this.scroll.hasHorizontalScroll;
       const hasVerticalScroll = this.scroll.hasVerticalScroll;
 
       if (!hasHorizontalScroll && !hasVerticalScroll) {
         return true;
       }
+
       if (freeScroll) {
         return reachBoundaryX || reachBoundaryY;
       }
@@ -430,19 +437,20 @@ export default {
     },
     _calculateMinHeight() {
       const { wrapper, listWrapper } = this.$refs;
-      const pullUpload = this.pullUpload;
+      const pullUpLoad = this.pullUpLoad;
       const pullDownRefresh = this.pullDownRefresh;
       let minHeight = 0;
 
-      if (pullDownRefresh || pullUpload) {
+      if (pullDownRefresh || pullUpLoad) {
         const wrapperHeight = getRect(wrapper).height;
-        if (pullUpload && pullUpload.visible) {
-          minHeight = wrapperHeight + 1;
+        minHeight = wrapperHeight + 1;
+        if (pullUpLoad && pullUpLoad.visible) {
           // minHeight = wrapperHeight + 1 - pullUpHeight, then pullUpLoad text is visible
           // when content's height is not larger than wrapper height
           minHeight -= this.pullUpHeight;
         }
       }
+
       listWrapper.style.minHeight = `${minHeight}px`;
     },
     _onPullDownRefresh() {
@@ -450,8 +458,8 @@ export default {
       this.scroll.on("scroll", this._pullDownScrollHandle);
     },
     _offPullDownRefresh() {
-      this.scroll.off('pullingDown', this._pullDownHandle)
-      this.scroll.off('scroll', this._pullDownScrollHandle)
+      this.scroll.off("pullingDown", this._pullDownHandle);
+      this.scroll.off("scroll", this._pullDownScrollHandle);
     },
     _pullDownRefreshChangeHandler() {
       this.$nextTick(() => {
@@ -461,26 +469,54 @@ export default {
     },
     _pullDownHandle() {
       if (this.resetPullDownTimer) {
-        clearTimeout(this.resetPullDownTimer)
+        clearTimeout(this.resetPullDownTimer);
+      }
+      this.beforePullDown = false;
+      this.isPullingDown = true;
+      this.$emit(EVENT_PULLING_DOWN);
+    },
+    _pullDownScrollHandle(pos) {
+      if (this.beforePullDown) {
+        this.bubbleY = Math.max(0, pos.y - this.pullDownHeight);
+        this.pullDownStyle = `top:${Math.min(
+          pos.y - this.pullDownHeight,
+          0
+        )}px`;
+      } else {
+        this.bubbleY = 0;
+        this.pullDownStyle = `top:${Math.min(pos.y - this.pullDownStop, 0)}px`;
       }
     },
-    _pullDownScrollHandle() {},
     _pullUpLoadChangeHandler() {
       this.$nextTick(() => {
-        this._getPullDownEleHeight();
+        this._getPullUpEleHeight();
         this._calculateMinHeight();
       });
     },
     _onPullUpLoad() {
       this.scroll.on("pullingUp", this._pullUpHandle);
     },
-    _offPullUpLoad() {},
+    _offPullUpLoad() {
+      this.scroll.off("pullingUp", this._pullUpHandle);
+    },
     _pullUpHandle() {
-      this.isPullingDown = true;
+      this.isPullUpLoad = true;
       this.$emit(EVENT_PULLING_UP);
     },
-    _reboundPullDown() {},
-    _afterPullDown() {},
+    _reboundPullDown(next) {
+      const { stopTime = DEFAULT_STOP_TIME } = this.pullDownRefresh;
+      setTimeout(() => {
+        this.scroll.finishPullDown();
+        next();
+      }, stopTime);
+    },
+    _afterPullDown(dirty) {
+      this.resetPullDownTimer = setTimeout(() => {
+        this.pullDownStyle = `top: -${this.pullDownHeight}px`;
+        this.beforePullDown = true;
+        dirty && this.refresh();
+      }, this.scroll.options.bounceTime);
+    },
     _getPullDownEleHeight() {
       let pulldown = this.$refs.pulldown;
       if (!pulldown) {
@@ -498,11 +534,88 @@ export default {
         this.isPullingDown = false;
       });
     },
-    _getPullUpEleHeight() {}
+    _getPullUpEleHeight() {
+      const listWrapper = this.$refs.listWrapper;
+      const pullup = listWrapper.nextElementSibling;
+      if (!pullup) {
+        this.pullUpHeight = 0;
+        return;
+      }
+      this.pullUpHeight = getRect(pullup).height;
+    }
+  },
+  components: {
+    Loading,
+    Bubble
   }
 };
 </script>
-<style lang="scss">
+
+<style lang="scss" rel="stylesheet/scss">
+@import '../../common/scss/variable.scss';
+
+.jjsnc-scroll-wrapper  {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.jjsnc-scroll-list-wrapper  {
+  overflow: hidden;
+}
+
+.jjsnc-pulldown-wrapper  {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all;
+
+  .before-trigger  {
+    height: 54px;
+    line-height: 0;
+    padding-top: 6px;
+  }
+
+  .after-trigger  {
+    .loading  {
+      padding: 8px 0;
+    }
+
+    .jjsnc-pulldown-loaded  {
+      padding: 12px 0;
+    }
+  }
+}
+
+.jjsnc-pullup-wrapper  {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .before-trigger  {
+    padding: 22px 0;
+    min-height: 1em;
+  }
+
+  .after-trigger  {
+    padding: 19px 0;
+  }
+}
+
+.jjsnc-scroll-content  {
+  position: relative;
+  z-index: 1;
+}
+
+.jjsnc-scroll-item  {
+  height: 60px;
+  line-height: 60px;
+  font-size: $fontsize-large-x;
+  padding-left: 20px;
+}
+
 </style>
-
-
