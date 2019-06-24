@@ -264,6 +264,7 @@ export default {
         return;
       }
       this._calculateMinHeight();
+      
     },
     disable() {},
     enable() {},
