@@ -1,16 +1,55 @@
 <template>
-  <transition name="jjsnc-image-preview-fade"></transition>
+  <transition name="jjsnc-image-preview-fade">
+    <jjsnc-popup type="image-preview" :z-index="zIndex" :center="false" v-show="isVisible">
+      <div class="jjsnc-image-preview-container">
+        <div class="jjsnc-image-preview-header">
+          <slot name="header" :current="currentPageIndex"></slot>
+        </div>
+        <jjsnc-slide
+          ref="slide"
+          v-if="isVisible"
+          :data="imgs"
+          :initial-index="currentPageIndex"
+          :auto-play="false"
+          :loop="loop"
+          :speed="speed"
+          :options="options"
+          @change="slideChangeHandler"
+        >
+          <jjsnc-slide-item v-for="(img, index) in imgs" :key="index">
+            <div class="jjsnc-image-preview-item" @click="itemClickHandler">
+              <jjsnc-scroll
+                ref="items"
+                :options="scrollOptions"
+                @dblclick.native="dblclickHandler(index, $event)"
+              >
+                <img class="jjsnc-image-preview-img" :src="img" @load="imgLoad(index)">
+              </jjsnc-scroll>
+            </div>
+          </jjsnc-slide-item>
+          <template slot="dots">
+            <i></i>
+          </template>
+        </jjsnc-slide>
+        <div class="jjsnc-image-preview-footer">
+          <slot name="footer" :current="currentPageIndex">
+            <span class="jjsnc-image-preview-counter">{{currentPageIndex + 1}}/{{imgs.length}}</span>
+          </slot>
+        </div>
+      </div>
+    </jjsnc-popup>
+  </transition>
 </template>
-<script>
+<script type="text/ecmascript-6">
 import jjsncPopup from "../popup/popup.vue";
 import jjsncSlide from "../slide/slide.vue";
-import jjsncSlideItem from "./slide/slide-item.vue";
+import jjsncSlideItem from "../slide/slide-item.vue";
+import jjsncScroll from "../scroll/scroll.vue";
 import visibilityMixin from "../../common/mixins/visibility";
 import popupMixin from "../../common/mixins/popup";
 import { isAndroid } from "../../common/helpers/env";
-import { clearTimeout } from "timers";
 
-const COMPONENT_NAME = "cube-image-preview";
+const COMPONENT_NAME = "jjsnc-image-preview";
 const EVENT_CHANGE = "change";
 const EVENT_HIDE = "hide";
 
@@ -44,7 +83,7 @@ export default {
   },
   data() {
     return {
-      curentPageIndex: this.initialIndex,
+      currentPageIndex: this.initialIndex,
       options: {
         observeDOM: false,
         bounce: {
@@ -60,13 +99,13 @@ export default {
         observeDOM: false,
         zoom: true,
         bindToWrapper: true,
-        freeScroll: false,
+        freeScroll: true,
         scrollX: true,
         scrollY: true,
         probeType: 3,
         bounce: false,
         click: false,
-        dbclick: true,
+        dblclick: true,
         bounceTime: 300,
         preventDefault: this.preventDefault
       }
@@ -86,7 +125,7 @@ export default {
       });
     },
     _listenSlide() {
-      // waiting slide nitial
+      // waiting slide initial
       this.$nextTick(() => {
         const slide = this.$refs.slide.slide;
         slide.on("scrollStart", this.slideScrollStartHandler);
@@ -101,7 +140,7 @@ export default {
           scroll.on("zoomStart", this.zoomStartHandler.bind(this, scroll));
           scroll.on("beforeScrollStart", this.beforeScrollHandler);
           scroll.on("scroll", this.checkBoundary.bind(this, scroll));
-          scroll.on("scrollEmd", this.scrollEndHandler.bind(this, scroll));
+          scroll.on("scrollEnd", this.scrollEndHandler.bind(this, scroll));
         });
       });
     },
@@ -124,13 +163,13 @@ export default {
     imgLoad(i) {
       /* istanbul ignore if */
       if (this.isVisible && this.$refs.items) {
-        this.$refs.itemsp[i].scroll.refresh();
+        this.$refs.items[i].scroll.refresh();
       }
     },
     setPageIndex(currentPageIndex) {
       if (
         this.currentPageIndex >= 0 &&
-        this.curentPageIndex !== currentPageIndex
+        this.currentPageIndex !== currentPageIndex
       ) {
         const item = this.$refs.items[this.currentPageIndex];
         if (item) {
@@ -163,11 +202,11 @@ export default {
         this.scrollEndHandler(scrollItem.scroll);
       });
     },
-    _scroll() {
+    _scroll(scroll) {
       const slide = this.$refs.slide.slide;
       slide.disable();
       slide.refresh();
-      slide.enable();
+      scroll.enable();
     },
     _slide(scroll) {
       this.$refs.slide.slide.enable();
@@ -197,7 +236,7 @@ export default {
         const reached =
           scroll.distX > 0
             ? pos.x >= scroll.minScrollX
-            : pos.x <= scroll.minScrollX;
+            : pos.x <= scroll.maxScrollX;
         if (reached) {
           this._hasEnableSlide = true;
           this._slide(scroll);
@@ -233,11 +272,85 @@ export default {
   components: {
     jjsncPopup,
     jjsncSlide,
-    jjsncSlideItem
+    jjsncSlideItem,
+    jjsncScroll
   }
 };
 </script>
+<style lang="scss" rel="stylesheet/scss">
+@import '../../common/scss/variable.scss';
 
-<style lang="scss">
+.jjsnc-image-preview-fade-enter, .jjsnc-image-preview-fade-leave-active {
+  opacity: 0;
+}
+
+.jjsnc-image-preview-fade-enter-active, .jjsnc-image-preview-fade-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.jjsnc-image-preview {
+  .jjsnc-popup-mask {
+    opacity: 0.6;
+  }
+
+  .jjsnc-popup-content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .jjsnc-slide-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+}
+
+.jjsnc-image-preview-container {
+  height: 100%;
+  margin: 0 -10px;
+}
+
+.jjsnc-image-preview-header, .jjsnc-image-preview-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.jjsnc-image-preview-header {
+  top: 0;
+}
+
+.jjsnc-image-preview-footer {
+  bottom: 0;
+}
+
+.jjsnc-image-preview-counter {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  text-align: center;
+  font-size: $fontsize-medium;
+  color: $image-preview-counter-color;
+}
+
+.jjsnc-image-preview-item {
+  position: relative;
+  padding: 0 10px;
+  width: 100%;
+  height: 100%;
+
+  .jjsnc-scroll-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .jjsnc-image-preview-img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
 </style>
-
