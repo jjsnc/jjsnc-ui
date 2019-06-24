@@ -393,7 +393,41 @@ export default {
         });
       });
     },
-    _checkReachBoundary() {},
+    _checkReachBoundary(pos) {
+      const distX = this.scroll.distX;
+      const distY = this.scroll.distY;
+      const reachBoundaryX =
+        distX > 0
+          ? pos.x >= this.scroll.minScrollX
+          : distX < 0
+          ? pos.x <= this.scroll.maxScrollX
+          : false;
+      const reachBoundaryY =
+        distY > 0
+          ? pos.y >= this.scroll.minScrollY
+          : distY < 0
+          ? pos.y <= this.scroll.maxScrollY
+          : false;
+      const freeScroll = this.scroll.freeScroll;
+
+      const hasHorizontalScroll = this.scroll.hasHorizontalScroll;
+      const hasVerticalScroll = this.scroll.hasVerticalScroll;
+
+      if (!hasHorizontalScroll && !hasVerticalScroll) {
+        return true;
+      }
+      if (freeScroll) {
+        return reachBoundaryX || reachBoundaryY;
+      }
+      
+      let reachBoundary;
+      if (this.scroll.movingDirectionX) {
+        reachBoundary = reachBoundaryX;
+      } else if (this.scroll.movingDirectionY) {
+        reachBoundary = reachBoundaryY;
+      }
+      return reachBoundary;
+    },
     _calculateMinHeight() {
       const { wrapper, listWrapper } = this.$refs;
       const pullUpload = this.pullUpload;
