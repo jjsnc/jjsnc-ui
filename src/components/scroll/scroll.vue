@@ -294,15 +294,47 @@ export default {
         this._pullUpLoadChangeHandler();
       }
     },
-    disable() {},
-    enable() {},
-    refresh() {},
-    destroy() {},
-    scrollTo() {},
-    scrollToElement() {},
-    clickItem() {},
-    forceUpdate() {},
-    resetPullUpTxt() {},
+    disable() {
+      this.scroll && this.scroll.disable();
+    },
+    enable() {
+      this.scroll && this.scroll.enable();
+    },
+    refresh() {
+      this._calculateMinHeight();
+      this.scroll && this.scroll.refresh();
+    },
+    destroy() {
+      this.scroll && this.scroll.destroy();
+      this.scroll = null;
+    },
+    scrollTo() {
+      this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments);
+    },
+    scrollToElement() {
+      this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments);
+    },
+    clickItem(item) {
+      this.$emit(EVENT_CLICK, item);
+    },
+    forceUpdate(dirty = false, nomore = false) {
+      if (this.pullDownRefresh && this.isPullingDown) {
+        this.isPullingDown = false;
+        this._reboundPullDown(() => {
+          this._afterPullDown(dirty);
+        });
+      } else if (this.pullUpload && this.isPullUpLoad) {
+        this.isPullUpLoad = false;
+        this.scroll.finishPullUp();
+        this.pullUpNoMore = !dirty || nomore;
+        dirty && this.refresh();
+      } else {
+        dirty && this.refresh();
+      }
+    },
+    resetPullUpTxt() {
+      this.pullUpNoMore = false;
+    },
     _listenScrollEvents() {
       this.finalScrollEvents.forEach(() => {
         this.scroll.on(camelize(event), (...args) => {
@@ -312,6 +344,54 @@ export default {
     },
     _handleNestScroll() {
       // waiting scroll initial
+      this.$nextTick(() => {
+        const innerScroll = this.scroll;
+        const outerScroll = this.parentScroll.scroll;
+        const scrolls = [innerScroll, outerScroll];
+        scrolls.forEach((scroll, index, arr) => {
+          // scroll ended always enable them
+          scroll.on("touchEnd", () => {
+            outerScroll.enable();
+            innerScroll.enable();
+            // when inner scroll reaching boundary, we will disable inner scroll, so when 'touchend' event fire,
+            // the inner scroll will not reset initiated within '_end' method in better-scroll.
+            // then lead to inner and outer scrolls together when we touch and move on the outer scroll element,
+            // so here we reset inner scroll's 'initiated' manually.
+            innerScroll.initiated = false;
+          });
+          scroll.on("beforeScrollStart", () => {
+            this.touchStartMoment = true;
+            const anotherScroll = arr[(index + 1) % 2];
+            anotherScroll.stop();
+            anotherScroll.resetPosition();
+          });
+        });
+
+        innerScroll.on("scroll", pos => {
+          // if scroll event triggered not by touch event, such as by 'scrollTo' method
+          if (!innerScroll.initiated || innerScroll.isInTransition) {
+            return;
+          }
+
+          if (this.nestMode === NEST_MODE_NATIVE && !this.touchStartMoment) {
+            return;
+          }
+
+          const reachBoundary = this._checkReachBoundary(pos);
+
+          if (reachBoundary) {
+            innerScroll.resetPosition();
+            innerScroll.disable();
+            // Prevent outer scroll have a bouncing step when enabled in 'free' nestMode.
+            outerScroll.pointX = innerScroll.pointX;
+            outerScroll.pointY = innerScroll.pointY;
+            outerScroll.enable();
+          } else {
+            outerScroll.disable();
+          }
+          this.touchStartMoment = false;
+        });
+      });
     },
     _checkReachBoundary() {},
     _calculateMinHeight() {
@@ -331,18 +411,52 @@ export default {
       }
       listWrapper.style.minHeight = `${minHeight}px`;
     },
-    _onPullDownRefresh() {},
+    _onPullDownRefresh() {
+      this.scroll.on("pullingDown", this._pullDownHandle);
+      this.scroll.on("scroll", this._pullDownScrollHandle);
+    },
     _offPullDownRefresh() {},
-    _pullDownRefreshChangeHandler() {},
+    _pullDownRefreshChangeHandler() {
+      this.$nextTick(() => {
+        this._getPullDownEleHeight();
+        this._calculateMinHeight();
+      });
+    },
     _pullDownHandle() {},
     _pullDownScrollHandle() {},
-    _pullUpLoadChangeHandler() {},
-    _onPullUpLoad() {},
+    _pullUpLoadChangeHandler() {
+      this.$nextTick(() => {
+        this._getPullDownEleHeight();
+        this._calculateMinHeight();
+      });
+    },
+    _onPullUpLoad() {
+      this.scroll.on("pullingUp", this._pullUpHandle);
+    },
     _offPullUpLoad() {},
-    _pullUpHandle() {},
+    _pullUpHandle() {
+      this.isPullingDown = true;
+      this.$emit(EVENT_PULLING_UP);
+    },
     _reboundPullDown() {},
     _afterPullDown() {},
-    _getPullDownEleHeight() {},
+    _getPullDownEleHeight() {
+      let pulldown = this.$refs.pulldown;
+      if (!pulldown) {
+        return;
+      }
+      pulldown = pulldown.firstChild;
+      this.pullDownHeight = getRect(pulldown).height;
+
+      this.beforePullDown = false;
+      this.isPullingDown = true;
+      this.$nextTick(() => {
+        this.pullDownStop = getRect(pulldown).height;
+
+        this.beforePullDown = true;
+        this.isPullingDown = false;
+      });
+    },
     _getPullUpEleHeight() {}
   }
 };
