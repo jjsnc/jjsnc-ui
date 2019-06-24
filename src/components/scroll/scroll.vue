@@ -212,15 +212,103 @@ export default {
         if (newVal) {
           this.scroll.openPullDown(newVal);
           if (!oldVal) {
-              this._onPullDownRefresh()
-              this._pullDownRefreshChangeHandler()
+            this._onPullDownRefresh();
+            this._pullDownRefreshChangeHandler();
           }
         }
-      }
+        if (!newVal && oldVal) {
+          this.scroll.closePulldown();
+          this._offPullDownRefresh();
+          this._pullDownRefreshChangeHandler();
+        }
+      },
+      deep: true
+    },
+    pullUpload: {
+      handler(newVal, oldVal) {
+        if (newVal) {
+          this.scroll.openPullDown(newVal);
+          if (!oldVal) {
+            this._onPullUpLoad();
+            this._pullUpLoadChangeHandler();
+          }
+        }
+        if (!newVal && oldVal) {
+          this.scroll.closePullUp();
+          this._offPullUpLoad();
+          this._pullUpLoadChangeHandler();
+        }
+      },
+      deep: true
     }
   },
-  methods:{
-      
+  activated() {
+    /* istanbul ignore next */
+    this.enable();
+  },
+  deactivated() {
+    /* istanbul ignore next */
+    this.disable();
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initScroll();
+    });
+  },
+  beforeDestroy() {
+    this.$destroy();
+  },
+  methods: {
+    initScroll() {
+      if (!this.$refs.wrapper) {
+        return;
+      }
+      this._calculateMinHeight();
+    },
+    disable() {},
+    enable() {},
+    refresh() {},
+    destroy() {},
+    scrollTo() {},
+    scrollToElement() {},
+    clickItem() {},
+    forceUpdate() {},
+    resetPullUpTxt() {},
+    _listenScrollEvents() {},
+    _handleNestScroll() {
+      // waiting scroll initial
+    },
+    _checkReachBoundary() {},
+    _calculateMinHeight() {
+      const { wrapper, listWrapper } = this.$refs;
+      const pullUpload = this.pullUpload;
+      const pullDownRefresh = this.pullDownRefresh;
+      let minHeight = 0;
+
+      if (pullDownRefresh || pullUpload) {
+        const wrapperHeight = getRect(wrapper).height;
+        if (pullUpload && pullUpload.visible) {
+          minHeight = wrapperHeight + 1;
+          // minHeight = wrapperHeight + 1 - pullUpHeight, then pullUpLoad text is visible
+          // when content's height is not larger than wrapper height
+          minHeight -= this.pullUpHeight;
+        }
+      }
+      listWrapper.style.minHeight = `${minHeight}px`;
+    },
+    _onPullDownRefresh() {},
+    _offPullDownRefresh() {},
+    _pullDownRefreshChangeHandler() {},
+    _pullDownHandle() {},
+    _pullDownScrollHandle() {},
+    _pullUpLoadChangeHandler() {},
+    _onPullUpLoad() {},
+    _offPullUpLoad() {},
+    _pullUpHandle() {},
+    _reboundPullDown() {},
+    _afterPullDown() {},
+    _getPullDownEleHeight() {},
+    _getPullUpEleHeight() {}
   }
 };
 </script>
