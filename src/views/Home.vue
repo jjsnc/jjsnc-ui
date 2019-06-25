@@ -1,7 +1,16 @@
 <template>
   <div class="home">
     <div class="scroll-list-wrap">
-      <jjsnc-scroll ref="scroll" :data="items" :options="options"></jjsnc-scroll>
+      <jjsnc-scroll
+        ref="scroll"
+        :data="items"
+        direction="horizontal"
+        class="horizontal-scroll-list-wrap"
+      >
+        <ul class="list-wrapper">
+          <li v-for="(item, index) in items" class="list-item" :key="index">{{ item }}</li>
+        </ul>
+      </jjsnc-scroll>
     </div>
   </div>
 </template>
@@ -13,19 +22,24 @@ export default {
     return {
       options: {},
       items: [
-        "😀 😁 😂 🤣 😃 😄 ",
-        "🙂 🤗 🤩 🤔 🤨 😐 ",
-        "👆🏻 scroll up/down 👇🏻 ",
+        "😀 😁 😂 🤣 😃 🙃 ",
+        "👈🏻  scroll 👉🏻 ",
+        "🙂 🤔 😄 🤨 😐 🙃 ",
+        "👈🏻  scroll 👉🏻 ",
         "😔 😕 🙃 🤑 😲 ☹️ ",
+        "👈🏻  scroll 👉🏻 ",
         "🐣 🐣 🐣 🐣 🐣 🐣 ",
-        "👆🏻 scroll up/down 👇🏻 ",
+        "👈🏻  scroll 👉🏻 ",
         "🐥 🐥 🐥 🐥 🐥 🐥 ",
+        "👈🏻  scroll 👉🏻 ",
         "🤓 🤓 🤓 🤓 🤓 🤓 ",
-        "👆🏻 scroll up/down 👇🏻 ",
+        "👈🏻  scroll 👉🏻 ",
         "🦔 🦔 🦔 🦔 🦔 🦔 ",
+        "👈🏻  scroll 👉🏻 ",
         "🙈 🙈 🙈 🙈 🙈 🙈 ",
-        "👆🏻 scroll up/down 👇🏻 ",
+        "👈🏻  scroll 👉🏻 ",
         "🚖 🚖 🚖 🚖 🚖 🚖 ",
+        "👈🏻  scroll 👉🏻 ",
         "✌🏻 ✌🏻 ✌🏻 ✌🏻 ✌🏻 ✌🏻 "
       ]
     };
@@ -45,8 +59,20 @@ export default {
   height: 100vh;
 }
 
-.scroll-list-wrap {
-  height: 350px;
+.horizontal-scroll-list-wrap {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  .jjsnc-scroll-content {
+    display: inline-block;
+  }
+  .list-wrapper {
+    padding: 0 10px;
+    line-height: 60px;
+    white-space: nowrap;
+  }
+  .list-item {
+    display: inline-block;
+  }
 }
 </style>
 
