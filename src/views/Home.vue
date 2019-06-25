@@ -56,7 +56,7 @@ export default {
 .home {
   padding: 20px;
   background: #efeff4;
-  height: 100vh;
+  height: 600px;
 }
 
 .horizontal-scroll-list-wrap {
