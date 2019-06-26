@@ -59,30 +59,24 @@ import scrollMixin from "../../common/mixins/scroll";
 import deprecatedMixin from "../../common/mixins/deprecated";
 import { getRect } from "../../common/helpers/dom";
 import { camelize } from "../../common/lang/string";
-
 const COMPONENT_NAME = "jjsnc-scroll";
 const DIRECTION_H = "horizontal";
 const DIRECTION_V = "vertical";
 const DEFAULT_REFRESH_TXT = "Refresh success";
 const DEFAULT_STOP_TIME = 600;
-
 const EVENT_CLICK = "click";
 const EVENT_PULLING_DOWN = "pulling-down";
 const EVENT_PULLING_UP = "pulling-up";
-
 const EVENT_SCROLL = "scroll";
 const EVENT_BEFORE_SCROLL_START = "before-scroll-start";
 const EVENT_SCROLL_END = "scroll-end";
-
 const NEST_MODE_NONE = "none";
 const NEST_MODE_NATIVE = "native";
-
 const SCROLL_EVENTS = [
   EVENT_SCROLL,
   EVENT_BEFORE_SCROLL_START,
   EVENT_SCROLL_END
 ];
-
 const DEFAULT_OPTIONS = {
   observeDOM: true,
   click: true,
@@ -91,7 +85,6 @@ const DEFAULT_OPTIONS = {
   pullDownRefresh: false,
   pullUpLoad: false
 };
-
 export default {
   name: COMPONENT_NAME,
   mixins: [scrollMixin, deprecatedMixin],
@@ -183,7 +176,6 @@ export default {
       const txt = pullUpLoad && pullUpLoad.txt;
       const moreTxt = (txt && txt.more) || "";
       const noMoreTxt = (txt && txt.noMore) || "";
-
       return this.pullUpNoMore ? noMoreTxt : moreTxt;
     },
     refreshTxt() {
@@ -192,7 +184,6 @@ export default {
     },
     finalScrollEvents() {
       const finalScrollEvents = this.scrollEvents.slice();
-
       if (!finalScrollEvents.length) {
         this.listenScroll && finalScrollEvents.push(EVENT_SCROLL);
         this.listenBeforeScroll &&
@@ -221,7 +212,6 @@ export default {
             this._pullDownRefreshChangeHandler();
           }
         }
-
         if (!newVal && oldVal) {
           this.scroll.closePullDown();
           this._offPullDownRefresh();
@@ -239,7 +229,6 @@ export default {
             this._pullUpLoadChangeHandler();
           }
         }
-
         if (!newVal && oldVal) {
           this.scroll.closePullUp();
           this._offPullUpLoad();
@@ -271,7 +260,6 @@ export default {
         return;
       }
       this._calculateMinHeight();
-
       let options = Object.assign(
         {},
         DEFAULT_OPTIONS,
@@ -282,20 +270,15 @@ export default {
         },
         this.options
       );
-
       this.scroll = new BScroll(this.$refs.wrapper, options);
-
       this.parentScroll &&
         this.nestMode !== NEST_MODE_NONE &&
         this._handleNestScroll();
-
       this._listenScrollEvents();
-
       if (this.pullDownRefresh) {
         this._onPullDownRefresh();
         this._pullDownRefreshChangeHandler();
       }
-
       if (this.pullUpLoad) {
         this._onPullUpLoad();
         this._pullUpLoadChangeHandler();
@@ -324,20 +307,22 @@ export default {
     clickItem(item) {
       this.$emit(EVENT_CLICK, item);
     },
-    forceUpdate(dirty = false, nomore = false) {
+    async forceUpdate(dirty = false, nomore = false) {
+      if (this.isPullDownUpdating) {
+        return;
+      }
       if (this.pullDownRefresh && this.isPullingDown) {
         this.isPullingDown = false;
-        this._reboundPullDown(() => {
-          this._afterPullDown(dirty);
-        });
+        this.isPullDownUpdating = true;
+        await this._waitFinishPullDown();
+        await this._waitResetPullDown(dirty);
+        this.isPullDownUpdating = false;
       } else if (this.pullUpLoad && this.isPullUpLoad) {
         this.isPullUpLoad = false;
         this.scroll.finishPullUp();
         this.pullUpNoMore = !dirty || nomore;
-        dirty && this.refresh();
-      } else {
-        dirty && this.refresh();
       }
+      dirty && this.refresh();
     },
     resetPullUpTxt() {
       this.pullUpNoMore = false;
@@ -366,7 +351,6 @@ export default {
             // so here we reset inner scroll's 'initiated' manually.
             innerScroll.initiated = false;
           });
-
           scroll.on("beforeScrollStart", () => {
             this.touchStartMoment = true;
             const anotherScroll = arr[(index + 1) % 2];
@@ -374,17 +358,14 @@ export default {
             anotherScroll.resetPosition();
           });
         });
-
         innerScroll.on("scroll", pos => {
           // if scroll event triggered not by touch event, such as by 'scrollTo' method
           if (!innerScroll.initiated || innerScroll.isInTransition) {
             return;
           }
-
           if (this.nestMode === NEST_MODE_NATIVE && !this.touchStartMoment) {
             return;
           }
-
           const reachBoundary = this._checkReachBoundary(pos);
           if (reachBoundary) {
             innerScroll.resetPosition();
@@ -418,15 +399,12 @@ export default {
       const freeScroll = this.scroll.freeScroll;
       const hasHorizontalScroll = this.scroll.hasHorizontalScroll;
       const hasVerticalScroll = this.scroll.hasVerticalScroll;
-
       if (!hasHorizontalScroll && !hasVerticalScroll) {
         return true;
       }
-
       if (freeScroll) {
         return reachBoundaryX || reachBoundaryY;
       }
-
       let reachBoundary;
       if (this.scroll.movingDirectionX) {
         reachBoundary = reachBoundaryX;
@@ -440,7 +418,6 @@ export default {
       const pullUpLoad = this.pullUpLoad;
       const pullDownRefresh = this.pullDownRefresh;
       let minHeight = 0;
-
       if (pullDownRefresh || pullUpLoad) {
         const wrapperHeight = getRect(wrapper).height;
         minHeight = wrapperHeight + 1;
@@ -450,7 +427,6 @@ export default {
           minHeight -= this.pullUpHeight;
         }
       }
-
       listWrapper.style.minHeight = `${minHeight}px`;
     },
     _onPullDownRefresh() {
@@ -503,19 +479,23 @@ export default {
       this.isPullUpLoad = true;
       this.$emit(EVENT_PULLING_UP);
     },
-    _reboundPullDown(next) {
+    _waitFinishPullDown(next) {
       const { stopTime = DEFAULT_STOP_TIME } = this.pullDownRefresh;
-      setTimeout(() => {
-        this.scroll.finishPullDown();
-        next();
-      }, stopTime);
+      return new Promise(resolve => {
+        setTimeout(() => {
+          this.scroll.finishPullDown();
+          resolve();
+        }, stopTime);
+      });
     },
-    _afterPullDown(dirty) {
-      this.resetPullDownTimer = setTimeout(() => {
-        this.pullDownStyle = `top: -${this.pullDownHeight}px`;
-        this.beforePullDown = true;
-        dirty && this.refresh();
-      }, this.scroll.options.bounceTime);
+    _waitResetPullDown(dirty) {
+      return new Promise(resolve => {
+        this.resetPullDownTimer = setTimeout(() => {
+          this.pullDownStyle = `top: -${this.pullDownHeight}px`;
+          this.beforePullDown = true;
+          resolve();
+        }, this.scroll.options.bounceTime);
+      });
     },
     _getPullDownEleHeight() {
       let pulldown = this.$refs.pulldown;
@@ -524,12 +504,10 @@ export default {
       }
       pulldown = pulldown.firstChild;
       this.pullDownHeight = getRect(pulldown).height;
-
       this.beforePullDown = false;
       this.isPullingDown = true;
       this.$nextTick(() => {
         this.pullDownStop = getRect(pulldown).height;
-
         this.beforePullDown = true;
         this.isPullingDown = false;
       });
@@ -552,19 +530,19 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-@import '../../common/scss/variable.scss';
+@import "../../common/scss/variable.scss";
 
-.jjsnc-scroll-wrapper  {
+.jjsnc-scroll-wrapper {
   position: relative;
   height: 100%;
   overflow: hidden;
 }
 
-.jjsnc-scroll-list-wrapper  {
+.jjsnc-scroll-list-wrapper {
   overflow: hidden;
 }
 
-.jjsnc-pulldown-wrapper  {
+.jjsnc-pulldown-wrapper {
   position: absolute;
   width: 100%;
   left: 0;
@@ -573,49 +551,48 @@ export default {
   align-items: center;
   transition: all;
 
-  .before-trigger  {
+  .before-trigger {
     height: 54px;
     line-height: 0;
     padding-top: 6px;
   }
 
-  .after-trigger  {
-    .loading  {
+  .after-trigger {
+    .loading {
       padding: 8px 0;
     }
 
-    .jjsnc-pulldown-loaded  {
+    .jjsnc-pulldown-loaded {
       padding: 12px 0;
     }
   }
 }
 
-.jjsnc-pullup-wrapper  {
+.jjsnc-pullup-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .before-trigger  {
+  .before-trigger {
     padding: 22px 0;
     min-height: 1em;
   }
 
-  .after-trigger  {
+  .after-trigger {
     padding: 19px 0;
   }
 }
 
-.jjsnc-scroll-content  {
+.jjsnc-scroll-content {
   position: relative;
   z-index: 1;
 }
 
-.jjsnc-scroll-item  {
+.jjsnc-scroll-item {
   height: 60px;
   line-height: 60px;
   font-size: $fontsize-large-x;
   padding-left: 20px;
 }
-
 </style>

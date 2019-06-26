@@ -145,14 +145,14 @@ export default {
 };
 </script>
 <style lang="scss">
-.jjsnc-slide {
-  height: 150px;
-}
-.home {
-  padding: 20px;
-  background: #efeff4;
-  height: 660px;
-}
+// .jjsnc-slide {
+//   height: 150px;
+// }
+// .home {
+//   padding: 20px;
+//   background: #efeff4;
+//   height: 660px;
+// }
 .scroll-wrapper {
   .jjsnc-pulldown-wrapper {
     .before-trigger {
