@@ -154,7 +154,7 @@ export default {
   height: 660px;
 }
 .scroll-wrapper {
-  .cube-pulldown-wrapper {
+  .jjsnc-pulldown-wrapper {
     .before-trigger {
       font-size: 30px;
       line-height: 30px;
