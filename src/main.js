@@ -10,8 +10,8 @@ import Toast from './modules/toast/'
 import ActionSheet from './modules/action-sheet/'
 import ImagePreview from './modules/image-preview'
 import Scroll from './modules/scroll'
-Vue.use(jjsncButton.install)
-Vue.use(CascadePicker.install)
+Vue.use(jjsncButton)
+Vue.use(CascadePicker)
 Vue.use(Dialog)
 Vue.use(Toast)
 Vue.use(ActionSheet)
