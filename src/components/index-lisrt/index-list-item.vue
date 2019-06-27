@@ -7,12 +7,12 @@
     @click="selectItem()"
   >
     <slot>
-      <div class="jjsnc-index-list-def border-bottom-1px">{{item.name}}</div>
+      <div class="jjsnc-index-list-item-def border-bottom-1px">{{item.name}}</div>
     </slot>
   </li>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import { addClass, removeClass } from "../../common/helpers/dom";
 
 const COMPONENT_NAME = "jjsnc-index-list-item";
@@ -41,7 +41,7 @@ export default {
     removeActiveCls(e) {
       removeClass(e.currentTarget, ACTIVE_CLS);
     },
-    selectTiem() {
+    selectItem() {
       this.$emit(EVENT_SELECT, this.item);
     }
   }
