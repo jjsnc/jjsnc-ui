@@ -66,9 +66,5 @@ export default {
 .jjsnc-index-list-item_active {
   background: $index-list-item-active-bgc;
 }
-
-
-
-
 </style>
 
