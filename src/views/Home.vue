@@ -1,5 +1,15 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <jjsnc-index-list
+      ref="indexList"
+      :data="data"
+      :title="title"
+      :pullUpLoad="true"
+      @select="selectItem"
+      @title-click="clickTitle"
+      @pulling-up="onPullingUp"
+    ></jjsnc-index-list>
+  </div>
 </template>
 
 <script>
@@ -10,7 +20,7 @@ export default {
   data() {
     return {
       title: "Current City: BEIJING",
-      cityData: cityData
+      data: cityData.slice(0, 4)
     };
   },
   computed: {},
@@ -21,6 +31,18 @@ export default {
     },
     clickTitle(title) {
       console.log(title);
+    },
+    onPullingUp() {
+      // Mock async load.
+      setTimeout(() => {
+        const length = this.data.length;
+        if (length < cityData.length) {
+          // Update data.
+          this.data.push(cityData[length]);
+        }
+        // Call forceUpdate after finishing data load.
+        this.$refs.indexList.forceUpdate();
+      }, 1000);
     }
   },
   components: {}
