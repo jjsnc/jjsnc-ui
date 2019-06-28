@@ -4,7 +4,7 @@
     <ul>
       <slot>
         <jjsnc-index-list-item
-          v-for="(item, index) in group.item"
+          v-for="(item, index) in group.items"
           :key="index"
           :item="item"
           @select="selectItem"
@@ -13,16 +13,21 @@
     </ul>
   </li>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 import jjsncIndexListItem from "./index-list-item.vue";
+
 const COMPONENT_NAME = "jjsnc-index-list-group";
 const EVENT_SELECT = "select";
+
 export default {
   name: COMPONENT_NAME,
   props: {
-    type: Object,
-    default() {
-      return {};
+    group: {
+      type: Object,
+      default() {
+        return {};
+      }
     }
   },
   methods: {
@@ -35,5 +40,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-</style>
