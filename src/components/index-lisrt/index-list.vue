@@ -10,7 +10,7 @@
       @pulling-up="onPullingUp"
     >
       <div class="jjsnc-index-list-content" ref="content">
-        <h1 class="jjsnc-index-list-title" v-if="title" ref="title" @click="titleClick">{{title}}</h1>
+        <h1 class="jjsnc-index-list-title" v-if="title" ref="title" @click="titleClick">{{ title }}</h1>
         <ul>
           <slot>
             <jjsnc-index-list-group
@@ -22,10 +22,10 @@
           </slot>
         </ul>
       </div>
-      <template v-if="$slotss.pullup || $scopedSlots.pullup" slot="pullup">
+      <template v-if="$slots.pullup || $scopedSlots.pullup" slot="pullup" slot-scope="props">
         <slot name="pullup" :pullUpLoad="props.pullUpLoad" :isPullUpLoad="props.isPullUpLoad"></slot>
       </template>
-      <template v-if="$slots.pulldown  || $scopedSlots.pulldown" slot="pulldown" slot-scope="props">
+      <template v-if="$slots.pulldown || $scopedSlots.pulldown" slot="pulldown" slot-scope="props">
         <slot
           name="pulldown"
           :pullDownRefresh="props.pullDownRefresh"
@@ -48,9 +48,9 @@
           :key="index"
           :data-index="index"
           class="jjsnc-index-list-nav-item"
-          :class="{active:currentIndex===index}"
+          :class="{active: currentIndex === index}"
         >
-          <slot name="nav-item" :item="item">{{item}}</slot>
+          <slot name="nav-item" :item="item">{{ item }}</slot>
         </li>
       </ul>
     </div>
@@ -63,7 +63,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import {
   getData,
   getRect,
@@ -71,11 +71,11 @@ import {
   getMatchedTarget
 } from "../../common/helpers/dom";
 import { inBrowser } from "../../common/helpers/env";
-import JjsncScroll from "../scroll/scroll.vue";
-import JjsncIndexListGroup from "./index-list-group.vue";
+
+import jjsncScroll from "../scroll/scroll.vue";
+import jjsncIndexListGroup from "./index-list-group.vue";
 import scrollMixin from "../../common/mixins/scroll";
-import deprecatedMixin from "../../common/minxins/deprecated";
-import { deprecate } from "util";
+import deprecatedMixin from "../../common/mixins/deprecated";
 
 const COMPONENT_NAME = "jjsnc-index-list";
 const EVENT_SELECT = "select";
@@ -84,7 +84,6 @@ const EVENT_PULLING_UP = "pulling-up";
 const EVENT_PULLING_DOWN = "pulling-down";
 
 const ANCHOR_HEIGHT = inBrowser ? (window.innerHeight <= 480 ? 17 : 18) : 18;
-
 const transformStyleKey = prefixStyle("transform");
 
 export default {
@@ -112,15 +111,15 @@ export default {
     pullDownRefresh: {
       type: [Object, Boolean],
       default: undefined,
-      deprecate: {
-        replaceBy: "options"
+      deprecated: {
+        replacedBy: "options"
       }
     },
     pullUpLoad: {
       type: [Object, Boolean],
       default: undefined,
-      deprecate: {
-        replaceBy: "options"
+      deprecated: {
+        replacedBy: "options"
       }
     }
   },
@@ -135,7 +134,8 @@ export default {
   },
   computed: {
     fixedTitle() {
-      this.title && !this.titleHeight && this._caculateTitleHeiht();
+      this.title && !this.titleHeight && this._caculateTitleHeight();
+
       return this.scrollY <= -this.titleHeight && this.data[this.currentIndex]
         ? this.data[this.currentIndex].name
         : "";
@@ -152,7 +152,7 @@ export default {
           pullDownRefresh: this.pullDownRefresh,
           pullUpLoad: this.pullUpLoad
         },
-        this.$options
+        this.options
       );
     }
   },
@@ -164,8 +164,8 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.title && this._caculateTitleHeiht();
-      this._caculateHeight();
+      this.title && this._caculateTitleHeight();
+      this._calculateHeight();
     });
   },
   methods: {
@@ -186,10 +186,10 @@ export default {
       this.$refs.scroll.forceUpdate(dirty);
       dirty &&
         this.$nextTick(() => {
-          this._caculateHeight();
+          this._calculateHeight();
         });
     },
-    onShortcutTouchStrat(e) {
+    onShortcutTouchStart(e) {
       const target = getMatchedTarget(e, "jjsnc-index-list-nav-item");
       if (!target) return;
       let anchorIndex = getData(target, "index");
@@ -199,18 +199,26 @@ export default {
 
       this._scrollTo(anchorIndex);
     },
+    onShortcutTouchMove(e) {
+      let firstTouch = e.touches[0];
+      this.touch.y2 = firstTouch.pageY;
+      let delta = ((this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT) | 0;
+      let anchorIndex = parseInt(this.touch.anchorIndex) + delta;
+
+      this._scrollTo(anchorIndex);
+    },
     onPullingUp() {
       this.$emit(EVENT_PULLING_UP);
     },
     onPullingDown() {
       this.$emit(EVENT_PULLING_DOWN);
     },
-    _caculateTitleHeiht() {
-      this.titleHeight = this.$$refs.title
+    _caculateTitleHeight() {
+      this.titleHeight = this.$refs.title
         ? getRect(this.$refs.title).height
         : 0;
     },
-    _caculateHeight() {
+    _calculateHeight() {
       this.groupList = this.$el.getElementsByClassName(
         "jjsnc-index-list-group"
       );
@@ -245,13 +253,13 @@ export default {
   watch: {
     data() {
       this.$nextTick(() => {
-        this._caculateHeight();
+        this._calculateHeight();
       });
     },
     title(newVal) {
       this.$nextTick(() => {
-        this._caculateTitleHeiht();
-        this._caculateHeight();
+        this._caculateTitleHeight();
+        this._calculateHeight();
       });
     },
     diff(newVal) {
@@ -265,11 +273,11 @@ export default {
       this.fixedTop = fixedTop;
       this.$refs.fixed.style[
         transformStyleKey
-      ] = `translate3d(0, ${fixedTop}px, 0)`;
+      ] = `translate3d(0,${fixedTop}px,0)`;
     },
     scrollY(newY) {
       const listHeight = this.listHeight;
-      //top
+      // top
       if (newY > -this.titleHeight) {
         this.currentIndex = 0;
         return;
@@ -289,8 +297,8 @@ export default {
     }
   },
   components: {
-    JjsncScroll,
-    JjsncIndexListGroup
+    jjsncScroll,
+    jjsncIndexListGroup
   }
 };
 </script>
