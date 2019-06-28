@@ -64,9 +64,225 @@
 </template>
 
 <script>
+import {
+  getData,
+  getRect,
+  prefixStyle,
+  getMatchedTarget
+} from "../../common/helpers/dom";
+import { inBrowser } from "../../common/helpers/env";
 import JjsncScroll from "../scroll/scroll.vue";
 import JjsncIndexListGroup from "./index-list-group.vue";
+import scrollMixin from "../../common/mixins/scroll";
+import deprecatedMixin from "../../common/minxins/deprecated";
+import { deprecate } from "util";
+
+const COMPONENT_NAME = "jjsnc-index-list";
+const EVENT_SELECT = "select";
+const EVENT_TITLE_CLICK = "title-click";
+const EVENT_PULLING_UP = "pulling-up";
+const EVENT_PULLING_DOWN = "pulling-down";
+
+const ANCHOR_HEIGHT = inBrowser ? (window.innerHeight <= 480 ? 17 : 18) : 18;
+
+const transformStyleKey = prefixStyle("transform");
+
 export default {
+  name: COMPONENT_NAME,
+  mixins: [scrollMixin, deprecatedMixin],
+  props: {
+    title: {
+      type: String,
+      default: ""
+    },
+    data: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+    speed: {
+      type: Number,
+      default: 0
+    },
+    navbar: {
+      type: Boolean,
+      default: true
+    },
+    pullDownRefresh: {
+      type: [Object, Boolean],
+      default: undefined,
+      deprecate: {
+        replaceBy: "options"
+      }
+    },
+    pullUpLoad: {
+      type: [Object, Boolean],
+      default: undefined,
+      deprecate: {
+        replaceBy: "options"
+      }
+    }
+  },
+  data() {
+    return {
+      scrollEvents: ["scroll"],
+      currentIndex: 0,
+      scrollY: -1,
+      diff: -1,
+      titleHeight: 0
+    };
+  },
+  computed: {
+    fixedTitle() {
+      this.title && !this.titleHeight && this._caculateTitleHeiht();
+      return this.scrollY <= -this.titleHeight && this.data[this.currentIndex]
+        ? this.data[this.currentIndex].name
+        : "";
+    },
+    shortcutList() {
+      return this.data.map(group => {
+        return group ? group.shortcut || group.name.substr(0, 1) : "";
+      });
+    },
+    scrollOptions() {
+      return Object.assign(
+        {},
+        {
+          pullDownRefresh: this.pullDownRefresh,
+          pullUpLoad: this.pullUpLoad
+        },
+        this.$options
+      );
+    }
+  },
+  created() {
+    this.groupList = [];
+    this.listHeight = [];
+    this.touch = {};
+    this.subTitleHeight = 0;
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.title && this._caculateTitleHeiht();
+      this._caculateHeight();
+    });
+  },
+  methods: {
+    /* TODO: remove refresh next minor version */
+    refresh() {
+      this.$refs.scroll.refresh();
+    },
+    selectItem(item) {
+      this.$emit(EVENT_SELECT, item);
+    },
+    scroll(pos) {
+      this.scrollY = pos.y;
+    },
+    titleClick() {
+      this.$emit(EVENT_TITLE_CLICK, this.title);
+    },
+    forceUpdate(dirty) {
+      this.$refs.scroll.forceUpdate(dirty);
+      dirty &&
+        this.$nextTick(() => {
+          this._caculateHeight();
+        });
+    },
+    onShortcutTouchStrat(e) {
+      const target = getMatchedTarget(e, "jjsnc-index-list-nav-item");
+      if (!target) return;
+      let anchorIndex = getData(target, "index");
+      let firstTouch = e.touches[0];
+      this.touch.y1 = firstTouch.pageY;
+      this.touch.anchorIndex = anchorIndex;
+
+      this._scrollTo(anchorIndex);
+    },
+    onPullingUp() {
+      this.$emit(EVENT_PULLING_UP);
+    },
+    onPullingDown() {
+      this.$emit(EVENT_PULLING_DOWN);
+    },
+    _caculateTitleHeiht() {
+      this.titleHeight = this.$$refs.title
+        ? getRect(this.$refs.title).height
+        : 0;
+    },
+    _caculateHeight() {
+      this.groupList = this.$el.getElementsByClassName(
+        "jjsnc-index-list-group"
+      );
+      const subTitleEl = this.$el.getElementsByClassName(
+        "jjsnc-index-list-anchor"
+      )[0];
+      this.subTitleHeight = subTitleEl ? getRect(subTitleEl).height : 0;
+      this.listHeight = [];
+
+      if (!this.groupList) {
+        return;
+      }
+
+      let height = this.titleHeight;
+      this.listHeight.push(height);
+      for (let i = 0; i < this.groupList.length; i++) {
+        let item = this.groupList[i];
+        height += item.clientHeight;
+        this.listHeight.push(height);
+      }
+    },
+    _scrollTo(index) {
+      if (index < 0) {
+        index = 0;
+      } else if (index > this.listHeight.length - 2) {
+        index = this.listHeight.length - 2;
+      }
+      this.$refs.scroll.scrollToElement(this.groupList[index], this.speed);
+      this.scrollY = this.$refs.scroll.scroll.y;
+    }
+  },
+  watch:{
+      data(){
+        this.$nextTick(()=>{
+          this._caculateHeight()
+        })
+      },
+      title(newVal){
+        this.$nextTick(()=>{
+           this._caculateTitleHeiht()
+           this._caculateHeight()
+        })
+      },
+      diff(newVal){
+         let fixedTop = (newVal >0 && newVal < this.subTitleHeight)? newVal - this.subTitleHeight: 0
+         if (this.fixedTop === fixedTop) {
+            return 
+         }
+         this.fixedTop = fixedTop
+         this.$refs.fixed.style[transformStyleKey] =  `translate3d(0, ${fixedTop}px, 0)`
+      },
+      scrollY(newY){
+          const listHeight = this.listHeight;
+          //top 
+          if (newY > -this.titleHeight) {
+               this.currentIndex = 0;
+               return 
+          }
+          // midd
+          for (let i = 0; i < listHeight.length-1 ; i++) {
+            let height1 = listHeight[i];
+            let height2 = listHeight[i+1]
+            if (-newY >= height1 && -newY < height2) {
+                this.currentIndex = i
+                this.diff = height2 + newY
+                return 
+            }
+          }
+          // bottom
+          this.currentIndex = listHeight.length - 2
+      }
+  },
   components: {
     JjsncScroll,
     JjsncIndexListGroup
@@ -140,7 +356,7 @@ jjsnc-index-list-anchor {
         color: $index-list-nav-active-color;
       }
       @media (max-height: 480px) {
-        & { 
+        & {
           padding-top: 3px;
         }
       }
