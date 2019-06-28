@@ -75,6 +75,78 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../common/scss/variable";
+@import "../../common/scss/mixin";
+
+.jjsnc-index-list {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  .jjsnc-scroll-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+}
+
+.jjsnc-index-list-content {
+  background: $index-list-bgc;
+  border-radius: 2px;
+}
+
+.jjsnc-index-list-title {
+  padding: 14px 16px;
+  font-size: $fontsize-medium;
+  line-height: 1.6;
+  color: $index-list-title-color;
+}
+
+jjsnc-index-list-anchor {
+  padding: 16px 16px 10px 16px;
+  line-height: 1;
+  font-size: $fontsize-medium;
+  color: $index-list-anchor-color;
+  background: $index-list-anchor-bgc;
+}
+
+.jjsnc-index-lisst-fixed {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.jjsnc-index-list-nav {
+  position: absolute;
+  z-index: 30;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: Helvetica;
+  > ul {
+    padding: 0;
+    margin: 0;
+    > li {
+      padding: 6px 16px 0 16px;
+      line-height: 1;
+      text-align: center;
+      box-sizing: (border-box);
+      font-size: $fontsize-small;
+      color: $index-list-nav-color;
+      &.active {
+        color: $index-list-nav-active-color;
+      }
+      @media (max-height: 480px) {
+        & { 
+          padding-top: 3px;
+        }
+      }
+    }
+  }
+}
 </style>
 
 
