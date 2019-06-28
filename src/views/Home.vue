@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
@@ -18,7 +17,6 @@ export default {
   mounted() {},
   methods: {
     selectItem(item) {
-      
       console.log(item.name);
     },
     clickTitle(title) {
