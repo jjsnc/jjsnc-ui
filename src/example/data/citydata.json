@@ -1,0 +1,337 @@
+{
+    "cityData": [
+        {
+            "name": "★Hot City",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "A",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "T",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "B",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "C",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "D",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "E",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "F",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        },
+        {
+            "name": "G",
+            "items": [
+                {
+                    "name": "BEIJING",
+                    "value": 1
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 2
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 3
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 4
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 5
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 6
+                },
+                {
+                    "name": "BEIJING",
+                    "value": 7
+                },
+                {
+                    "name": "SHANGHAI",
+                    "value": 8
+                }
+            ]
+        }
+    ]
+}

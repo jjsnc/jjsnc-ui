@@ -10,112 +10,7 @@
 </template>
 
 <script>
-const cityData = [
-  {
-    name: "★Hot City",
-    items: [
-      {
-        name: "BEIJING",
-        value: 1
-      },
-      {
-        name: "SHANGHAI",
-        value: 2
-      }
-    ]
-  },
-  {
-    name: "A",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "B",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "C",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "D",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "E",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "F",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  },
-    {
-    name: "G",
-    items: [
-      {
-        name: "ANSHAN",
-        value: 3
-      },
-      {
-        name: "ANQING",
-        value: 4
-      }
-    ]
-  }
-];
+import {cityData} from '../example/data/citydata.json'
 
 export default {
   name: "home",
@@ -139,13 +34,13 @@ export default {
 };
 </script>
 <style lang="scss">
-.jjsnc-slide {
-  height: 150px;
-}
+// .jjsnc-slide {
+//   height: 150px;
+// }
 .home {
-  padding: 20px;
-  background: #efeff4;
-  height: 660px;
+  // padding: 20px;
+  // background: #efeff4;
+  height: 100vh;
 }
 </style>
 
