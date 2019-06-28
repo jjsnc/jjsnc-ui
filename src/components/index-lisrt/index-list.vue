@@ -242,46 +242,51 @@ export default {
       this.scrollY = this.$refs.scroll.scroll.y;
     }
   },
-  watch:{
-      data(){
-        this.$nextTick(()=>{
-          this._caculateHeight()
-        })
-      },
-      title(newVal){
-        this.$nextTick(()=>{
-           this._caculateTitleHeiht()
-           this._caculateHeight()
-        })
-      },
-      diff(newVal){
-         let fixedTop = (newVal >0 && newVal < this.subTitleHeight)? newVal - this.subTitleHeight: 0
-         if (this.fixedTop === fixedTop) {
-            return 
-         }
-         this.fixedTop = fixedTop
-         this.$refs.fixed.style[transformStyleKey] =  `translate3d(0, ${fixedTop}px, 0)`
-      },
-      scrollY(newY){
-          const listHeight = this.listHeight;
-          //top 
-          if (newY > -this.titleHeight) {
-               this.currentIndex = 0;
-               return 
-          }
-          // midd
-          for (let i = 0; i < listHeight.length-1 ; i++) {
-            let height1 = listHeight[i];
-            let height2 = listHeight[i+1]
-            if (-newY >= height1 && -newY < height2) {
-                this.currentIndex = i
-                this.diff = height2 + newY
-                return 
-            }
-          }
-          // bottom
-          this.currentIndex = listHeight.length - 2
+  watch: {
+    data() {
+      this.$nextTick(() => {
+        this._caculateHeight();
+      });
+    },
+    title(newVal) {
+      this.$nextTick(() => {
+        this._caculateTitleHeiht();
+        this._caculateHeight();
+      });
+    },
+    diff(newVal) {
+      let fixedTop =
+        newVal > 0 && newVal < this.subTitleHeight
+          ? newVal - this.subTitleHeight
+          : 0;
+      if (this.fixedTop === fixedTop) {
+        return;
       }
+      this.fixedTop = fixedTop;
+      this.$refs.fixed.style[
+        transformStyleKey
+      ] = `translate3d(0, ${fixedTop}px, 0)`;
+    },
+    scrollY(newY) {
+      const listHeight = this.listHeight;
+      //top
+      if (newY > -this.titleHeight) {
+        this.currentIndex = 0;
+        return;
+      }
+      // midd
+      for (let i = 0; i < listHeight.length - 1; i++) {
+        let height1 = listHeight[i];
+        let height2 = listHeight[i + 1];
+        if (-newY >= height1 && -newY < height2) {
+          this.currentIndex = i;
+          this.diff = height2 + newY;
+          return;
+        }
+      }
+      // bottom
+      this.currentIndex = listHeight.length - 2;
+    }
   },
   components: {
     JjsncScroll,
