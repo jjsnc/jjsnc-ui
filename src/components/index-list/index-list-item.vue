@@ -51,6 +51,7 @@ export default {
 <style lang="scss">
 @import "../../common/scss/variable";
 @import "../../common/scss/mixin";
+@import "../../common/scss/index";
 
 .jjsnc-index-list-item-def {
   position: relative;
@@ -60,11 +61,12 @@ export default {
   font-size: $fontsize-medium;
   color: $index-list-item-color;
   &:last-child {
-    @include border-none();
+    // @include border-none();
   }
 }
 .jjsnc-index-list-item_active {
   background: $index-list-item-active-bgc;
 }
+
 </style>
 

@@ -36,6 +36,84 @@ const cityData = [
         value: 4
       }
     ]
+  },
+    {
+    name: "B",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
+  },
+    {
+    name: "C",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
+  },
+    {
+    name: "D",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
+  },
+    {
+    name: "E",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
+  },
+    {
+    name: "F",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
+  },
+    {
+    name: "G",
+    items: [
+      {
+        name: "ANSHAN",
+        value: 3
+      },
+      {
+        name: "ANQING",
+        value: 4
+      }
+    ]
   }
 ];
 

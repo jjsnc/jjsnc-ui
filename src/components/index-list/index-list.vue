@@ -320,28 +320,24 @@ export default {
     overflow: hidden;
   }
 }
-
 .jjsnc-index-list-content {
   background: $index-list-bgc;
   border-radius: 2px;
 }
-
 .jjsnc-index-list-title {
   padding: 14px 16px;
   font-size: $fontsize-medium;
   line-height: 1.6;
   color: $index-list-title-color;
 }
-
-jjsnc-index-list-anchor {
+.jjsnc-index-list-anchor {
   padding: 16px 16px 10px 16px;
   line-height: 1;
   font-size: $fontsize-medium;
   color: $index-list-anchor-color;
   background: $index-list-anchor-bgc;
 }
-
-.jjsnc-index-lisst-fixed {
+.jjsnc-index-list-fixed {
   z-index: 1;
   position: absolute;
   top: 0;
@@ -362,7 +358,7 @@ jjsnc-index-list-anchor {
       padding: 6px 16px 0 16px;
       line-height: 1;
       text-align: center;
-      box-sizing: (border-box);
+      // @include box-sizing(border-box);
       font-size: $fontsize-small;
       color: $index-list-nav-color;
       &.active {
