@@ -3,7 +3,8 @@
     ref="swipeItem"
     @transitionend="onTransitionEnd"
     @touchstart="onTouchStart"
-    @touchmove="onTouchEnd"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
     class="jjsnc-swipe-item"
   >
     <slot>
@@ -25,11 +26,11 @@
     </ul>
   </div>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 import { getRect, prefixStyle } from "../../common/helpers/dom";
 
-import { easeOutQuart, easeOutCubic } from "../../common/lang/ease";
-
+import { easeOutQuart, easeOutCubic } from "../../common/helpers/ease";
 import { getNow } from "../../common/lang/date";
 
 const COMPONENT_NAME = "jjsnc-swipe-item";
@@ -89,7 +90,7 @@ export default {
     this.swipe.addItem(this);
   },
   mounted() {
-    this.scrollerStyle = this.$refs.swipeItem.scrollerStyle;
+    this.scrollerStyle = this.$refs.swipeItem.style;
     this.$nextTick(() => {
       this.refresh();
     });
@@ -110,7 +111,6 @@ export default {
       if (this.btns.length === 0) {
         return;
       }
-
       const len = this.$refs.btns.length;
       let delta = 0;
       let totalWidth = -this.maxScrollX;
@@ -152,7 +152,7 @@ export default {
     },
     _translate(x, useZ) {
       let translateZ = useZ ? " translateZ(0)" : "";
-      this.scrollerStyle[transform] = `translate(${x}px, 0)${translateZ}`;
+      this.scrollerStyle[transform] = `translate(${x}px,0)${translateZ}`;
       this.x = x;
     },
     _transitionProperty(property = "transform") {
@@ -175,19 +175,18 @@ export default {
       if (this.btns.length === 0) {
         return;
       }
-
       const len = this.$refs.btns.length;
       let delta = 0;
       let translate = 0;
       for (let i = 0; i < len; i++) {
-        const btn = this.$$refs.btns[i];
+        const btn = this.$refs.btns[i];
         if (this.state === STATE_GROW) {
           translate = delta;
         } else {
           translate = 0;
         }
         delta += this.cachedBtns[i].width;
-        btn.style[transform] = `translate(${translate}px, 0) translateZ(0)`;
+        btn.style[transform] = `translate(${translate}px,0) translateZ(0)`;
         btn.style[transitionProperty] = "all";
         btn.style[transitionTimingFunction] = easing;
         btn.style[transitionDuration] = `${time}ms`;
@@ -227,7 +226,7 @@ export default {
         this.isInTransition = true;
       }
     },
-    genBtnStyle(btn) {
+    genBtnStyl(btn) {
       return `background: ${btn.color}`;
     },
     clickItem() {
@@ -237,6 +236,9 @@ export default {
     clickBtn(btn) {
       this.swipe.onBtnClick(btn, this.index);
       this.$emit(EVENT_BTN_CLICK, btn, this.index);
+      if (this.autoShrink) {
+        this.shrink();
+      }
     },
     stop() {
       if (this.isInTransition) {
@@ -254,7 +256,7 @@ export default {
       this.movingDirectionX = 0;
       const point = e.touches[0];
       this.pointX = point.pageX;
-      this.pointY = point.pageXY;
+      this.pointY = point.pageY;
       this.distX = 0;
       this.distY = 0;
       this.startX = this.x;
@@ -272,13 +274,13 @@ export default {
         e.stopPropagation();
       }
       /* istanbul ignore if */
-      if (this.isIntransition) {
+      if (this.isInTransition) {
         return;
       }
       e.preventDefault();
       const point = e.touches[0];
       let deltaX = point.pageX - this.pointX;
-      let deltaY = (point.pageY = this.pointY);
+      let deltaY = point.pageY - this.pointY;
       this.pointX = point.pageX;
       this.pointY = point.pageY;
 
@@ -290,14 +292,15 @@ export default {
       if (absDistX + directionLockThreshold <= absDistY) {
         return;
       }
-      let timestamp = getNow();
 
+      let timestamp = getNow();
       if (
         timestamp - this.endTime > momentumLimitTime &&
         absDistX < momentumLimitDistance
       ) {
         return;
       }
+
       this.movingDirectionX =
         deltaX > 0 ? DIRECTION_RIGHT : deltaX < 0 ? DIRECTION_LEFT : 0;
 
@@ -311,6 +314,7 @@ export default {
       if (!this.moved) {
         this.moved = true;
       }
+
       this._translate(newX, true);
 
       if (timestamp - this.startTime > momentumLimitTime) {
@@ -319,6 +323,26 @@ export default {
       }
 
       this.$emit(EVENT_SCROLL, this.x);
+    },
+    onTouchEnd() {
+      if (!this.moved) {
+        return;
+      }
+      if (this.movingDirectionX === DIRECTION_RIGHT) {
+        this.shrink();
+        return;
+      }
+      this.endTime = getNow();
+      let duration = this.endTime - this.startTime;
+      let absDistX = Math.abs(this.x - this.startX);
+      if (
+        (duration < momentumLimitTime && absDistX > momentumLimitDistance) ||
+        this.x < this.maxScrollX / 2
+      ) {
+        this.grow();
+      } else {
+        this.shrink();
+      }
     },
     onTransitionEnd() {
       this.isInTransition = false;
