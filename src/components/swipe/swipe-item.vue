@@ -52,8 +52,85 @@ const transitionDuration = prefixStyle("transitionDuration");
 const transitionTimingFunction = prefixStyle("transitionTimingFunction");
 
 export default {
-  name: COMp
+  name: COMPONENT_NAME,
+  inject: ["swipe"],
+  props: {
+    item: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
+    btns: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
+    index: {
+      type: Number,
+      index: -1
+    },
+    autoShrink: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    btns() {
+      this.$nextTick(() => {
+        this.refresh();
+      });
+    }
+  },
+  created() {
+    this.x = 0;
+    this.state = STATE_SHRINK;
+    this.swipe.addItem(this);
+  },
+  mounted() {
+    this.scrollerStyle = this.$refs.swipeItem.scrollerStyle;
+    this.$nextTick(() => {
+      this.refresh();
+    });
+    this.$on(EVENT_SCROLL, this._handleBtns);
+  },
+  methods: {
+    _initCachedBtns() {
+      this.cachedBtns = [];
+      const len = this.$refs.btns.length;
+      for (let i = 0; i < len; i++) {
+        this.cachedBtns.push({
+          width: getRect(this.$refs.btns[i]).width
+        });
+      }
+    },
+    _handleBtns(x) {
+      /* istanbul ignore if */
+      if (this.btns.length === 0) {
+        return;
+      }
 
+      const len = this.$refs.btns.length;
+      let delta = 0;
+      let totalWidth = -this.maxScrollX;
+      for (let i = 0; i < len; i++) {
+        const btn = this.$refs.btns[i];
+        let rate = (totalWidth - delta) / totalWidth;
+        let width;
+        let translate = rate * x - x;
+        if (x < this.maxScrollX) {
+          width = this.cachedBtns[i].width + rate * (this.maxScrollX - x);
+        } else {
+          width = this.cachedBtns[i].width;
+        }
+        delta += this.cachedBtns[i].width;
+        btn.style.width = `${width}px`;
+        btn.style[transform] = `translate(${translate}px)`;
+        btn.style[transitionDuration] = "0ms";
+      }
+    }
+  }
 };
 </script>
 
