@@ -79,7 +79,22 @@ export default {
 };
 </script>
 
-<style lang="sass">
-
+<style lang="scss">
+.jjsnc-swipe {
+  overflow: hidden;
+}
+.jjsnc-swipe-enter-active,
+.jjsnc-swipe-leave-active {
+  transition: all 0.3s;
+  .jjsnc-swipe-item-inner {
+    transition: all 0.3s;
+  }
+}
+.jjsnc-swipe-enter,
+.jjsnc-swipe-leave-to {
+  .jjsnc-swipe-item-inner {
+    height: 0;
+  }
+}
 </style>
 
