@@ -2,7 +2,28 @@
   <div class="home">
     <div class="swipe-wrapper">
       <jjsnc-scroll>
-        <jjsnc-swipe @item-click="onItemClick" @btn-click="onBtnClick" :data="swipeData"></jjsnc-swipe>
+        <jjsnc-swipe>
+          <transition-group name="swipe" tag="ul">
+            <li class="swipe-item-wrapper" v-for="(data,index) in swipeData" :key="data.item.id">
+              <jjsnc-swipe-item
+                ref="swipeItem"
+                :btns="data.btns"
+                :index="index"
+                @btn-click="onBtnClick"
+              >
+                <div @click="onItemClick(data.item, index)" class="item-inner">
+                  <div class="icon">
+                    <img width="60" height="60" :src="data.item.imgurl">
+                  </div>
+                  <div class="text">
+                    <h2 class="item-name" v-html="data.item.name"></h2>
+                    <p class="item-desc" v-html="data.item.desc"></p>
+                  </div>
+                </div>
+              </jjsnc-swipe-item>
+            </li>
+          </transition-group>
+        </jjsnc-swipe>
       </jjsnc-scroll>
     </div>
   </div>
@@ -10,12 +31,12 @@
 
 <script>
 // import { cityData } from "../example/data/citydata.json";
-import { swipeData } from "../example/data/swipedata.json";
+import { customData } from "../example/data/swipedata.json";
 export default {
   name: "home",
   data() {
     return {
-      swipeData: swipeData
+      swipeData: customData
     };
   },
   computed: {},
@@ -45,8 +66,8 @@ export default {
   // background: #efeff4;
   height: 100vh;
 }
-.swipe-wrapper{
-  height: 500px;
+.swipe-wrapper {
+  height: 600px;
 }
 .swipe-view {
   .swipe-wrapper {
