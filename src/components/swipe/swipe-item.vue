@@ -332,5 +332,36 @@ export default {
 };
 </script>
 
+<style lang="scss">
+@import "../../common/scss/variable";
+.jjsnc-swipe-item {
+  position: relative;
+}
+
+.jjsnc-swipe-item-inner {
+  height: 60px;
+  line-height: 60px;
+  font-size: $fontsize-large;
+  padding-left: 20px;
+}
+
+.jjsnc-swipe-btn {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: $fontsize-large;
+  .text {
+    flex: 1;
+    padding: 0 20px;
+    white-space: nowrap;
+    color: $swipe-btn-color;
+  }
+}
+</style>
+
 
 
