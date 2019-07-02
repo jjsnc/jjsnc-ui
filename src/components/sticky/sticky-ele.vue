@@ -9,12 +9,13 @@
   </div>
 </template>
 
-<script>
-import { getRect, prefixStyle } from "../../common/helpers";
+<script type="text/ecmascript-6">
+import { getRect, prefixStyle } from "../../common/helpers/dom";
 
 const COMPONENT_NAME = "jjsnc-sticky";
 const EVENT_CHANGE = "change";
 const EVENT_DIFF_CHANGE = "diff-change";
+
 const transformStyleKey = prefixStyle("transform");
 
 export default {
@@ -78,7 +79,7 @@ export default {
       const newEle = this.eles[newIndex];
 
       const currentKey =
-        newEle && newEle.eleKey !== undeifned
+        newEle && newEle.eleKey !== undefined
           ? newEle.eleKey
           : newIndex === -1
           ? ""
@@ -103,6 +104,7 @@ export default {
           }
         }
       });
+
       this.currentKey = currentKey;
       this.$emit(EVENT_CHANGE, currentKey, newIndex);
     },
@@ -135,10 +137,10 @@ export default {
           ele.refresh();
         });
         this._calculateHeight();
-        this.computedCurrentSticky(this.pos);
+        this.computeCurrentSticky(this.pos);
       });
     },
-    computedCurrentSticky(scrollY) {
+    computeCurrentSticky(scrollY) {
       scrollY += this.offset;
 
       const positions = this.positions;
@@ -160,7 +162,7 @@ export default {
         }
         const max = Math.max(bottom, nextTop);
 
-        if (scrollY >= top && scrooY <= max) {
+        if (scrollY >= top && scrollY <= max) {
           this.currentIndex = i;
           this.currentDiff = scrollY - top;
           const diff = nextTop - scrollY;
@@ -179,7 +181,7 @@ export default {
       const eles = this.eles;
       eles.forEach((ele, i) => {
         const { top, height } = getRect(ele.$el);
-        top.positions[i] = top;
+        this.positions[i] = top;
         this.heights[i] = height;
       });
       this.fixedEleHeight = this.$refs.fixedEle.offsetHeight;
