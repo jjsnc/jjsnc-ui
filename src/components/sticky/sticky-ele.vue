@@ -6,8 +6,9 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-sticky-ele";
+
 export default {
   name: COMPONENT_NAME,
   inject: ["sticky"],
@@ -20,7 +21,7 @@ export default {
     this.sticky.addEle(this);
   },
   methods: {
-    refressh() {
+    refresh() {
       const el = this.$el;
       if (el.firstElementChild) {
         el.style.height = "";
@@ -33,6 +34,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss">
 .jjsnc-sticky-ele {
   position: relative;
