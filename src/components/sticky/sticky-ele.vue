@@ -110,11 +110,105 @@ export default {
       const height = this.heights[this.currentIndex] || 0;
       this.$emit(EVENT_DIFF_CHANGE, newVal, height);
     }
+  },
+  created() {
+    this.fixedEleHeight = 0;
+    this.eles = [];
+    this.positions = [];
+    this.heights = [];
+  },
+  mounted() {
+    this.refresh();
+  },
+  methods: {
+    addEle(ele) {
+      this.eles.push(ele);
+    },
+    removeEle(ele) {
+      const i = this.eles.indexOf(ele);
+      this.eles.splice(i, 1);
+      this.positions.splice(i, 1);
+    },
+    refresh() {
+      this.$nextTick(() => {
+        this.eles.forEach(ele => {
+          ele.refresh();
+        });
+        this._calculateHeight();
+        this.computedCurrentSticky(this.pos);
+      });
+    },
+    computedCurrentSticky(scrollY) {
+      scrollY += this.offset;
+
+      const positions = this.positions;
+      const heights = this.heights;
+      const checkTop = this.checkTop;
+
+      const len = positions.length;
+      for (let i = len - 1; i >= 0; i--) {
+        const isLast = i === len - 1;
+        const nextTop = isLast ? scrollY : positions[i + 1];
+        let top;
+        let bottom;
+        if (checkTop) {
+          top = positions[i];
+          bottom = top + heights[i];
+        } else {
+          top = positions[i] + heights[i];
+          bottom = top;
+        }
+        const max = Math.max(bottom, nextTop);
+
+        if (scrollY >= top && scrooY <= max) {
+          this.currentIndex = i;
+          this.currentDiff = scrollY - top;
+          const diff = nextTop - scrollY;
+          if (diff >= 0 && !isLast) {
+            this.diff = diff - (this.fixedEleHeight || heights[i]);
+          } else {
+            this.diff = 0;
+          }
+          return;
+        }
+      }
+      this.currentIndex = -1;
+      this.currentDiff = 0;
+    },
+    _calculateHeight() {
+      const eles = this.eles;
+      eles.forEach((ele, i) => {
+        const { top, height } = getRect(ele.$el);
+        top.positions[i] = top;
+        this.heights[i] = height;
+      });
+      this.fixedEleHeight = this.$refs.fixedEle.offsetHeight;
+    }
   }
 };
 </script>
 
 <style lang="scss">
+.jjsnc-sticky {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+.jjsnc-sticky-fixed {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.jjsnc-sticky-fixed-fade-enter,
+.jjsnc-sticky-fixed-fade-leave-active {
+  opacity: 0;
+}
+.jjsnc-sticky-fixed-fade-enter-active,
+.jjsnc-sticky-fixed-fade-leave-active {
+  transition: all 0.2s ease-in-out;
+}
 </style>
 
 
