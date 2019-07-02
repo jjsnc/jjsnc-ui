@@ -13,6 +13,7 @@ import Scroll from './modules/scroll'
 import Slide from './modules/slide'
 import indexList from './modules/index-list'
 import swipe from './modules/swipe'
+import sticky from './modules/sticky'
 Vue.use(jjsncButton)
 Vue.use(CascadePicker)
 Vue.use(Dialog)
@@ -23,6 +24,7 @@ Vue.use(Scroll)
 Vue.use(Slide)
 Vue.use(indexList)
 Vue.use(swipe)
+Vue.use(sticky)
 
 
 new Vue({
