@@ -1,47 +1,40 @@
 <template>
   <div class="home">
-    <jjsnc-sticky :pos="scrollY">
-      <jjsnc-scroll :scroll-events="scrollEvents" @scroll="scrollHandler">
+    <jjsnc-sticky :pos="scrollY" :check-top="checkTop">
+      <div class="scroll-ele" @scroll="scrollHandler">
         <ul>
           <li>title</li>
         </ul>
-        <jjsnc-sticky-ele ele-key="11">
+        <jjsnc-sticky-ele>
           <ul class="sticky-header">
-            <li>11</li>
+            <li>1</li>
           </ul>
         </jjsnc-sticky-ele>
         <ul>
           <li v-for="(item, index) in items" :key="index">{{item}}</li>
         </ul>
-        <jjsnc-sticky-ele ele-key="22">
+        <jjsnc-sticky-ele>
           <ul class="sticky-header">
-            <li>22</li>
+            <li>2</li>
           </ul>
         </jjsnc-sticky-ele>
         <ul>
           <li v-for="(item, index) in items2" :key="index">{{item}}</li>
         </ul>
-        <jjsnc-sticky-ele ele-key="33">
+        <jjsnc-sticky-ele>
           <ul class="sticky-header">
-            <li>33</li>
+            <li>333</li>
           </ul>
         </jjsnc-sticky-ele>
         <ul>
           <li v-for="(item, index) in items3" :key="index">{{item}}</li>
         </ul>
-      </jjsnc-scroll>
-      <template slot="fixed" slot-scope="props">
-        <ul class="sticky-header">
-          <li>{{props.current}}</li>
-        </ul>
-      </template>
+      </div>
     </jjsnc-sticky>
   </div>
 </template>
 
 <script>
-// import { cityData } from "../example/data/citydata.json";
-// import { swipeData } from "../example/data/swipedata.json";
 const _data = [
   "😀 😁 😂 🤣 😃 😄 ",
   "🙂 🤗 🤩 🤔 🤨 😐 ",
@@ -62,8 +55,8 @@ export default {
   name: "home",
   data() {
     return {
-      scrollEvents: ["scroll"],
       scrollY: 0,
+      checkTop: true,
       items: _data.concat(),
       items2: _data.concat(),
       items3: _data.concat()
@@ -72,8 +65,8 @@ export default {
   computed: {},
   mounted() {},
   methods: {
-    scrollHandler({ y }) {
-      this.scrollY = -y;
+    scrollHandler(e) {
+      this.scrollY = e.currentTarget.scrollTop;
     }
   },
   components: {}
@@ -83,12 +76,19 @@ export default {
 .home {
   height: 100vh;
 }
+.scroll-ele {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #fff;
+}
+
 .sticky-header li {
-  background:#636161;
+  background: #636161;
   z-index: 99;
   color: #fff;
 }
-.jjsnc-sticky{
+.jjsnc-sticky {
   li {
     height: 50px;
     line-height: 50px;
