@@ -37,6 +37,7 @@ export default {
 <style lang="scss">
 .home {
   height: 100vh;
+  background: #edf0f4;
 }
 </style>
 
