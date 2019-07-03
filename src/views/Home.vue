@@ -1,6 +1,17 @@
 <template>
   <div class="home">
     <jjsnc-scroll-nav-bar :current="current" :labels="labels" @change="changeHandler" />
+    <div class="side-container">
+      <jjsnc-scroll-nav-bar
+        direction="vertical"
+        :current="current"
+        :labels="labels"
+        :txts="txts"
+        @change="changeHandler"
+      >
+        <i slot-scope="props">{{props.txt}}</i>
+      </jjsnc-scroll-nav-bar>
+    </div>
   </div>
 </template>
 
@@ -21,6 +32,18 @@ export default {
         "豪华车",
         "二手车",
         "出租车"
+      ],
+      txts: [
+        "1快车",
+        "2小巴",
+        "3专车",
+        "4顺风车",
+        "5代驾",
+        "6公交",
+        "7自驾租车",
+        "8豪华车",
+        "9二手车",
+        "10出租车"
       ]
     };
   },
@@ -38,6 +61,10 @@ export default {
 .home {
   height: 100vh;
   background: #edf0f4;
+}
+.side-container {
+  height: 300px;
+  margin-top: 20px;
 }
 </style>
 
