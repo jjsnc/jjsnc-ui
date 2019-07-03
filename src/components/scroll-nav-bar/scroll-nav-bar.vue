@@ -144,8 +144,8 @@ export default {
 .jjsnc-scroll-nav-bar {
   position: relative;
   display: flex;
-  color: $color-nav-color;
-  background-color: $color-nav-bgc;
+  color: $scroll-nav-color;
+  background-color: $scroll-nav-bgc;
 }
 .jjsnc-scroll-nav-bar_horizontal {
   align-items: center;
