@@ -6,7 +6,7 @@
           class="jjsnc-scroll-nav-bar-item"
           v-for="(txt, index) in txts"
           :key="index"
-          :class="{'jjsnc-scroll-nav-bar-item_active': active=== labels[index]}"
+          :class="{'jjsnc-scroll-nav-bar-item_active': active === labels[index]}"
           @click="clickHandler(labels[index])"
         >
           <slot :txt="txt" :index="index" :active="active" :label="labels[index]">
@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import scrollMixin from "../../common/mixins/scroll";
 import jjsncScroll from "../scroll/scroll.vue";
 
@@ -55,7 +55,7 @@ export default {
       type: Array,
       default() {
         /* istanbul ignore next */
-        return [];
+        return this.labels;
       }
     },
     current: {
@@ -96,30 +96,32 @@ export default {
       }
       this.active = label;
       this.scrollNav && this.scrollNav.barChange(label);
-    }
-  },
-  refresh() {
-    this.$refs.scroll.refresh();
-    this._adjust();
-  },
-  _adjust() {
-    // waiting ui
-    this.$nextTick(() => {
-      const isHorizontal = this.direction === DIRECTION_H;
-      const targetProp = isHorizontal ? "clientWidth" : "clientHeight";
-      const active = this.active;
-      const viewportSize = this.$refs.$el[targetProp];
-      const itemsEle = this.$refs.items;
-      const scrollerSize = itemsEle[targetProp];
-      const minTranslate = Math.min(0, viewportSize - scrollerSize);
-      const middleTranslate = viewportSize / 2;
-      const items = itemsEle.children;
-      let size = 0;
-      this.labels.every((label, index) => {
-        if (label === active) {
-          size += items[index][targetProp] / 2;
-          return false;
-        }
+    },
+    refresh() {
+      this.$refs.scroll.refresh();
+      this._adjust();
+    },
+    _adjust() {
+      // waiting ui
+      this.$nextTick(() => {
+        const isHorizontal = this.direction === DIRECTION_H;
+        const targetProp = isHorizontal ? "clientWidth" : "clientHeight";
+        const active = this.active;
+        const viewportSize = this.$refs.scroll.$el[targetProp];
+        const itemsEle = this.$refs.items;
+        const scrollerSize = itemsEle[targetProp];
+        const minTranslate = Math.min(0, viewportSize - scrollerSize);
+        const middleTranslate = viewportSize / 2;
+        const items = itemsEle.children;
+        let size = 0;
+        this.labels.every((label, index) => {
+          if (label === active) {
+            size += items[index][targetProp] / 2;
+            return false;
+          }
+          size += items[index][targetProp];
+          return true;
+        });
         let translate = middleTranslate - size;
         translate = Math.max(minTranslate, Math.min(0, translate));
         this.$refs.scroll.scrollTo(
@@ -128,7 +130,7 @@ export default {
           300
         );
       });
-    });
+    }
   },
   components: {
     jjsncScroll
