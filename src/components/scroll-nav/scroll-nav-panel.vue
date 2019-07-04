@@ -6,10 +6,12 @@
     <slot></slot>
   </div>
 </template>
-<script>
+
+<script type="text/ecmascript-6">
 import jjsncStickyEle from "../sticky/sticky-ele.vue";
 
 const COMPONENT_NAME = "jjsnc-scroll-nav-panel";
+
 export default {
   name: COMPONENT_NAME,
   inject: ["scrollNav"],
@@ -27,7 +29,7 @@ export default {
     }
   },
   mounted() {
-    this.scrillNav.addPane(this);
+    this.scrollNav.addPanel(this);
   },
   beforeDestroy() {
     this.scrollNav.removePanel(this);
@@ -37,7 +39,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-</style>
-
