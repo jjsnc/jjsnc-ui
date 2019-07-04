@@ -1,9 +1,10 @@
 <template>
-  <div class="jjsnc-scroll-nav" :class="{'jjsnc-scroll-nav_side':side}">
+  <div class="jjsnc-scroll-nav" :class="{'jjsnc-scroll-nav_side': side}">
     <jjsnc-sticky ref="sticky" :pos="scrollY" @change="stickyChangeHandler">
       <jjsnc-scroll
         ref="scroll"
         :scroll-events="scrollEvents"
+        :options="options"
         :data="data"
         @scroll="scrollHandler"
         @scroll-end="scrollEndHandler"
@@ -17,7 +18,7 @@
                 :txts="barTxts"
                 :labels="labels"
                 :current="active"
-              ></jjsnc-scroll-nav-bar>
+              />
             </slot>
           </jjsnc-sticky-ele>
           <jjsnc-sticky
@@ -30,7 +31,7 @@
               <slot></slot>
             </div>
             <template slot="fixed" v-if="!side">
-              <slot></slot>
+              <div></div>
             </template>
           </jjsnc-sticky>
         </div>
@@ -39,7 +40,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 import scrollMixin from "../../common/mixins/scroll";
 
 import jjsncSticky from "../sticky/sticky.vue";
@@ -49,6 +50,7 @@ import jjsncScrollNavBar from "../scroll-nav-bar/scroll-nav-bar.vue";
 
 const DIRECTION_H = "horizontal";
 const DIRECTION_V = "vertical";
+
 const COMPONENT_NAME = "jjsnc-scroll-nav";
 const EVENT_CHANGE = "change";
 const EVENT_STICKY_CHANGE = "sticky-change";
@@ -63,6 +65,9 @@ export default {
   mixins: [scrollMixin],
   props: {
     data: {
+      type: Array
+    },
+    speed: {
       type: Number,
       default: 300
     },
@@ -72,7 +77,7 @@ export default {
     },
     current: {
       type: [String, Number],
-      default: " "
+      default: ""
     }
   },
   data() {
@@ -132,7 +137,7 @@ export default {
         : this.$refs.navBarEle.$el.offsetHeight;
       this.$refs.scroll.refresh();
     },
-    setBart(bar) {
+    setBar(bar) {
       this.navBar = bar;
     },
     barChange(label) {
@@ -151,7 +156,7 @@ export default {
       if (panel) {
         this._jumping = true;
         const offset = this.pageStickyOffset;
-        this.$$refs.scroll.scrollToElement(
+        this.$refs.scroll.scrollToElement(
           panel.$el,
           this.speed,
           0,
@@ -174,7 +179,7 @@ export default {
         current = this.labels[0];
       }
       this.stickyCurrent = current;
-      if (this._panel) {
+      if (this._jumping) {
         return;
       }
       this.active = current;
@@ -188,7 +193,7 @@ export default {
       this.$emit(EVENT_STICKY_CHANGE, current);
     },
     scrollHandler(pos) {
-      this.scrollY = -pos;
+      this.scrollY = -pos.y;
       if (!this._jumping) {
         this.active = this.stickyCurrent;
       }
@@ -212,6 +217,7 @@ export default {
   }
 };
 </script>
+
 <style lang="scss">
 .jjsnc-scroll-nav {
   position: relative;
