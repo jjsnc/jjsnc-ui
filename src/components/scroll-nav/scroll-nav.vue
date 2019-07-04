@@ -227,14 +227,12 @@ export default {
     height: 100%;
   }
 }
-
 .jjsnc-scroll-nav-main {
   overflow: hidden;
   > .jjsnc-sticky {
     position: static;
   }
 }
-
 .jjsnc-scroll-nav_side {
   > .jjsnc-sticky {
     display: flex;
