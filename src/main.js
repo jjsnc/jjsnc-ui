@@ -15,6 +15,7 @@ import indexList from './modules/index-list'
 import swipe from './modules/swipe'
 import sticky from './modules/sticky'
 import scrollNavBar from './modules/scroll-nav-bar'
+import scrollNav from './modules/scroll-nav'
 Vue.use(jjsncButton)
 Vue.use(CascadePicker)
 Vue.use(Dialog)
@@ -27,6 +28,7 @@ Vue.use(indexList)
 Vue.use(swipe)
 Vue.use(sticky)
 Vue.use(scrollNavBar)
+Vue.use(scrollNav)
 
 
 new Vue({
