@@ -1,17 +1,17 @@
 <template>
   <div class="jjsnc-recycle-list">
     <div class="jjsnc-recycle-list-main">
-      <div class="jjsnc-recycle-list-item" :style="{height:heights+'px'}">
+      <div class="jjsnc-recycle-list-items" :style="{height: heights + 'px'}">
         <div
           v-for="(item, index) in visibleItems"
           :key="index"
           class="jjsnc-recycle-list-item"
-          :style="{transform:'translate(0, '+ item.top + 'px)'}"
+          :style="{transform: 'translate(0,' + item.top + 'px)'}"
         >
           <div
             v-if="infinite"
             :class="{'jjsnc-recycle-list-transition': infinite}"
-            :style="{opacity: !item.loaded}"
+            :style="{opacity: +!item.loaded}"
           >
             <slot name="tombstone"></slot>
           </div>
@@ -19,9 +19,11 @@
             <slot name="item" :data="item.data"></slot>
           </div>
         </div>
+
         <!-- preloads item for get its height, remove it after caculating height-->
         <div class="jjsnc-recycle-list-pool">
           <div
+            class="jjsnc-recycle-list-item jjsnc-recycle-list-invisible"
             v-show="item && !item.isTombstone && !item.height"
             :ref="'preloads'+index"
             v-for="(item, index) in items"
@@ -37,7 +39,7 @@
       <div
         v-if="!infinite && !noMore"
         class="jjsnc-recycle-list-loading"
-        :style="{visibility: loading? 'visible': 'hidden'}"
+        :style="{visibility: loading ? 'visible' : 'hidden'}"
       >
         <slot name="spinner">
           <div class="jjsnc-recycle-list-loading-content">
@@ -45,13 +47,15 @@
           </div>
         </slot>
       </div>
+
       <div v-show="noMore" class="jjsnc-recycle-list-noMore">
-        <slot name="noMore"></slot>
+        <slot name="noMore" />
       </div>
     </div>
     <div class="jjsnc-recycle-list-fake"></div>
   </div>
 </template>
+
 <script>
 import jjsncLoading from "../loading/loading.vue";
 import { warn } from "../../common/helpers/debug.js";
@@ -144,6 +148,7 @@ export default {
     getItems() {
       const index = this.promiseStack.length;
       const promiseFetch = this.onFetch();
+      this.loadings.push("pending");
       this.promiseStack.push(promiseFetch);
       promiseFetch.then(res => {
         this.loadings.pop();
@@ -161,27 +166,25 @@ export default {
     },
     removeUnusedTombs(copy, index) {
       let cursor;
-      let size = index.size;
+      let size = this.size;
       let start = index * size;
       let end = (index + 1) * size;
       for (cursor = start; cursor < end; cursor++) {
-        if (copy[cursor] && copy[cursor].isTombstone) {
-          break;
-        }
+        if (copy[cursor] && copy[cursor].isTombstone) break;
       }
       this.items = copy.slice(0, cursor);
     },
     stopScroll(index) {
       this.noMore = true;
       this.removeUnusedTombs(this.items.slice(0), index);
-      this.uodateItemTop();
-      this.uodateStartIndex();
+      this.updateItemTop();
+      this.updateStartIndex();
     },
     setList(index, res) {
       const list = this.list;
       const baseIndex = index * this.size;
       for (let i = 0; i < res.length; i++) {
-        list[baseIndex + 1] = res[i];
+        list[baseIndex + i] = res[i];
       }
     },
     loadItemsByIndex(index) {
@@ -233,7 +236,7 @@ export default {
         cur.height = this.tombHeight;
       }
     },
-    uodateItemTop() {
+    updateItemTop() {
       let heights = 0;
       const items = this.items;
       let pre;
@@ -247,13 +250,13 @@ export default {
         if (!items[i]) {
           heights += 0;
         } else {
-          current.top = pre ? pre.top + pre.heights : 0;
+          current.top = pre ? pre.top + pre.height : 0;
           heights += current.height;
         }
       }
       this.heights = heights;
     },
-    uodateStartIndex() {
+    updateStartIndex() {
       // update visible items start index
       let top = this.$el.scrollTop;
       let item;
@@ -282,7 +285,7 @@ export default {
         },
         {
           key: "loadings",
-          vlaue: []
+          value: []
         },
         {
           key: "noMore",
