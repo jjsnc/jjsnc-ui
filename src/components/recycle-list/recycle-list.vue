@@ -327,6 +327,53 @@ export default {
 };
 </script>
 
+<style lang="scss">
+.jjsnc-recycle-list {
+  position: relative;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.jjsnc-recycle-list-main {
+  min-height: 100%;
+}
+
+.jjsnc-recycle-list-fake {
+  height: 1px;
+}
+
+.jjsnc-recycle-list-invisible {
+  top: -1000px;
+  visibility: hidden;
+}
+.jjsnc-recycle-list-item {
+  width: 100%;
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.jjsnc-recycle-list-transition {
+  position: absolute;
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 500ms;
+}
+.jjsnc-recycle-list-loading {
+  overflow: hidden;
+}
+
+.jjsnc-recycle-list-loading-content {
+  text-align: center;
+}
+.jjsnc-recycle-list-spinner {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+}
+</style>
+
 
 
 
