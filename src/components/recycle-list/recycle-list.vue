@@ -351,6 +351,7 @@ export default {
   top: -1000px;
   visibility: hidden;
 }
+
 .jjsnc-recycle-list-item {
   width: 100%;
   position: absolute;
@@ -363,6 +364,7 @@ export default {
   transition-property: opacity;
   transition-duration: 500ms;
 }
+
 .jjsnc-recycle-list-loading {
   overflow: hidden;
 }
@@ -375,6 +377,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 </style>
 
 
