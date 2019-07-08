@@ -69,6 +69,7 @@ export default {
 };
 </script>
 <style lang="scss">
+
 .jjsnc-tab-panels {
   position: relative;
   overflow: hidden;

@@ -16,16 +16,12 @@
 import { prefixStyle } from "../../common/helpers/dom";
 import { findIndex } from "../../common/helpers/util";
 import jjsncTab from "./tab.vue";
-
 const COMPONENT_NAME = "jjsnc-tab-bar";
-
 const EVENT_INPUT = "input";
 const EVENT_CHANGE = "change";
 const EVENT_CLICK = "click";
-
 const TRANSFORM = prefixStyle("transform");
 const TRANSITION = prefixStyle("transition");
-
 export default {
   name: COMPONENT_NAME,
   components: {
