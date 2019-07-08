@@ -12,8 +12,7 @@
     </div>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import TabPanel from "./tab-panel.vue";
 import { findIndex } from "../../common/helpers/util";
 import { prefixStyle } from "../../common/helpers/dom";
@@ -21,7 +20,6 @@ import { prefixStyle } from "../../common/helpers/dom";
 const TRANSFORM = prefixStyle("transform");
 
 const COMPONENT_NAME = "jjsnc-tab-panels";
-
 const INDEX_OUT_OF_BOUNDARY = -1;
 
 export default {
@@ -50,19 +48,16 @@ export default {
       if (curIndex === INDEX_OUT_OF_BOUNDARY) {
         return;
       }
-
       const panelsGroup = this.$refs.panelsGroup;
       const distance = -(curIndex * 100);
       panelsGroup.style[TRANSFORM] = `translateX(${distance}%)`;
     },
-    addPanle(panel) {
+    addPanel(panel) {
       this.panels.push(panel);
     },
-    removePanle(panel) {
+    removePanel(panel) {
       const index = this.panels.indexOf(panel);
-      if (index > -1) {
-        this.panels.splice(index, 1);
-      }
+      if (index > -1) this.panels.splice(index, 1);
     }
   },
   watch: {
