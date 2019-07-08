@@ -3,13 +3,13 @@
     <jjsnc-tab-bar v-model="selectedLabel" show-slider>
       <jjsnc-tab v-for="(item, index) in tabs" :icon="item.icon" :label="item.label" :key="index"></jjsnc-tab>
     </jjsnc-tab-bar>
-    <!-- <jjsnc-tab-panels v-model="selectedLabel">
+    <jjsnc-tab-panels v-model="selectedLabel">
       <jjsnc-tab-panel v-for="(item, index) in tabs" :label="item.label" :key="index">
         <ul>
           <li class="tab-panel-li" v-for="(hero, index) in item.heroes" :key="index">{{hero}}</li>
         </ul>
       </jjsnc-tab-panel>
-    </jjsnc-tab-panels> -->
+    </jjsnc-tab-panels>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ export default {
 </script>
 <style lang="scss">
 .home {
-  // height: 100vh;
+  height: 100vh;
   // background: #edf0f4;
 }
 

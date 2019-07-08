@@ -120,7 +120,7 @@ export default {
       let index = 0;
       if (this.tabs.length > 0) {
         index = findIndex(this.tabs, tab => tab.value === this.value);
-        width = this.tabs[index].$el.clientWidth;
+        width = this.tabs[index].$el.clientWidth - 1;
       }
       return {
         width,
