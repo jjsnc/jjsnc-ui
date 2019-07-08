@@ -3,9 +3,9 @@
     <slot></slot>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 const COMPONENT_NAME = "jjsnc-tab-panel";
+
 export default {
   name: COMPONENT_NAME,
   props: {
@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted() {
-    this.$$parent.addPanel(this);
+    this.$parent.addPanel(this);
   },
   destroyed() {
     this.$parent.removePanel(this);
