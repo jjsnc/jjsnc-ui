@@ -1,5 +1,5 @@
 <template>
-  <div class="jjsnc-tab-bar" :class="{'jjsnc-tab-bar_inline':inline}">
+  <div class="jjsnc-tab-bar" :class="{'jjsnc-tab-bar_inline': inline}">
     <slot>
       <jjsnc-tab
         v-for="(item, index) in data"
@@ -12,8 +12,7 @@
     <div v-if="showSlider" ref="slider" class="jjsnc-tab-bar-slider"></div>
   </div>
 </template>
-
-<script>
+<script type="text/ecmascript-6">
 import { prefixStyle } from "../../common/helpers/dom";
 import { findIndex } from "../../common/helpers/util";
 import jjsncTab from "./tab.vue";
@@ -148,15 +147,16 @@ export default {
   }
 };
 </script>
-
 <style lang="scss">
 @import "../../common/scss/variable";
+
 .jjsnc-tab-bar {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .jjsnc-tab-bar_inline {
   .jjsnc-tab {
     display: flex;
@@ -164,6 +164,7 @@ export default {
     justify-content: center;
   }
 }
+
 .jjsnc-tab-bar-slider {
   position: absolute;
   left: 0;
