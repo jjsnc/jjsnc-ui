@@ -5,6 +5,7 @@ import './registerServiceWorker'
 Vue.config.productionTip = false
 import jjsncButton from './modules/button/'
 import jjsncTabBar from './modules/tab-bar'
+import jjsncTabPanels from './modules/tab-panels'
 import CascadePicker from './modules/cascade-picker/'
 import Dialog from './modules/dialog/'
 import Toast from './modules/toast/'
@@ -20,6 +21,7 @@ import scrollNav from './modules/scroll-nav'
 import recycleList from './modules/recycle-list'
 Vue.use(jjsncButton)
 Vue.use(jjsncTabBar)
+Vue.use(jjsncTabPanels)
 Vue.use(CascadePicker)
 Vue.use(Dialog)
 Vue.use(Toast)
