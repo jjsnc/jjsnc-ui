@@ -2,7 +2,7 @@
   <div class="jjsnc-sticky">
     <slot></slot>
     <transition :name="fixedShowAni">
-      <div ref="fixedEle" v-show="fixedShow" class="jjsnc-sticky-fixed">
+      <div ref="fixedEle" :class="{active:fixedShow}" class="jjsnc-sticky-fixed">
         <slot name="fixed" :current="currentKey" :index="currentIndex"></slot>
       </div>
     </transition>
@@ -197,11 +197,14 @@ export default {
   overflow: hidden;
 }
 .jjsnc-sticky-fixed {
-  z-index: 1;
+  z-index: -999;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  &.active{
+     z-index: 1;
+  }
 }
 .jjsnc-sticky-fixed-fade-enter,
 .jjsnc-sticky-fixed-fade-leave-active {
