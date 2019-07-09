@@ -1,3 +1,4 @@
+
 <template>
   <jjsnc-picker
     ref="picker"
@@ -25,12 +26,10 @@ import popupMixin from "../../common/mixins/popup";
 import basicPickerMixin from "../../common/mixins/basic-picker";
 import pickerMixin from "../../common/mixins/picker";
 import localeMixin from "../../common/mixins/locale";
-
 const COMPONENT_NAME = "jjsnc-cascade-picker";
 const EVENT_SELECT = "select";
 const EVENT_CANCEL = "cancel";
 const EVENT_CHANGE = "change";
-
 export default {
   name: COMPONENT_NAME,
   mixins: [
@@ -102,14 +101,11 @@ export default {
               : this.$refs.picker.refillColumn(i, columnData);
         }
         data = data.length ? data[this.pickerSelectedIndex[i]].children : null;
-
         i++;
       }
-
       if (i < this.pickerData.length) {
         this.pickerData.splice(i, this.pickerData.length - i);
       }
-
       this.pickerData = this.pickerData.slice();
     }
   },

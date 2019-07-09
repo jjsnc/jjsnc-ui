@@ -58,14 +58,11 @@ import popupMixin from "../../common/mixins/popup";
 import basicPickerMixin from "../../common/mixins/basic-picker";
 import pickerMixin from "../../common/mixins/picker";
 import localeMixin from "../../common/mixins/locale";
-
 const COMPONENT_NAME = "jjsnc-picker";
-
 const EVENT_SELECT = "select";
 const EVENT_VALUE_CHANGE = "value-change";
 const EVENT_CANCEL = "cancel";
 const EVENT_CHANGE = "change";
-
 export default {
   name: COMPONENT_NAME,
   mixins: [
@@ -96,24 +93,19 @@ export default {
         return;
       }
       this.hide();
-
       let changed = false;
       let pickerSelectedText = [];
-
       const length = this.finalData.length;
       const oldLength = this._values.length;
-
       // when column count has changed.
       if (oldLength !== length) {
         changed = true;
         oldLength > length &&
           (this._values.length = this._indexes.length = length);
       }
-
       for (let i = 0; i < length; i++) {
         let index = this.wheels[i].getSelectedIndex();
         this._indexes[i] = index;
-
         let value = null;
         let text = "";
         if (this.finalData[i].length) {
@@ -126,9 +118,7 @@ export default {
         this._values[i] = value;
         pickerSelectedText[i] = text;
       }
-
       this.$emit(EVENT_SELECT, this._values, this._indexes, pickerSelectedText);
-
       if (changed) {
         this.$emit(
           EVENT_VALUE_CHANGE,
@@ -149,7 +139,6 @@ export default {
       if (this.isVisible) {
         return;
       }
-
       this.isVisible = true;
       if (!this.wheels || this.dirty) {
         this.$nextTick(() => {
@@ -174,7 +163,6 @@ export default {
         return;
       }
       this.isVisible = false;
-
       for (let i = 0; i < this.finalData.length; i++) {
         this.wheels[i].disable();
       }

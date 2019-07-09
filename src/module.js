@@ -28,7 +28,7 @@ import Form from './modules/form'
 import Popup from './modules/popup'
 import Toast from './modules/toast'
 import Picker from './modules/picker'
-// import CascadePicker from './modules/cascade-picker'
+import CascadePicker from './modules/cascade-picker'
 // import DatePicker from './modules/date-picker'
 // import TimePicker from './modules/time-picker'
 // import SegmentPicker from './modules/segment-picker'
@@ -97,7 +97,7 @@ export {
   Popup,
   Toast,
   Picker,
-  // CascadePicker,
+  CascadePicker,
   // DatePicker,
   // TimePicker,
   // SegmentPicker,
