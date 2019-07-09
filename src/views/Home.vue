@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="home">
+    <jjsnc-button @click="showMutiPicker">Picker</jjsnc-button>
   </div>
 </template>
 
@@ -7,13 +8,18 @@
 export default {
   data() {
     return {};
+  },
+  methods: {
   }
 };
 </script>
 <style lang="scss">
 .home {
   height: 100vh;
-  // background: #edf0f4;
+  background: #edf0f4;
+}
+.jjsnc-checkbox {
+  background: #fff;
 }
 </style>
 
