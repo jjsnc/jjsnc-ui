@@ -1,35 +1,105 @@
-import jjsncButton from './modules/button/'
-import jjsncTabBar from './modules/tab-bar'
-import jjsncTabPanels from './modules/tab-panels'
-import CascadePicker from './modules/cascade-picker/'
-import Dialog from './modules/dialog/'
-import Toast from './modules/toast/'
-import ActionSheet from './modules/action-sheet/'
-import ImagePreview from './modules/image-preview'
-
 import Vue from 'vue'
-import Scroll from './modules/scroll'
-import Slide from './modules/slide'
-import indexList from './modules/index-list'
-import swipe from './modules/swipe'
-import sticky from './modules/sticky'
-import scrollNavBar from './modules/scroll-nav-bar'
-import scrollNav from './modules/scroll-nav'
-import recycleList from './modules/recycle-list'
+import {
+    /* eslint-disable no-unused-vars */
+    // Style,
+    // locale
+    Locale,
+    // basic
+    Button,
+    Loading,
+    Tip,
+    Toolbar,
+    TabBar,
+    TabPanels,
+    // form
+    Checkbox,
+    CheckboxGroup,
+    Checker,
+    Radio,
+    RadioGroup,
+    Input,
+    Textarea,
+    Select,
+    Switch,
+    Rate,
+    Validator,
+    Upload,
+    Form,
+    // popup
+    Popup,
+    Toast,
+    Picker,
+    // CascadePicker,
+    // DatePicker,
+    // TimePicker,
+    // SegmentPicker,
+    Dialog,
+    ActionSheet,
+    // Drawer,
+    ImagePreview,
+    // scroll
+    Scroll,
+    Slide,
+    IndexList,
+    Swipe,
+    Sticky,
+    ScrollNav,
+    ScrollNavBar,
+    RecycleList,
+    // module
+    BetterScroll,
+    createAPI
+} from './module'
 
-Vue.use(jjsncButton)
-Vue.use(jjsncTabBar)
-Vue.use(jjsncTabPanels)
-Vue.use(CascadePicker)
-Vue.use(Dialog)
-Vue.use(Toast)
-Vue.use(ActionSheet)
-Vue.use(ImagePreview)
-Vue.use(Scroll)
-Vue.use(Slide)
-Vue.use(indexList)
-Vue.use(swipe)
-Vue.use(sticky)
-Vue.use(scrollNavBar)
-Vue.use(scrollNav)
-Vue.use(recycleList)
+
+
+const components = [
+    // locale
+    Locale,
+    // basic
+    Button,
+    Loading,
+    Tip,
+    Toolbar,
+    TabBar,
+    TabPanels,
+    // form
+    Checkbox,
+    CheckboxGroup,
+    Checker,
+    Radio,
+    RadioGroup,
+    Input,
+    Textarea,
+    Select,
+    Switch,
+    Rate,
+    Validator,
+    Upload,
+    Form,
+    // popup
+    Popup,
+    Toast,
+    Picker,
+    // CascadePicker,
+    // DatePicker,
+    // TimePicker,
+    // SegmentPicker,
+    Dialog,
+    ActionSheet,
+    // Drawer,
+    ImagePreview,
+    // scroll
+    Scroll,
+    Slide,
+    IndexList,
+    Swipe,
+    Sticky,
+    ScrollNav,
+    ScrollNavBar,
+    RecycleList
+]
+
+components.forEach((component)=> {
+    Vue.use(component)
+})
