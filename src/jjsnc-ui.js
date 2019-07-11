@@ -31,7 +31,7 @@ import {
     // Popup,
     // Toast,
     // Picker,
-    CascadePicker,
+    // CascadePicker,
     // DatePicker,
     // TimePicker,
     // SegmentPicker,
@@ -49,7 +49,7 @@ import {
     // ScrollNavBar
 } from './index.js'
 console.log(Button)
-console.log(CascadePicker)
+// console.log(CascadePicker)
 Vue.use(Button)
 // Vue.use(Loading)
 // Vue.use(Tip)
