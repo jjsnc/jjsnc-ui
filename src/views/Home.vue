@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <jjsnc-button @click="showCascadePicker">Cascade Picker</jjsnc-button>
+    <!-- <jjsnc-button @click="showCascadePicker">Cascade Picker</jjsnc-button> -->
   </div>
 </template>
 
@@ -11,6 +11,7 @@ export default {
   },
   mounted() {
   },
+  
   methods: {
   }
 };
