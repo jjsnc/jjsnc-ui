@@ -11,6 +11,9 @@ Vue.config.productionTip = false
 
 // // Basic
 import Button from './modules/button'
+import CascadePicker from './modules/cascade-picker'
+Vue.use(Button)
+Vue.use(CascadePicker)
 // import Loading from './modules/loading'
 // import Tip from './modules/tip'
 // import Toolbar from './modules/toolbar'
@@ -35,7 +38,7 @@ import Button from './modules/button'
 // import Popup from './modules/popup'
 // import Toast from './modules/toast'
 // import Picker from './modules/picker'
-import CascadePicker from './modules/cascade-picker'
+
 //  import DatePicker from './modules/date-picker'
 // import TimePicker from './modules/time-picker'
 //  import SegmentPicker from './modules/segment-picker'
@@ -70,8 +73,7 @@ import CascadePicker from './modules/cascade-picker'
 // const Tab = TabBar.Tab
 // const TabPanel = TabPanels.Panel
 // const CheckerItem = Checker.Item
-Vue.use(Button)
-Vue.use(CascadePicker)
+
 
 new Vue({
   router,
