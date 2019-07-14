@@ -49,7 +49,7 @@ export default {
     this.cascadePicker = this.$createCascadePicker({
       title: "Cascade Picker",
       data: this.goodData,
-      selectedIndex: [0, 1, 0],
+      selectedIndex: [0, 1, 1],
       onSelect: this.selectHandle,
       onCancel: this.cancelHandle
     });
@@ -60,22 +60,10 @@ export default {
       this.cascadePicker.show();
     },
     selectHandle(selectedVal, selectedIndex, selectedText) {
-      this.$createDialog({
-        type: "warn",
-        content: `Selected Item: <br/> - value: ${selectedVal.join(
-          ", "
-        )} <br/> - index: ${selectedIndex.join(
-          ", "
-        )} <br/> - text: ${selectedText.join(" ")}`,
-        icon: "cubeic-alert"
-      }).show();
+      console.log(selectedVal, selectedIndex, selectedText);
     },
     cancelHandle() {
-      this.$createToast({
-        type: "correct",
-        txt: "Picker canceled",
-        time: 1000
-      }).show();
+      console.log('取消')
     }
   }
 };
