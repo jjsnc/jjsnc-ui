@@ -58,12 +58,6 @@ export default {
   methods: {
     showCascadePicker() {
       this.cascadePicker.show();
-    },
-    selectHandle(selectedVal, selectedIndex, selectedText) {
-      console.log(selectedVal, selectedIndex, selectedText);
-    },
-    cancelHandle() {
-      console.log('取消')
     }
   }
 };
